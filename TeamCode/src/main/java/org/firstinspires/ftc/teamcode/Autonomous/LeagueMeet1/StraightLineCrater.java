@@ -1,12 +1,10 @@
-package Autonomous.LeagueMeet1;
+package org.firstinspires.ftc.teamcode.Autonomous.LeagueMeet1;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import ChickHicks.Drivetrain;
-import ChickHicks.Lift;
-import ChickHicks.Sensors;
-import ChickHicks.Vision;
+import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
+import org.firstinspires.ftc.teamcode.ChickHicks.Lift;
 
 @Autonomous
         (name = "StrateLineCrater", group = "Auto")

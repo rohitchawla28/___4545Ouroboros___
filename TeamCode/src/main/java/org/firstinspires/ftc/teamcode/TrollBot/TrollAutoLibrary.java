@@ -1,4 +1,4 @@
-package TrollBot;
+package org.firstinspires.ftc.teamcode.TrollBot;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;

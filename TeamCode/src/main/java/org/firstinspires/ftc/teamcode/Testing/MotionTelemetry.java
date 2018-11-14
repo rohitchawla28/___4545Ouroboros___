@@ -1,11 +1,10 @@
-package Testing;
+package org.firstinspires.ftc.teamcode.Testing;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import ChickHicks.Drivetrain;
+import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
 
 @Disabled
 @Autonomous

@@ -1,4 +1,4 @@
-package ChickHicks;
+package org.firstinspires.ftc.teamcode.ChickHicks;
 
 
 import com.qualcomm.hardware.bosch.BNO055IMU;

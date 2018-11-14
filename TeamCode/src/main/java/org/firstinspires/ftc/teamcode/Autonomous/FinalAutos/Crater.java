@@ -1,14 +1,13 @@
-package Autonomous.FinalAutos;
+package org.firstinspires.ftc.teamcode.Autonomous.FinalAutos;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import ChickHicks.Drivetrain;
-import ChickHicks.Lift;
-import ChickHicks.Marker;
-//import ChickHicks.Vision;
-//import ChickHicks.Vuforia;
+import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
+import org.firstinspires.ftc.teamcode.ChickHicks.Lift;
+import org.firstinspires.ftc.teamcode.ChickHicks.Marker;
+
 
 @Disabled
 @Autonomous

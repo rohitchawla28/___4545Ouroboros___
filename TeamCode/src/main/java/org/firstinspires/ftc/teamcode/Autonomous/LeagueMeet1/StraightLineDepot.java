@@ -1,13 +1,13 @@
-package Autonomous.LeagueMeet1;
+package org.firstinspires.ftc.teamcode.Autonomous.LeagueMeet1;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import ChickHicks.Drivetrain;
-import ChickHicks.Lift;
-import ChickHicks.Marker;
-import ChickHicks.Sensors;
-import ChickHicks.Vision;
+import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
+import org.firstinspires.ftc.teamcode.ChickHicks.Lift;
+import org.firstinspires.ftc.teamcode.ChickHicks.Marker;
+import org.firstinspires.ftc.teamcode.ChickHicks.Sensors;
+
 
 @Autonomous
         (name = "StrateLineDepot", group = "Auto")
@@ -16,7 +16,6 @@ public class StraightLineDepot extends LinearOpMode {
     Drivetrain drivetrain;
     Sensors sensors;
     Lift lift;
-    Vision vision;
     Marker marker;
 
     @Override

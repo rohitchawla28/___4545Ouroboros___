@@ -1,16 +1,12 @@
-package Autonomous.LeagueMeet1;
+package org.firstinspires.ftc.teamcode.Autonomous.LeagueMeet1;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.robotcore.internal.ftdi.eeprom.FT_EEPROM_232H;
+import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
+import org.firstinspires.ftc.teamcode.ChickHicks.Lift;
+import org.firstinspires.ftc.teamcode.ChickHicks.Marker;
 
-import ChickHicks.Drivetrain;
-import ChickHicks.Lift;
-import ChickHicks.Marker;
-import ChickHicks.Sensors;
-import ChickHicks.Vision;
-import ChickHicks.Vuforia;
 
 @Autonomous
         (name = "LM1Depot", group = "Auto")

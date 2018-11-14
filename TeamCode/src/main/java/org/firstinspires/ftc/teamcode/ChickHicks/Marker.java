@@ -1,14 +1,11 @@
-package ChickHicks;
+package org.firstinspires.ftc.teamcode.ChickHicks;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import TeleOp.OPMode;
-
 public class Marker {
 
     private LinearOpMode opMode;
-    private OPMode OPmode;
 
     private Servo marker;
 

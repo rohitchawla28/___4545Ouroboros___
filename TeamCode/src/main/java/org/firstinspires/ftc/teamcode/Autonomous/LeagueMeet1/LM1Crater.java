@@ -1,12 +1,12 @@
-package Autonomous.LeagueMeet1;
+package org.firstinspires.ftc.teamcode.Autonomous.LeagueMeet1;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.robocol.RobocolParsable;
 
-import ChickHicks.Drivetrain;
-import ChickHicks.Lift;
-import ChickHicks.Marker;
+import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
+import org.firstinspires.ftc.teamcode.ChickHicks.Lift;
+import org.firstinspires.ftc.teamcode.ChickHicks.Marker;
+
 
 @Autonomous
         (name = "LM1Crater", group = "Auto")

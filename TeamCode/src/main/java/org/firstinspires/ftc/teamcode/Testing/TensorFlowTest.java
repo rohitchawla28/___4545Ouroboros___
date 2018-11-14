@@ -1,15 +1,10 @@
-package Testing;
+package org.firstinspires.ftc.teamcode.Testing;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import ChickHicks.Vision.TensorFlowDetection;
+import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
 
-//import ChickHicks.Vision;
-//import ChickHicks.Vuforia;
-
-@Disabled
 @Autonomous
         (name = "OpenCVTest", group = "Auto")
 

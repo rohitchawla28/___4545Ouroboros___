@@ -1,4 +1,4 @@
-package ChickHicks.Vision;
+package org.firstinspires.ftc.teamcode.ChickHicks.Vision;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
