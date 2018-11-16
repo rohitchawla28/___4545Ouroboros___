@@ -33,6 +33,7 @@ public class TensorFlowDetection {
 
     public TensorFlowDetection(LinearOpMode opMode) {
 
+        this.opMode = opMode;
         initVuforia();
 
         if (ClassFactory.getInstance().canCreateTFObjectDetector()) {
