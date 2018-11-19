@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
 
-@Disabled
 @Autonomous
         (name = "MotionTelemetry", group = "Teleop")
 

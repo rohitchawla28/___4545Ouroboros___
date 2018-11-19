@@ -20,7 +20,7 @@ public class LM2Crater extends LinearOpMode{
     public void runOpMode() throws InterruptedException {
 
         drivetrain = new Drivetrain(this);
-        marker = new Marker(this);
+        //marker = new Marker(this);
         lift = new Lift(this);
 
         telemetry.addLine("Ready to get this W");
@@ -34,40 +34,31 @@ public class LM2Crater extends LinearOpMode{
 //        //prepare for movement
 //        sleep(300);
 
-        //hit mineral
-        drivetrain.moveEncoder(0.5, 1042, 4);
+        //move to not hit lander
+        drivetrain.moveEncoder(0.6, 400, 4);
 
-        sleep(3000);
+        sleep(250);
 
-        //move backwards
-        drivetrain.moveEncoder(-0.4, 661, 3);
+        // Will turn to go around sampling
+        drivetrain.turnGyro(0.5, 90, true, 4);
 
-        //turn to face wall
-        drivetrain.turnGyro(0.4, 90, false, 4);
+        //move to wall
+        drivetrain.moveEncoder(0.4, 1965, 3);
 
-        //move closer to wall
-        drivetrain.moveEncoder(0.5, 1700, 4);
+        //turn parallel to wall
+        drivetrain.turnGyro(0.4, 70, false, 4);
 
-        //turn more to align with wall
-        drivetrain.turnGyro(0.4, 15, false, 3);
+        //move along
+        drivetrain.moveEncoder(0.5, 1926, 4);
 
-        //move along wall
-        drivetrain.moveEncoder(0.4, 958, 3);
-
-        //turn to depot
-        drivetrain.turnGyro(0.4, 10, false, 4);
-
-        //move to depot
-        drivetrain.moveEncoder(0.6, 1168, 4);
-
-        //drop marker
-        marker.markerOut();
+//        //drop marker
+//        marker.markerOut();
 
         //backwards to almost crater
-        drivetrain.moveEncoder(-0.6, 3100, 4);
+        drivetrain.moveEncoder(-0.6, 1465, 4);
 
         //touch crater
-        drivetrain.moveEncoder(-0.2, 100, 3);
+        drivetrain.moveEncoder(-0.2, 250, 3);
 
     }
 }

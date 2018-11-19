@@ -41,13 +41,26 @@ public class LM2Depot extends LinearOpMode {
          *
          */
 
-        //hit mineral and move into depot
-        drivetrain.moveEncoder(0.6, 2200, 4);
+        //move to not hit lander
+        drivetrain.moveEncoder(0.6, 400, 4);
 
         sleep(250);
 
-        // Will turn towards the crater
-        drivetrain.turnGyro(0.5, 45, true, 4);
+        // Will turn to go around sampling
+        drivetrain.turnGyro(0.5, 90, true, 4);
+
+        //move around sampling
+        drivetrain.moveEncoder(0.6, 1741, 4);
+
+        sleep(250);
+
+        // Will turn towards the depot
+        drivetrain.turnGyro(0.5, 140, true, 4);
+
+        sleep(250);
+
+        //move to depot
+        drivetrain.moveEncoder(0.6, 2013, 4);
 
         sleep(250);
 
@@ -57,12 +70,12 @@ public class LM2Depot extends LinearOpMode {
 //        sleep(150);
 
         //move to almost the crater
-        drivetrain.moveEncoder(-0.6, 3050, 4);
+        drivetrain.moveEncoder(-0.6, 1505, 4);
 
         sleep(150);
 
         //move to touch the crater
-        drivetrain.moveEncoder(-0.5, 300, 4);
+        drivetrain.moveEncoder(-0.5, 250, 4);
     }
 
 }

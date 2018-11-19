@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.ChickHicks.Sensors;
 
 
 @Autonomous
-        (name = "StrateLineDepot", group = "Auto")
+        (name = "StrateLineDepot2", group = "Auto")
 
 public class StraightLineDepot extends LinearOpMode {
     Drivetrain drivetrain;

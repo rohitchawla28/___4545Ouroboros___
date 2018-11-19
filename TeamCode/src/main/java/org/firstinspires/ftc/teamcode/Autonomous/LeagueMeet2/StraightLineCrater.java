@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
 import org.firstinspires.ftc.teamcode.ChickHicks.Lift;
 
 @Autonomous
-        (name = "StrateLineCrater", group = "Auto")
+        (name = "StrateLineCrater2", group = "Auto")
 
 public class StraightLineCrater extends LinearOpMode{
 
