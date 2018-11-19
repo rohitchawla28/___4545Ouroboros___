@@ -99,7 +99,7 @@ public class TooOverPowered extends OPMode {
 
 
         lift();
-        setServoTele();
+        //setServoTele();
 
         //sugatsune();
         //collect();

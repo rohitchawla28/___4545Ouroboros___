@@ -70,7 +70,7 @@ public abstract class OPMode extends OpMode {
         liftL.setDirection(DcMotor.Direction.FORWARD);
         liftR.setDirection(DcMotor.Direction.REVERSE);
 
-        marker = hardwareMap.servo.get("marker");
+        //marker = hardwareMap.servo.get("marker");
 
 
         //collectL.setDirection(CRServo.Direction.REVERSE);
@@ -86,27 +86,27 @@ public abstract class OPMode extends OpMode {
 
     public void setServoTele() {
 
-        //marker up
-        if (gamepad2.x){
-            marker.setPosition(0.6);
-        }
-
-        //marker out
-        if (gamepad2.y) {
-            marker.setPosition(0);
-        }
-
-        //open
-        if (gamepad2.a){
-            lockLiftL.setPosition(0.2);
-            lockLiftR.setPosition(0.55);
-        }
-
-        //lock
-        if(gamepad2.b) {
-            lockLiftL.setPosition(0.4);
-            lockLiftR.setPosition(0.25);
-        }
+//        //marker up
+//        if (gamepad2.x){
+//            marker.setPosition(0.6);
+//        }
+//
+//        //marker out
+//        if (gamepad2.y) {
+//            marker.setPosition(0);
+//        }
+//
+//        //open
+//        if (gamepad2.a){
+//            lockLiftL.setPosition(0.2);
+//            lockLiftR.setPosition(0.55);
+//        }
+//
+//        //lock
+//        if(gamepad2.b) {
+//            lockLiftL.setPosition(0.4);
+//            lockLiftR.setPosition(0.25);
+//        }
     }
 
     public void lift() {

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous.LeagueMeet1;
+package org.firstinspires.ftc.teamcode.Autonomous.LeagueMeet2;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -9,9 +9,9 @@ import org.firstinspires.ftc.teamcode.ChickHicks.Marker;
 
 
 @Autonomous
-        (name = "LM1Depot", group = "Auto")
+        (name = "LM2Depot", group = "Auto")
 
-public class LM1Depot extends LinearOpMode {
+public class LM2Depot extends LinearOpMode {
 
     Drivetrain drivetrain;
     Lift lift;
@@ -22,9 +22,9 @@ public class LM1Depot extends LinearOpMode {
 
         drivetrain = new Drivetrain(this);
         lift = new Lift(this);
-        marker = new Marker(this);
+        //  marker = new Marker(this);
 
-        telemetry.addLine("Initialized");
+        telemetry.addLine("Ready to get this W");
         telemetry.update();
 
         waitForStart();
@@ -34,21 +34,6 @@ public class LM1Depot extends LinearOpMode {
 //
 //        //prepare for movement
 //        sleep(300);
-//
-//        //turn out of hook
-//        drivetrain.turnGyro(0.35, 20, true, 3);
-//
-//        sleep(150);
-//
-//        //lower lift so can turn back
-//        lift.shortDown();
-//
-//        sleep(150);
-//
-//        //turns back to center
-//        drivetrain.turnGyro(0.35, 20, false, 3);
-//
-//        sleep(150);
 
         /**
          *
@@ -57,7 +42,7 @@ public class LM1Depot extends LinearOpMode {
          */
 
         //hit mineral and move into depot
-        drivetrain.moveEncBadHardwareForward(0.6, 2200, 4);
+        drivetrain.moveEncoder(0.6, 2200, 4);
 
         sleep(250);
 
@@ -67,17 +52,17 @@ public class LM1Depot extends LinearOpMode {
         sleep(250);
 
         //drop marker
-        marker.markerOut();
-
-        sleep(150);
+//        marker.markerOut();
+//
+//        sleep(150);
 
         //move to almost the crater
-        drivetrain.moveEncBadHardwareBackward(-0.6, 3050, 4);
+        drivetrain.moveEncoder(-0.6, 3050, 4);
 
         sleep(150);
 
         //move to touch the crater
-        drivetrain.moveEncBadHardwareBackward(-0.5, 300, 4);
+        drivetrain.moveEncoder(-0.5, 300, 4);
     }
 
 }
