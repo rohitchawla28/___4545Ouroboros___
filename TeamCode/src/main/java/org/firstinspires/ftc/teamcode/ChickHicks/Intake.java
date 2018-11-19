@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import static org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection.cubePosition;
+
 public class Intake {
 
     private LinearOpMode opMode;
@@ -91,5 +93,39 @@ public class Intake {
         tiltR.setPosition(0.5);
 
     }
+    //================================= SAMPLING ===================================================
+    public void extendSampling(Drivetrain drivetrain){
+        while(cubePosition != 0) {
+            switch(cubePosition)
+            {
+                case 1:
+                    drivetrain.turnGyro(0.3, 13, false, 4);
+                    extend(300, false);
+                    startCollect(0.2, true);
+                    opMode.sleep(500);
+                    startCollect(0.2, false);
+                    cubePosition = 0;
+                    break;
+                case 2:
+                    extend(300, false);
+                    startCollect(0.2, true);
+                    opMode.sleep(500);
+                    startCollect(0.2, false);
+                    cubePosition = 0;
+                    break;
+                case 3:
+                    drivetrain.turnGyro(0.3, 13, true, 4);
+                    extend(300, false);
+                    startCollect(0.2, true);
+                    opMode.sleep(500);
+                    startCollect(0.2, false);
+                    cubePosition = 0;
+                    break;
 
+                default:
+                    cubePosition = 2;
+
+            }
+        }
+    }
 }
