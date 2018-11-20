@@ -11,10 +11,13 @@ public class TooOverPowered extends OPMode {
     private boolean halfSpeed = false;
     private boolean reverseDrive = false;
 
-    private double leftDrive = gamepad1.left_stick_y * halfSpeedMod;
-    private double rightDrive = gamepad1.right_stick_y * halfSpeedMod;
+    private double leftDrive;  //= gamepad1.left_stick_y * halfSpeedMod;
+    private double rightDrive; //= gamepad1.right_stick_y * halfSpeedMod;
 
     public void loop() {
+
+        leftDrive = gamepad1.left_stick_y * halfSpeedMod;
+        rightDrive = gamepad1.right_stick_y * halfSpeedMod;
 
         //puts reverse drive on
         if (gamepad1.y && !reverseDrive) {

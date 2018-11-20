@@ -104,6 +104,7 @@ public class Intake {
                     startCollect(0.2, true);
                     opMode.sleep(500);
                     startCollect(0.2, false);
+                    drivetrain.turnGyro(0.3,13, true,4);
                     cubePosition = 0;
                     break;
                 case 2:
@@ -119,7 +120,9 @@ public class Intake {
                     startCollect(0.2, true);
                     opMode.sleep(500);
                     startCollect(0.2, false);
+                    drivetrain.turnGyro(0.3,13, false,4);
                     cubePosition = 0;
+
                     break;
 
                 default:
