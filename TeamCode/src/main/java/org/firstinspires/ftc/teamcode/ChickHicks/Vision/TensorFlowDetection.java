@@ -55,13 +55,11 @@ public class TensorFlowDetection {
                     List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
                     if (updatedRecognitions != null) {
 //                        this.opMode.telemetry.addData("# Object Detected", updatedRecognitions.size());
-                        if (updatedRecognitions.size() == 3) {
+                        if (updatedRecognitions.size() == 2) {
 
                             for (Recognition recognition : updatedRecognitions) {
                                 if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
                                     goldMineralX = (int) recognition.getLeft();
-                                    this.opMode.telemetry.addData("Gold Mineral Left Coordinate", goldMineralX);
-                                    this.opMode.telemetry.update();
                                 }
                                 else if (silverMineral1X == -1) {
                                     silverMineral1X = (int) recognition.getLeft();
@@ -70,7 +68,6 @@ public class TensorFlowDetection {
                                     silverMineral2X = (int) recognition.getLeft();
                                 }
                             }
-
                             detect();
                         }
                     }
@@ -101,22 +98,15 @@ public class TensorFlowDetection {
     }
 
     public void detect() {
-        if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
-            if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
-//                this.opMode.telemetry.addData("Gold Mineral Position", "Left");
-//                this.opMode.telemetry.update();
-                cubePosition = 1;
-            }
-            else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
-//                this.opMode.telemetry.addData("Gold Mineral Position", "Right");
-//                this.opMode.telemetry.update();
-                cubePosition = 3;
-            }
-            else {
-//                this.opMode.telemetry.addData("Gold Mineral Position", "Center");
-//                this.opMode.telemetry.update();
-                cubePosition = 2;
-            }
+        if (goldMineralX == -1){
+            cubePosition = 1;
+            this.opMode.telemetry.addLine("LEFT");
+        }
+        else if (goldMineralX < silverMineral1X && silverMineral2X == -1){
+            cubePosition = 2;
+        }
+        else{
+            cubePosition = 3;
         }
     }
     

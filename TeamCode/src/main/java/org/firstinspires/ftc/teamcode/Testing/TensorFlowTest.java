@@ -22,8 +22,11 @@ public class TensorFlowTest extends LinearOpMode {
 
         tensorFlowDetection = new TensorFlowDetection(this);
 
-        telemetry.addData("Cube Position", TensorFlowDetection.cubePosition);
-        telemetry.update();
+        while (opModeIsActive()){
+
+            telemetry.addData("Cube Position", TensorFlowDetection.cubePosition);
+            telemetry.update();
+        }
 
     }
 }
