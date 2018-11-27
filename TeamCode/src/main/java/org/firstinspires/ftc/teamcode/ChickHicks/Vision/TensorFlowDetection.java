@@ -101,13 +101,20 @@ public class TensorFlowDetection {
         if (goldMineralX == -1){
             cubePosition = 1;
             this.opMode.telemetry.addLine("LEFT");
+            this.opMode.telemetry.update();
         }
-        else if (goldMineralX < silverMineral1X && silverMineral2X == -1){
+        else if ((goldMineralX < silverMineral1X) || (goldMineralX < silverMineral2X) && (silverMineral2X == -1)||(silverMineral1X == -1)){
             cubePosition = 2;
+            this.opMode.telemetry.addLine("CENTER");
+            this.opMode.telemetry.update();
         }
         else{
             cubePosition = 3;
+            this.opMode.telemetry.addLine("RIGHT");
+            this.opMode.telemetry.update();
         }
     }
-    
+    public void composeTelemetry(){
+
+    }
 }
