@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.ChickHicks;
 
+import com.qualcomm.hardware.motors.RevRoboticsCoreHexMotor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -13,48 +14,57 @@ public class Intake {
 
     private DcMotor extend;
 
-    private CRServo collectL;
-    private CRServo collectR;
+    private CRServo collectFL;
+    private CRServo collectFR;
+    private CRServo collectBL;
+    private CRServo collectBR;
 
-    private Servo tiltL;
-    private Servo tiltR;
-
+    private Servo gate;
 
 
     public Intake(LinearOpMode opMode) {
 
         this.opMode = opMode;
 
-        collectL = this.opMode.hardwareMap.get(CRServo.class, "collectL");
-        collectR = this.opMode.hardwareMap.get(CRServo.class, "collectR");
-        tiltL = this.opMode.hardwareMap.get(Servo.class, "tiltL");
-        tiltR = this.opMode.hardwareMap.get(Servo.class, "tiltR");
-        extend = this.opMode.hardwareMap.get(DcMotor.class, "collectL");
+        collectFL = this.opMode.hardwareMap.crservo.get("collectFL");
+        collectFR = this.opMode.hardwareMap.crservo.get("collectFR");
+        collectBL = this.opMode.hardwareMap.crservo.get("collectBL");
+        collectBR = this.opMode.hardwareMap.crservo.get("collectBR");
+
+        gate = this.opMode.hardwareMap.servo.get("gate");
+
+        extend = this.opMode.hardwareMap.dcMotor.get("extend");
 
     }
 
-    public void startCollect(double power, boolean intake) {
+    public void startCollect(boolean in) {
 
          // Sucks in
-        if (intake) {
+        if (in) {
 
-            collectL.setPower(-0.7);
-            collectR.setPower(0.7);
+            collectFL.setPower(0.7);
+            collectFR.setPower(-0.7);
+            collectBL.setPower(0.7);
+            collectBR.setPower(-0.7);
 
          }
 
          //Spits out
-        else if(!intake) {
-            collectL.setPower(0.7);
-            collectR.setPower(-0.7);
+        else if(!in) {
+            collectFL.setPower(-0.7);
+            collectFR.setPower(0.7);
+            collectBL.setPower(-0.7);
+            collectBR.setPower(0.7);
         }
 
     }
 
     public void stopCollect() {
 
-        collectL.setPower(0);
-        collectR.setPower(0);
+        collectFL.setPower(0);
+        collectFR.setPower(0);
+        collectBL.setPower(0);
+        collectBR.setPower(0);
 
     }
 
@@ -79,20 +89,6 @@ public class Intake {
 
     }
 
-    public void tiltUnfold() {
-
-        tiltL.setPosition(-0.75);
-        tiltR.setPosition(0.75);
-
-    }
-
-    //holds mineral so it doesn't fall out
-    public void tiltHold() {
-
-        tiltL.setPosition(-0.5);
-        tiltR.setPosition(0.5);
-
-    }
     //================================= SAMPLING ===================================================
     public void extendSampling(Drivetrain drivetrain){
         while(cubePosition != 0) {
@@ -100,26 +96,17 @@ public class Intake {
             {
                 case 1:
                     drivetrain.turnGyro(0.3, 13, false, 4);
-                    extend(300, false);
-                    startCollect(0.2, true);
-                    opMode.sleep(500);
-                    startCollect(0.2, false);
+                    extend(300, true);
                     drivetrain.turnGyro(0.3,13, true,4);
                     cubePosition = 0;
                     break;
                 case 2:
-                    extend(300, false);
-                    startCollect(0.2, true);
-                    opMode.sleep(500);
-                    startCollect(0.2, false);
+                    extend(300, true);
                     cubePosition = 0;
                     break;
                 case 3:
                     drivetrain.turnGyro(0.3, 13, true, 4);
-                    extend(300, false);
-                    startCollect(0.2, true);
-                    opMode.sleep(500);
-                    startCollect(0.2, false);
+                    extend(300, true);
                     drivetrain.turnGyro(0.3,13, false,4);
                     cubePosition = 0;
 
@@ -130,5 +117,6 @@ public class Intake {
 
             }
         }
+        extend(300, false);
     }
 }
