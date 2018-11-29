@@ -42,35 +42,37 @@ public class LM2Depot extends LinearOpMode {
          */
 
         //move to not hit lander
-        drivetrain.moveEncoder(0.4, 350, 4);
+        drivetrain.moveEncoder(0.5, 350, 4);
 
         sleep(250);
 
         // Will turn to go around sampling
-        drivetrain.turnGyro(0.3, 60, false, 4);
+        drivetrain.turnGyro(0.4, 60, false, 4);
+
+        sleep(250);
 
         //move around sampling
-        drivetrain.moveEncoder(0.4, 1600, 4);
+        drivetrain.moveEncoder(0.5, 1600, 4);
 
         sleep(250);
 
         // Will turn towards the depot
-        drivetrain.turnGyro(0.3, 95, true, 4);
+        drivetrain.turnGyro(0.4, 95, true, 4);
 
         sleep(250);
 
         // Get closer to wall
-        drivetrain.moveEncoder(0.4, 400, 4);
+        drivetrain.moveEncoder(0.5, 400, 4);
 
         sleep(150);
 
         // Align with wall
-        drivetrain.turnGyro(0.3, 5, true, 4);
+        drivetrain.turnGyro(0.4, 5, true, 4);
 
         sleep(250);
 
         //move to depot
-        drivetrain.moveEncoder(0.4, 1650, 4);
+        drivetrain.moveEncoder(0.5, 1650, 4);
 
         sleep(250);
 

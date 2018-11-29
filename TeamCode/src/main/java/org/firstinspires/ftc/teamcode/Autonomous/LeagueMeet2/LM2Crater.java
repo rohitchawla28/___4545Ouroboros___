@@ -35,36 +35,50 @@ public class LM2Crater extends LinearOpMode{
 //        sleep(300);
 
         //move to not hit lander
-        drivetrain.moveEncoder(0.4, 350, 4);
+        drivetrain.moveEncoder(0.6, 350, 4);
 
         sleep(250);
 
         // Will turn to go around sampling
-        drivetrain.turnGyro(0.3, 60, false, 4);
+        drivetrain.turnGyro(0.5, 60, false, 4);
+
+        sleep(250);
 
         //move to wall
-        drivetrain.moveEncoder(0.4, 1825, 3);
+        drivetrain.moveEncoder(0.6, 1825, 3);
+
+        sleep(250);
 
         //turn parallel to wall
-        drivetrain.turnGyro(0.3, 32, false, 4);
+        drivetrain.turnGyro(0.5, 32, false, 4);
+
+        sleep(250);
 
         // move next to wall
-        drivetrain.moveEncoder(0.4, 400, 4);
+        drivetrain.moveEncoder(0.6, 400, 4);
+
+        sleep(250);
 
         //turn parallel to wall
-        drivetrain.turnGyro(0.3, 5, false, 4);
+        drivetrain.turnGyro(0.5, 5, false, 4);
+
+        sleep(250);
 
         //move along wall
-        drivetrain.moveEncoder(0.4, 1650, 4);
+        drivetrain.moveEncoder(0.6, 1650, 4);
+
+        sleep(250);
 
 //        //drop marker
 //        marker.markerOut();
 
         //backwards to almost crater
-        drivetrain.moveEncoder(-0.4, 1900, 4);
+        drivetrain.moveEncoder(-0.6, 1900, 4);
+
+        sleep(250);
 
         //touch crater
-        drivetrain.moveEncoder(-0.2, 550, 3);
+        drivetrain.moveEncoder(-0.4, 550, 3);
 
     }
 }
