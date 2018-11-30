@@ -1,64 +1,61 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
 public abstract class OPMode extends OpMode {
 
-    DcMotor fl;
-    DcMotor fr;
-    DcMotor bl;
-    DcMotor br;
+    private DcMotor fl;
+    private DcMotor fr;
+    private DcMotor bl;
+    private DcMotor br;
 
-    //private DcMotor extend;
-    //private DcMotor dump;
+    private DcMotor extend;
+    private DcMotor dump;
     private DcMotor liftL;
     private DcMotor liftR;
 
-    //private CRServo collectL;
-    //private CRServo collectR;
+    private CRServo collectFL;
+    private CRServo collectFR;
+    private CRServo collectBL;
+    private CRServo collectBR;
 
-    //private Servo tiltL;
-    //private Servo tiltR;
-    //private Servo doorL;
-    //private Servo doorR;
+    private Servo gate;
+
+    private Servo doorL;
+    private Servo doorR;
     private Servo lockLiftL;
     private Servo lockLiftR;
-    private Servo marker;
 
     @Override
     public void init() {
 
-        fl = hardwareMap.get(DcMotor.class, "fl");
-        fr = hardwareMap.get(DcMotor.class, "fr");
-        bl = hardwareMap.get(DcMotor.class, "bl");
-        br = hardwareMap.get(DcMotor.class, "br");
+        fl = hardwareMap.dcMotor.get("fl");
+        fr = hardwareMap.dcMotor.get("fr");
+        bl = hardwareMap.dcMotor.get("bl");
+        br = hardwareMap.dcMotor.get("fl");
 
-        //extend = hardwareMap.get(DcMotor.class, "extend");
+        extend = hardwareMap.dcMotor.get("extend");
 
-        //collectL = hardwareMap.get(CRServo.class, "collectL");
-        //collectR = hardwareMap.get(CRServo.class, "collectR");
+        collectFL = hardwareMap.crservo.get("collectFL");
+        collectFR = hardwareMap.crservo.get("collectFR");
+        collectBL = hardwareMap.crservo.get("collectBL");
+        collectBR = hardwareMap.crservo.get("collectBR");
 
-        //tiltL = hardwareMap.get(Servo.class, "tiltL");
-        //tiltR = hardwareMap.get(Servo.class, "tiltR");
+        dump = hardwareMap.dcMotor.get("dump");
 
-        //dump = hardwareMap.get(DcMotor.class, "dump");
-
-        //doorL = hardwareMap.get(Servo.class, "doorL");
-        //doorR = hardwareMap.get(Servo.class, "doorR");
+        doorL = hardwareMap.servo.get("doorL");
+        doorR = hardwareMap.servo.get("doorR");
 
         liftL = hardwareMap.get(DcMotor.class, "liftL");
         liftR = hardwareMap.get(DcMotor.class, "liftR");
 
         lockLiftL = hardwareMap.get(Servo.class, "lockLiftL");
         lockLiftR = hardwareMap.get(Servo.class, "lockLiftR");
-
-//        fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-//        fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-//        bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-//        br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
         fl.setDirection(DcMotor.Direction.FORWARD);
         fr.setDirection(DcMotor.Direction.REVERSE);
@@ -73,40 +70,29 @@ public abstract class OPMode extends OpMode {
         //marker = hardwareMap.servo.get("marker");
 
 
-        //collectL.setDirection(CRServo.Direction.REVERSE);
-        //collectR.setDirection(CRServo.Direction.FORWARD);
-
-        //servo movement to unfold servo tilt
-        //intake.tiltUnfold();
+        collectFL.setDirection(CRServo.Direction.FORWARD);
+        collectFR.setDirection(CRServo.Direction.REVERSE);
+        collectBL.setDirection(CRServo.Direction.FORWARD);
+        collectBR.setDirection(CRServo.Direction.REVERSE);
 
         telemetry.addLine("Initialized");
         telemetry.update();
 
     }
 
-    public void setServoTele() {
+    public void lockLidft() {
 
-//        //marker up
-//        if (gamepad2.x){
-//            marker.setPosition(0.6);
-//        }
-//
-//        //marker out
-//        if (gamepad2.y) {
-//            marker.setPosition(0);
-//        }
-//
-//        //open
-//        if (gamepad2.a){
-//            lockLiftL.setPosition(0.2);
-//            lockLiftR.setPosition(0.55);
-//        }
-//
-//        //lock
-//        if(gamepad2.b) {
-//            lockLiftL.setPosition(0.4);
-//            lockLiftR.setPosition(0.25);
-//        }
+        //open
+        if (gamepad2.a){
+            lockLiftL.setPosition(0.2);
+            lockLiftR.setPosition(0.55);
+        }
+
+        //lock
+        if(gamepad2.b) {
+            lockLiftL.setPosition(0.4);
+            lockLiftR.setPosition(0.25);
+        }
     }
 
     public void lift() {
@@ -128,44 +114,39 @@ public abstract class OPMode extends OpMode {
         }
     }
 
-    public void sugatsune() {
-//
-//        double initEncoder = extend.getCurrentPosition();
-//        double accuracy = 50;
-//
-//        while (gamepad1.left_trigger > 0.1) {
-//
-//            extend.setPower(gamepad1.left_trigger / 1.25);
-//
-//        }
-//        while (gamepad1.right_trigger > 0.1) {
-//
-//            extend.setPower(-(gamepad1.right_trigger / 1.25));
-//
-//        }
-//
-//        if (gamepad1.a) {
-//
-//            // Make accuracy a range
-//            while (-(extend.getCurrentPosition()) < (initEncoder - accuracy)) {
-//
-//                extend.setPower(-0.6);
-//
-//            }
-//
-//            doorR.setPosition(0.5);
-//            doorL.setPosition(0.5);
-//
-//            tiltL.setPosition(0.25);
-//            tiltR.setPosition(0.25);
-//
-//            doorR.setPosition(0);
-//            doorL.setPosition(0);
-//
-//            tiltL.setPosition(0);
-//            tiltR.setPosition(0);
-//
-//        }
+    public void extend() {
+
+        double initEncoder = extend.getCurrentPosition();
+        double accuracy = 50;
+
+        while (gamepad1.left_trigger > 0.1) {
+
+            extend.setPower(gamepad1.left_trigger / 1.25);
+
+        }
+        while (gamepad1.right_trigger > 0.1) {
+
+            extend.setPower(-(gamepad1.right_trigger / 1.25));
+
+        }
+
+        if (gamepad1.a) {
+
+            // Make accuracy a range
+            while (-(extend.getCurrentPosition()) < (initEncoder - accuracy)) {
+
+                extend.setPower(-0.6);
+
+            }
+
+            doorR.setPosition(0.5);
+            doorL.setPosition(0.5);
+
+            doorR.setPosition(0);
+            doorL.setPosition(0);
+
+
+        }
     }
 
 //    public void collect() {
