@@ -3,69 +3,82 @@ package org.firstinspires.ftc.teamcode.ChickHicks;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
 
 import static org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection.cubePosition;
 
 public class Intake {
 
     private LinearOpMode opMode;
+    private TensorFlowDetection vision;
 
     private DcMotor extend;
+    private Servo marker;
 
-    private CRServo collectFL;
-    private CRServo collectFR;
-    private CRServo collectBL;
-    private CRServo collectBR;
+    //private CRServo collectFL;
+    //private CRServo collectFR;
+    //private CRServo collectBL;
+    //private CRServo collectBR;
 
-    private Servo gate;
+    //private Servo gate;
 
 
     public Intake(LinearOpMode opMode) {
 
         this.opMode = opMode;
 
-        collectFL = this.opMode.hardwareMap.crservo.get("collectFL");
-        collectFR = this.opMode.hardwareMap.crservo.get("collectFR");
-        collectBL = this.opMode.hardwareMap.crservo.get("collectBL");
-        collectBR = this.opMode.hardwareMap.crservo.get("collectBR");
+        marker = this.opMode.hardwareMap.servo.get("marker");
 
-        gate = this.opMode.hardwareMap.servo.get("gate");
+        //collectFL = this.opMode.hardwareMap.crservo.get("collectFL");
+        //collectFR = this.opMode.hardwareMap.crservo.get("collectFR");
+        //collectBL = this.opMode.hardwareMap.crservo.get("collectBL");
+        //collectBR = this.opMode.hardwareMap.crservo.get("collectBR");
+
+//        gate = this.opMode.hardwareMap.servo.get("gate");
+        //marker = this.opMode.hardwareMap.servo.get("marker");
 
         extend = this.opMode.hardwareMap.dcMotor.get("extend");
 
-    }
+//        collectFR.setDirection(CRServo.Direction.REVERSE);
+//        collectFL.setDirection(CRServo.Direction.FORWARD);
 
-    public void startCollect(boolean in) {
-
-         // Sucks in
-        if (in) {
-
-            collectFL.setPower(0.7);
-            collectFR.setPower(-0.7);
-            collectBL.setPower(0.7);
-            collectBR.setPower(-0.7);
-
-         }
-
-         //Spits out
-        else if(!in) {
-            collectFL.setPower(-0.7);
-            collectFR.setPower(0.7);
-            collectBL.setPower(-0.7);
-            collectBR.setPower(0.7);
-        }
+        marker.setPosition(0);
 
     }
 
-    public void stopCollect() {
+//    public void startCollect(boolean in) {
+//
+//         // Sucks in
+//        if (in) {
+//
+//            collectFL.setPower(0.7);
+//            collectFR.setPower(-0.7);
+//            collectBL.setPower(0.7);
+//            collectBR.setPower(-0.7);
+//
+//         }
+//
+//         //Spits out
+//        else if(!in) {
+//            collectFL.setPower(-0.7);
+//            collectFR.setPower(0.7);
+//            collectBL.setPower(-0.7);
+//            collectBR.setPower(0.7);
+//        }
+//
+//    }
 
-        collectFL.setPower(0);
-        collectFR.setPower(0);
-        collectBL.setPower(0);
-        collectBR.setPower(0);
-
-    }
+//    public void stopCollect() {
+//
+//        collectFL.setPower(0);
+//        collectFR.setPower(0);
+//        collectBL.setPower(0);
+//        collectBR.setPower(0);
+//
+//    }
 
     public void extend(double distanceOut, boolean in) {
 
@@ -88,33 +101,37 @@ public class Intake {
 
     }
 
+    public void markerOut() {
+
+        marker.setPosition(0.7);
+
+    }
+
     //================================= SAMPLING ===================================================
-    public void extendSampling(Drivetrain drivetrain){
-        while(cubePosition != 0) {
-            switch(cubePosition)
-            {
-                case 1:
-                    drivetrain.turnGyro(0.3, 13, false, 4);
-                    extend(300, true);
-                    drivetrain.turnGyro(0.3,13, true,4);
-                    cubePosition = 0;
-                    break;
-                case 2:
-                    extend(300, true);
-                    cubePosition = 0;
-                    break;
-                case 3:
-                    drivetrain.turnGyro(0.3, 13, true, 4);
-                    extend(300, true);
-                    drivetrain.turnGyro(0.3,13, false,4);
-                    cubePosition = 0;
+    public void extendSampling(Drivetrain drivetrain, TensorFlowDetection vision){
+        vision = new TensorFlowDetection(opMode);
+        vision.sample();
+        switch(cubePosition)
+        {
+            case "left" :
+                drivetrain.turnGyro(0.3, 13, false, 4);
+                extend(300, true);
+                drivetrain.turnGyro(0.3,13, true,4);
+                break;
 
-                    break;
+            case "center" :
+                extend(300, true);
+                break;
 
-                default:
-                    cubePosition = 2;
+            case "right" :
+                drivetrain.turnGyro(0.3, 13, true, 4);
+                extend(300, true);
+                drivetrain.turnGyro(0.3,13, false,4);
+                break;
 
-            }
+            default :
+                extend(300, true);
+                break;
         }
         extend(300, false);
     }

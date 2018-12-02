@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
 import org.firstinspires.ftc.teamcode.ChickHicks.Intake;
 import org.firstinspires.ftc.teamcode.ChickHicks.Lift;
-import org.firstinspires.ftc.teamcode.ChickHicks.Marker;
 
 
 @Disabled
@@ -21,7 +20,7 @@ public class Depot extends LinearOpMode {
     Intake intake;
 //    Vision vision;
 //    Vuforia vuforia;
-    Marker marker;
+
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -31,7 +30,7 @@ public class Depot extends LinearOpMode {
         intake = new Intake(this);
 //        vision = new Vision(this);
 //        vuforia = new Vuforia(this);
-        marker = new Marker(this);
+
 
         telemetry.addLine("Initialized");
         telemetry.update();

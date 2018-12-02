@@ -11,10 +11,13 @@ public class TooOverPowered extends OPMode {
     private boolean halfSpeed = false;
     private boolean reverseDrive = false;
 
-    private double leftDrive;  //= gamepad1.left_stick_y * halfSpeedMod;
-    private double rightDrive; //= gamepad1.right_stick_y * halfSpeedMod;
+    private double leftDrive;
+    private double rightDrive;
 
     public void loop() {
+
+        telemetry.addData("Extend encoder", extend.getCurrentPosition());
+        telemetry.update();
 
         leftDrive = gamepad1.left_stick_y * halfSpeedMod;
         rightDrive = gamepad1.right_stick_y * halfSpeedMod;
@@ -102,11 +105,6 @@ public class TooOverPowered extends OPMode {
 
 
         lift();
-        //setServoTele();
-
-        //sugatsune();
-        //collect();
-        //output();
-        //slideLock();
+        extend();
     }
 }

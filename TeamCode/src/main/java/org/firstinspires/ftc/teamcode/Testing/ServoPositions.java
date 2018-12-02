@@ -24,7 +24,9 @@ public class ServoPositions extends LinearOpMode {
 
         lockLiftL.setPosition(0.2);
         lockLiftR.setPosition(0.55);
-        marker.setPosition(0.6);
+        marker.setPosition(0);
+
+        sleep(1000);
     }
 
     public void runOpMode() throws InterruptedException {
@@ -35,7 +37,7 @@ public class ServoPositions extends LinearOpMode {
 
         lockLiftL.setPosition(0.4);
         lockLiftR.setPosition(0.25);
-        marker.setPosition(0);
+        marker.setPosition(0.7);
 
 
         Thread.sleep(5000);

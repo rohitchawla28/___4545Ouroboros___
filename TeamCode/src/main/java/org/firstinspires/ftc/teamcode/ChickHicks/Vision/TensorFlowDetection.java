@@ -29,7 +29,7 @@ public class TensorFlowDetection {
     private int silverMineral1X = -1;
     private int silverMineral2X = -1;
 
-    public static int cubePosition = 0;
+    public static String cubePosition = "";
 
     public TensorFlowDetection(LinearOpMode opMode) {
 
@@ -42,42 +42,36 @@ public class TensorFlowDetection {
             this.opMode.telemetry.addData("Sorry!", "This device is not compatible with TFOD");
         }
 
-        if (this.opMode.opModeIsActive()) {
-            /** Activate Tensor Flow Object Detection. */
-            if (tfod != null) {
-                tfod.activate();
-            }
+        this.opMode.telemetry.addLine("Initialized");
+        this.opMode.telemetry.update();
+    }
 
-            while (this.opMode.opModeIsActive()) {
-                if (tfod != null) {
-                    // getUpdatedRecognitions() will return null if no new information is available since
-                    // the last time that call was made.
-                    List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
-                    if (updatedRecognitions != null) {
-//                        this.opMode.telemetry.addData("# Object Detected", updatedRecognitions.size());
-                        if (updatedRecognitions.size() == 2) {
+    public void sample() {
 
-                            for (Recognition recognition : updatedRecognitions) {
-                                if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
-                                    goldMineralX = (int) recognition.getLeft();
-                                }
-                                else if (silverMineral1X == -1) {
-                                    silverMineral1X = (int) recognition.getLeft();
-                                }
-                                else {
-                                    silverMineral2X = (int) recognition.getLeft();
-                                }
-                            }
-                            detect();
+        tfod.activate();
+
+        while (cubePosition.equals("")) {
+            // getUpdatedRecognitions() will return null if no new information is available since
+            // the last time that call was made.
+            List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+            if (updatedRecognitions != null) {
+                if (updatedRecognitions.size() == 2) {
+
+                    for (Recognition recognition : updatedRecognitions) {
+                        if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
+                            goldMineralX = (int) recognition.getLeft();
+                        } else if (silverMineral1X == -1) {
+                            silverMineral1X = (int) recognition.getLeft();
+                        } else {
+                            silverMineral2X = (int) recognition.getLeft();
                         }
                     }
+                    detect();
                 }
             }
         }
 
-        if (tfod != null) {
-            tfod.shutdown();
-        }
+        tfod.shutdown();
     }
 
     private void initVuforia() {
@@ -98,35 +92,14 @@ public class TensorFlowDetection {
     }
 
     public void detect() {
-        if (goldMineralX == -1){
-            cubePosition = 1;
-            composeTelemetry();
+        if (goldMineralX == -1) {
+            cubePosition = "left";
 
-        }
-        else if ((goldMineralX < silverMineral1X) || (goldMineralX < silverMineral2X) && (silverMineral2X == -1)||(silverMineral1X == -1)){
-            cubePosition = 2;
-            composeTelemetry();
+        } else if ((goldMineralX < silverMineral1X) || (goldMineralX < silverMineral2X) && (silverMineral2X == -1) || (silverMineral1X == -1)) {
+            cubePosition = "center";
 
+        } else {
+            cubePosition = "right";
         }
-        else{
-            cubePosition = 3;
-            composeTelemetry();
-        }
-    }
-    public void composeTelemetry(){
-        if (cubePosition == 1) {
-            this.opMode.telemetry.addLine("LEFT");
-            this.opMode.telemetry.update();
-        }
-        else if (cubePosition == 2) {
-            this.opMode.telemetry.addLine("CENTER");
-            this.opMode.telemetry.update();
-        }
-        else {
-            this.opMode.telemetry.addLine("RIGHT");
-            this.opMode.telemetry.update();
-        }
-
-
     }
 }

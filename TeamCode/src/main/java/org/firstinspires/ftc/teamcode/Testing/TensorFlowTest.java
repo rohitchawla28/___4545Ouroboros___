@@ -15,18 +15,14 @@ public class TensorFlowTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        telemetry.addLine("Initialized");
-        telemetry.update();
-
         waitForStart();
 
         tensorFlowDetection = new TensorFlowDetection(this);
 
-        while (opModeIsActive()){
+        tensorFlowDetection.sample();
 
-            telemetry.addData("Cube Position", TensorFlowDetection.cubePosition);
-            telemetry.update();
-        }
+        telemetry.addData("Cube Position", TensorFlowDetection.cubePosition);
+        telemetry.update();
 
     }
 }

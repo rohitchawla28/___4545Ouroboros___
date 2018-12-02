@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
 import org.firstinspires.ftc.teamcode.ChickHicks.Lift;
-import org.firstinspires.ftc.teamcode.ChickHicks.Marker;
 
 
 @Disabled
@@ -18,7 +17,7 @@ public class Crater extends LinearOpMode{
     Lift lift;
 //    Vision vision;
 //    Vuforia vuforia;
-    Marker marker;
+
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -27,7 +26,7 @@ public class Crater extends LinearOpMode{
         lift = new Lift(this);
 //        vision = new Vision(this);
 //        vuforia = new Vuforia(this);
-        marker = new Marker(this);
+
 
         telemetry.addLine("Initialized");
         telemetry.update();

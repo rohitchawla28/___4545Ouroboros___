@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
 import org.firstinspires.ftc.teamcode.ChickHicks.Lift;
-import org.firstinspires.ftc.teamcode.ChickHicks.Marker;
+import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
 
 
 @Autonomous
@@ -14,7 +14,6 @@ import org.firstinspires.ftc.teamcode.ChickHicks.Marker;
 public class LM2Crater extends LinearOpMode{
     Drivetrain drivetrain;
     Lift lift;
-    Marker marker;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -23,7 +22,7 @@ public class LM2Crater extends LinearOpMode{
         //marker = new Marker(this);
         lift = new Lift(this);
 
-        telemetry.addLine("Ready to get this W");
+        telemetry.addLine("Initialized");
         telemetry.update();
 
         waitForStart();
@@ -35,39 +34,29 @@ public class LM2Crater extends LinearOpMode{
 //        sleep(300);
 
         //move to not hit lander
-        drivetrain.moveEncoder(0.6, 350, 4);
+        drivetrain.moveEncoder(0.5, 500, 4);
 
-        sleep(250);
+        sleep(1000);
 
         // Will turn to go around sampling
-        drivetrain.turnGyro(0.5, 60, false, 4);
+        drivetrain.turnGyro(0.4, 60, false, 4);
 
-        sleep(250);
+        sleep(1000);
 
         //move to wall
-        drivetrain.moveEncoder(0.6, 1825, 3);
+        drivetrain.moveEncoder(0.5, 1900, 3);
 
-        sleep(250);
-
-        //turn parallel to wall
-        drivetrain.turnGyro(0.5, 32, false, 4);
-
-        sleep(250);
-
-        // move next to wall
-        drivetrain.moveEncoder(0.6, 400, 4);
-
-        sleep(250);
+        sleep(1000);
 
         //turn parallel to wall
-        drivetrain.turnGyro(0.5, 5, false, 4);
+        drivetrain.turnGyro(0.4, 29, false, 4);
 
-        sleep(250);
+        sleep(1000);
 
         //move along wall
-        drivetrain.moveEncoder(0.6, 1650, 4);
+        drivetrain.moveEncoder(0.6, 1700, 4);
 
-        sleep(250);
+        sleep(1000);
 
 //        //drop marker
 //        marker.markerOut();
@@ -75,10 +64,10 @@ public class LM2Crater extends LinearOpMode{
         //backwards to almost crater
         drivetrain.moveEncoder(-0.6, 1900, 4);
 
-        sleep(250);
+        sleep(1000);
 
         //touch crater
-        drivetrain.moveEncoder(-0.4, 550, 3);
+        drivetrain.moveEncoder(-0.25, 400, 3);
 
     }
 }

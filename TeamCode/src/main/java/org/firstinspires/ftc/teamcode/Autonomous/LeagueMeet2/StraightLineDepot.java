@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
 import org.firstinspires.ftc.teamcode.ChickHicks.Lift;
-import org.firstinspires.ftc.teamcode.ChickHicks.Marker;
 import org.firstinspires.ftc.teamcode.ChickHicks.Sensors;
 
 
@@ -16,7 +15,6 @@ public class StraightLineDepot extends LinearOpMode {
     Drivetrain drivetrain;
     Sensors sensors;
     Lift lift;
-    Marker marker;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -27,7 +25,6 @@ public class StraightLineDepot extends LinearOpMode {
         drivetrain = new Drivetrain(this);
         sensors = new Sensors(this, true);
         lift = new Lift(this);
-        marker= new Marker(this);
 
         telemetry.addLine("Ready to get this W");
         telemetry.update();
@@ -40,7 +37,6 @@ public class StraightLineDepot extends LinearOpMode {
 
         sleep(300);
 
-        marker.markerOut();
 
 //        drivetrain.turnGyro(0.75, 50, true, 5);
 //

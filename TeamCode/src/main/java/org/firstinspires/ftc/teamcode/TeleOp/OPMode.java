@@ -9,27 +9,21 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public abstract class OPMode extends OpMode {
 
-    private DcMotor fl;
-    private DcMotor fr;
-    private DcMotor bl;
-    private DcMotor br;
+    public DcMotor fl;
+    public DcMotor fr;
+    public DcMotor bl;
+    public DcMotor br;
 
-    private DcMotor extend;
-    private DcMotor dump;
-    private DcMotor liftL;
-    private DcMotor liftR;
+    public DcMotor extend;
 
-    private CRServo collectFL;
-    private CRServo collectFR;
-    private CRServo collectBL;
-    private CRServo collectBR;
+    public DcMotor liftL;
+    public DcMotor liftR;
 
-    private Servo gate;
+    public Servo gate;
+    public Servo marker;
 
-    private Servo doorL;
-    private Servo doorR;
-    private Servo lockLiftL;
-    private Servo lockLiftR;
+//    public Servo lockLiftL;
+//    public Servo lockLiftR;
 
     @Override
     public void init() {
@@ -41,57 +35,41 @@ public abstract class OPMode extends OpMode {
 
         extend = hardwareMap.dcMotor.get("extend");
 
-        collectFL = hardwareMap.crservo.get("collectFL");
-        collectFR = hardwareMap.crservo.get("collectFR");
-        collectBL = hardwareMap.crservo.get("collectBL");
-        collectBR = hardwareMap.crservo.get("collectBR");
-
-        dump = hardwareMap.dcMotor.get("dump");
-
-        doorL = hardwareMap.servo.get("doorL");
-        doorR = hardwareMap.servo.get("doorR");
-
         liftL = hardwareMap.get(DcMotor.class, "liftL");
         liftR = hardwareMap.get(DcMotor.class, "liftR");
 
-        lockLiftL = hardwareMap.get(Servo.class, "lockLiftL");
-        lockLiftR = hardwareMap.get(Servo.class, "lockLiftR");
+//        lockLiftL = hardwareMap.get(Servo.class, "lockLiftL");
+//        lockLiftR = hardwareMap.get(Servo.class, "lockLiftR");
 
         fl.setDirection(DcMotor.Direction.FORWARD);
         fr.setDirection(DcMotor.Direction.REVERSE);
         bl.setDirection(DcMotor.Direction.FORWARD);
         br.setDirection(DcMotor.Direction.REVERSE);
 
-        //extend.setDirection(DcMotor.Direction.FORWARD);
+        extend.setDirection(DcMotor.Direction.FORWARD);
 
         liftL.setDirection(DcMotor.Direction.FORWARD);
         liftR.setDirection(DcMotor.Direction.REVERSE);
 
-        //marker = hardwareMap.servo.get("marker");
-
-
-        collectFL.setDirection(CRServo.Direction.FORWARD);
-        collectFR.setDirection(CRServo.Direction.REVERSE);
-        collectBL.setDirection(CRServo.Direction.FORWARD);
-        collectBR.setDirection(CRServo.Direction.REVERSE);
+        marker = hardwareMap.servo.get("marker");
 
         telemetry.addLine("Initialized");
         telemetry.update();
 
     }
 
-    public void lockLidft() {
+    public void lockLift() {
 
         //open
         if (gamepad2.a){
-            lockLiftL.setPosition(0.2);
-            lockLiftR.setPosition(0.55);
+//            lockLiftL.setPosition(0.2);
+//            lockLiftR.setPosition(0.55);
         }
 
         //lock
         if(gamepad2.b) {
-            lockLiftL.setPosition(0.4);
-            lockLiftR.setPosition(0.25);
+//            lockLiftL.setPosition(0.4);
+//            lockLiftR.setPosition(0.25);
         }
     }
 
@@ -116,36 +94,30 @@ public abstract class OPMode extends OpMode {
 
     public void extend() {
 
-        double initEncoder = extend.getCurrentPosition();
-        double accuracy = 50;
-
-        while (gamepad1.left_trigger > 0.1) {
-
-            extend.setPower(gamepad1.left_trigger / 1.25);
-
+        if (gamepad1.left_trigger > 0.1) {
+            extend.setPower(gamepad1.left_trigger);
         }
-        while (gamepad1.right_trigger > 0.1) {
+        else {
+            extend.setPower(0);
+        }
 
-            extend.setPower(-(gamepad1.right_trigger / 1.25));
-
+        if (gamepad1.right_trigger > 0.1) {
+            extend.setPower(-(gamepad1.right_trigger));
+        }
+        else {
+            extend.setPower(0);
         }
 
         if (gamepad1.a) {
 
+            double initEncoder = extend.getCurrentPosition();
+
             // Make accuracy a range
-            while (-(extend.getCurrentPosition()) < (initEncoder - accuracy)) {
+            while ((extend.getCurrentPosition() - initEncoder) > 0) {
 
                 extend.setPower(-0.6);
 
             }
-
-            doorR.setPosition(0.5);
-            doorL.setPosition(0.5);
-
-            doorR.setPosition(0);
-            doorL.setPosition(0);
-
-
         }
     }
 

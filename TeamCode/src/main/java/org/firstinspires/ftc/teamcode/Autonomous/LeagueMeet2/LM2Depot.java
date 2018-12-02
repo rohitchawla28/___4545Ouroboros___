@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
 import org.firstinspires.ftc.teamcode.ChickHicks.Lift;
-import org.firstinspires.ftc.teamcode.ChickHicks.Marker;
+import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
 
 
 @Autonomous
@@ -15,16 +15,18 @@ public class LM2Depot extends LinearOpMode {
 
     Drivetrain drivetrain;
     Lift lift;
-    Marker marker;
+    TensorFlowDetection vision;
+    //Intake intake;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
         drivetrain = new Drivetrain(this);
         lift = new Lift(this);
-        //  marker = new Marker(this);
+//        vision = new TensorFlowDetection(this);
 
-        telemetry.addLine("Ready to get this W");
+//        telemetry.addData("Mineral Position", vision.cubePosition);
+        telemetry.addLine("Initialized");
         telemetry.update();
 
         waitForStart();
@@ -42,49 +44,39 @@ public class LM2Depot extends LinearOpMode {
          */
 
         //move to not hit lander
-        drivetrain.moveEncoder(0.5, 350, 4);
+        drivetrain.moveEncoder(0.5, 500, 4);
 
-        sleep(250);
+        sleep(400);
 
         // Will turn to go around sampling
         drivetrain.turnGyro(0.4, 60, false, 4);
 
-        sleep(250);
+        sleep(400);
 
-        //move around sampling
-        drivetrain.moveEncoder(0.5, 1600, 4);
+        //move to wall
+        drivetrain.moveEncoder(0.5, 1900, 4);
 
-        sleep(250);
+        sleep(400);
 
         // Will turn towards the depot
-        drivetrain.turnGyro(0.4, 95, true, 4);
+        drivetrain.turnGyro(0.4, 85, true, 4);
 
-        sleep(250);
-
-        // Get closer to wall
-        drivetrain.moveEncoder(0.5, 400, 4);
-
-        sleep(150);
-
-        // Align with wall
-        drivetrain.turnGyro(0.4, 5, true, 4);
-
-        sleep(250);
+        sleep(400);
 
         //move to depot
-        drivetrain.moveEncoder(0.5, 1650, 4);
+        drivetrain.moveEncoder(0.5, 2050, 4);
 
-        sleep(250);
+        sleep(400);
 
         //drop marker
-//        marker.markerOut();
+//        intake.markerOut();
 //
 //        sleep(150);
 
         //move to almost the crater
         drivetrain.moveEncoder(-0.5, 2150, 4);
 
-        sleep(150);
+        sleep(400);
 
         //move to touch the crater
         drivetrain.moveEncoder(-0.3, 300, 4);
