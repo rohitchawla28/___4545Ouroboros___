@@ -20,7 +20,7 @@ public class LM2Crater extends LinearOpMode{
 
         drivetrain = new Drivetrain(this);
         //marker = new Marker(this);
-        lift = new Lift(this);
+//        lift = new Lift(this);
 
         telemetry.addLine("Initialized");
         telemetry.update();

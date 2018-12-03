@@ -22,7 +22,7 @@ public class LM2Depot extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         drivetrain = new Drivetrain(this);
-        lift = new Lift(this);
+//        lift = new Lift(this);
 //        vision = new TensorFlowDetection(this);
 
 //        telemetry.addData("Mineral Position", vision.cubePosition);
@@ -79,7 +79,7 @@ public class LM2Depot extends LinearOpMode {
         sleep(400);
 
         //move to touch the crater
-        drivetrain.moveEncoder(-0.3, 300, 4);
+        drivetrain.moveEncoder(-0.3, 320, 4);
     }
 
 }

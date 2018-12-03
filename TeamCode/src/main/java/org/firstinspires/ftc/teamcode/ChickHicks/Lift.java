@@ -26,7 +26,6 @@ public class Lift {
             liftL = this.opMode.hardwareMap.get(DcMotor.class , "liftL");
             liftR = this.opMode.hardwareMap.get(DcMotor.class, "liftR");
 
-            lockLiftL = this.opMode.hardwareMap.get(Servo.class, "lockLiftL");
             lockLiftR = this.opMode.hardwareMap.get(Servo.class, "lockLiftR");
 
             liftL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -36,14 +35,14 @@ public class Lift {
             liftR.setDirection(DcMotorSimple.Direction.REVERSE);
 
             //set position to hold robot
-            lockLiftL.setPosition(0.2);
-            lockLiftR.setPosition(0.55);
+//            lockLiftL.setPosition(0.2);
+//            lockLiftR.setPosition(0.55);
         }
 
         public void unlock() {
 
             lockLiftL.setPosition(0.4);
-            lockLiftR.setPosition(0.25);
+//            lockLiftR.setPosition(0.25);
 
             opMode.sleep(2000);
 
@@ -65,7 +64,7 @@ public class Lift {
         //MAKE SURE THE METHOD KEEPS GOING LONG ENOUGH SO THAT IT RAISES ENOUGH TO TURN OUT
         public void detachTime() {
             int time = 2500;
-            unlock();
+//            unlock();
 
             runTime.reset();
 
