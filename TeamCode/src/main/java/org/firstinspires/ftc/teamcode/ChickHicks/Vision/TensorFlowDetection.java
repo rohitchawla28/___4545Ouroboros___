@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.ChickHicks.Vision;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 import java.util.List;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
@@ -49,8 +51,9 @@ public class TensorFlowDetection {
     public void sample() {
 
         tfod.activate();
+        ElapsedTime time = new ElapsedTime();
 
-        while (cubePosition.equals("")) {
+        while (cubePosition.equals("") || time.seconds() < 0.75) {
             // getUpdatedRecognitions() will return null if no new information is available since
             // the last time that call was made.
             List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();

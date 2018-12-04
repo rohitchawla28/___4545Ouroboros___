@@ -19,11 +19,10 @@ public abstract class OPMode extends OpMode {
     public DcMotor liftL;
     public DcMotor liftR;
 
-    public Servo gate;
     public Servo marker;
 
-//    public Servo lockLiftL;
-//    public Servo lockLiftR;
+    public Servo lockLiftL;
+    public Servo lockLiftR;
 
     @Override
     public void init() {
@@ -31,15 +30,15 @@ public abstract class OPMode extends OpMode {
         fl = hardwareMap.dcMotor.get("fl");
         fr = hardwareMap.dcMotor.get("fr");
         bl = hardwareMap.dcMotor.get("bl");
-        br = hardwareMap.dcMotor.get("fl");
+        br = hardwareMap.dcMotor.get("br");
 
         extend = hardwareMap.dcMotor.get("extend");
 
         liftL = hardwareMap.get(DcMotor.class, "liftL");
         liftR = hardwareMap.get(DcMotor.class, "liftR");
 
-//        lockLiftL = hardwareMap.get(Servo.class, "lockLiftL");
-//        lockLiftR = hardwareMap.get(Servo.class, "lockLiftR");
+        lockLiftL = hardwareMap.get(Servo.class, "lockLiftL");
+        lockLiftR = hardwareMap.get(Servo.class, "lockLiftR");
 
         fl.setDirection(DcMotor.Direction.FORWARD);
         fr.setDirection(DcMotor.Direction.REVERSE);
@@ -62,14 +61,14 @@ public abstract class OPMode extends OpMode {
 
         //open
         if (gamepad2.a){
-//            lockLiftL.setPosition(0.2);
-//            lockLiftR.setPosition(0.55);
+             lockLiftL.setPosition(0.2);
+             lockLiftR.setPosition(0.55);
         }
 
         //lock
         if(gamepad2.b) {
-//            lockLiftL.setPosition(0.4);
-//            lockLiftR.setPosition(0.25);
+            lockLiftL.setPosition(0.4);
+            lockLiftR.setPosition(0.25);
         }
     }
 
@@ -108,7 +107,7 @@ public abstract class OPMode extends OpMode {
             extend.setPower(0);
         }
 
-        if (gamepad1.a) {
+        if (gamepad1.y) {
 
             double initEncoder = extend.getCurrentPosition();
 
@@ -180,26 +179,26 @@ public abstract class OPMode extends OpMode {
      //Macro hang
     public void macroHang() {
 
-        double upEncoder = 0/* TEST VALUE */;
-        double accuracy = 0/* TEST VALUE */;
-        double hangClearance = 0/* TEST VALUE */;
-
-        resetEncoders();
-
-        double initEncoder = (liftL.getCurrentPosition() + liftR.getCurrentPosition()) / 2;
-
-        if (gamepad2.a) {
-
-            while (Math.abs(((liftL.getCurrentPosition() + liftR.getCurrentPosition()) / 2) - initEncoder) < upEncoder - accuracy) {
-
-                liftL.setPower(0.5);
-                liftR.setPower(0.5);
-
-            }
-            liftL.setPower(0);
-            liftR.setPower(0);
-
-        }
+//        double upEncoder = 0/* TEST VALUE */;
+//        double accuracy = 0/* TEST VALUE */;
+//        double hangClearance = 0/* TEST VALUE */;
+//
+//        resetEncoders();
+//
+//        double initEncoder = (liftL.getCurrentPosition() + liftR.getCurrentPosition()) / 2;
+//
+//        if (gamepad2.a) {
+//
+//            while (Math.abs(((liftL.getCurrentPosition() + liftR.getCurrentPosition()) / 2) - initEncoder) < upEncoder - accuracy) {
+//
+//                liftL.setPower(0.5);
+//                liftR.setPower(0.5);
+//
+//            }
+//            liftL.setPower(0);
+//            liftR.setPower(0);
+//
+//        }
     }
 
 

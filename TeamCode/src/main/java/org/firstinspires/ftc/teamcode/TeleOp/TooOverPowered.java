@@ -17,14 +17,15 @@ public class TooOverPowered extends OPMode {
     public void loop() {
 
         telemetry.addData("Extend encoder", extend.getCurrentPosition());
+        telemetry.addData("Reverse Drive", reverseDrive);
         telemetry.update();
 
         leftDrive = gamepad1.left_stick_y * halfSpeedMod;
         rightDrive = gamepad1.right_stick_y * halfSpeedMod;
 
         //puts reverse drive on
-        if (gamepad1.y && !reverseDrive) {
-            while (gamepad1.y) {
+        if (gamepad1.a && !reverseDrive) {
+            while (gamepad1.a) {
             }
             reverseDrive = !reverseDrive;
 
@@ -35,8 +36,8 @@ public class TooOverPowered extends OPMode {
             telemetry.update();
         }
         //turns reverse drive off
-        if (gamepad1.y && reverseDrive) {
-            while (gamepad1.y) {
+        if (gamepad1.a && reverseDrive) {
+            while (gamepad1.a) {
             }
             reverseDrive = !reverseDrive;
 
@@ -74,7 +75,7 @@ public class TooOverPowered extends OPMode {
         }
 
         if (gamepad1.b && !halfSpeed) {
-            while (gamepad1.b){
+            while (gamepad1.x){
             }
             halfSpeed = !halfSpeed;
             halfSpeedMod = 0.5;
@@ -83,7 +84,7 @@ public class TooOverPowered extends OPMode {
             telemetry.update();
         }
         if (gamepad1.b && halfSpeed) {
-            while(gamepad1.b){
+            while(gamepad1.x){
             }
             halfSpeed = !halfSpeed;
             halfSpeedMod = 1;
