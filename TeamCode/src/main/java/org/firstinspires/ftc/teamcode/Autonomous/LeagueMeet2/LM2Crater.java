@@ -22,7 +22,6 @@ public class LM2Crater extends LinearOpMode{
 
         drivetrain = new Drivetrain(this);
         intake = new Intake(this);
-        //marker = new Marker(this);
 //        lift = new Lift(this);
 
         telemetry.addLine("Initialized");
@@ -31,6 +30,9 @@ public class LM2Crater extends LinearOpMode{
         waitForStart();
 
         intake.extendSampling(drivetrain);
+
+        telemetry.addData("Cube Position", TensorFlowDetection.cubePosition);
+        telemetry.update();
 
         //move to not hit lander
         drivetrain.moveEncoder(0.5, 500, 4);
@@ -57,8 +59,8 @@ public class LM2Crater extends LinearOpMode{
 
         sleep(1000);
 
-//        //drop marker
-//        marker.markerOut();
+        //drop marker
+        intake.markerOut();
 
         //backwards to almost crater
         drivetrain.moveEncoder(-0.6, 1900, 4);

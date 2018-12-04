@@ -33,7 +33,7 @@ public class Intake {
 
         ElapsedTime runTime = new ElapsedTime();
 
-        while (runTime.seconds() < time) {
+        while (runTime.seconds() < time && opMode.opModeIsActive()) {
             extend.setPower(0.8);
 
         }
@@ -52,23 +52,23 @@ public class Intake {
         switch(cubePosition)
         {
             case "left" :
-                drivetrain.turnGyro(0.4, 25, false, 4);
-                extendTime(3);
-                drivetrain.turnGyro(0.4,25, true,4);
+                drivetrain.turnGyro(0.4, 20, false, 4);
+                extendTime(2);
+                drivetrain.turnGyro(0.4,20, true,4);
                 break;
 
             case "center" :
-                extendTime(3);
+                extendTime(2);
                 break;
 
             case "right" :
-                drivetrain.turnGyro(0.4, 25, true, 4);
-                extendTime(3);
-                drivetrain.turnGyro(0.4,25, false,4);
+                drivetrain.turnGyro(0.4, 20, true, 4);
+                extendTime(2);
+                drivetrain.turnGyro(0.4,20, false,4);
                 break;
 
             default :
-                extendTime(3);
+                extendTime(2);
                 break;
         }
         extendTime(3);
