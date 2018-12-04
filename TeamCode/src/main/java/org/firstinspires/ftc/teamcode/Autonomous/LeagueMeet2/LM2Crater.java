@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
+import org.firstinspires.ftc.teamcode.ChickHicks.Intake;
 import org.firstinspires.ftc.teamcode.ChickHicks.Lift;
 import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
 
@@ -14,11 +15,13 @@ import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
 public class LM2Crater extends LinearOpMode{
     Drivetrain drivetrain;
     Lift lift;
+    Intake intake;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
         drivetrain = new Drivetrain(this);
+        intake = new Intake(this);
         //marker = new Marker(this);
 //        lift = new Lift(this);
 
@@ -27,11 +30,7 @@ public class LM2Crater extends LinearOpMode{
 
         waitForStart();
 
-//        //Detach from lander IN MILLISECONDS
-//        lift.detachTime();
-//
-//        //prepare for movement
-//        sleep(300);
+        intake.extendSampling(drivetrain);
 
         //move to not hit lander
         drivetrain.moveEncoder(0.5, 500, 4);

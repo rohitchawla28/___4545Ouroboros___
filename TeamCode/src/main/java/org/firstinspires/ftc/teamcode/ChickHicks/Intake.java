@@ -1,10 +1,9 @@
 package org.firstinspires.ftc.teamcode.ChickHicks;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
 
@@ -13,17 +12,9 @@ import static org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetecti
 public class Intake {
 
     private LinearOpMode opMode;
-    private TensorFlowDetection vision;
 
     private DcMotor extend;
     private Servo marker;
-
-    //private CRServo collectFL;
-    //private CRServo collectFR;
-    //private CRServo collectBL;
-    //private CRServo collectBR;
-
-    //private Servo gate;
 
 
     public Intake(LinearOpMode opMode) {
@@ -32,73 +23,20 @@ public class Intake {
 
         marker = this.opMode.hardwareMap.servo.get("marker");
 
-        //collectFL = this.opMode.hardwareMap.crservo.get("collectFL");
-        //collectFR = this.opMode.hardwareMap.crservo.get("collectFR");
-        //collectBL = this.opMode.hardwareMap.crservo.get("collectBL");
-        //collectBR = this.opMode.hardwareMap.crservo.get("collectBR");
-
-//        gate = this.opMode.hardwareMap.servo.get("gate");
-        //marker = this.opMode.hardwareMap.servo.get("marker");
-
         extend = this.opMode.hardwareMap.dcMotor.get("extend");
-
-//        collectFR.setDirection(CRServo.Direction.REVERSE);
-//        collectFL.setDirection(CRServo.Direction.FORWARD);
 
         marker.setPosition(0);
 
     }
 
-//    public void startCollect(boolean in) {
-//
-//         // Sucks in
-//        if (in) {
-//
-//            collectFL.setPower(0.7);
-//            collectFR.setPower(-0.7);
-//            collectBL.setPower(0.7);
-//            collectBR.setPower(-0.7);
-//
-//         }
-//
-//         //Spits out
-//        else if(!in) {
-//            collectFL.setPower(-0.7);
-//            collectFR.setPower(0.7);
-//            collectBL.setPower(-0.7);
-//            collectBR.setPower(0.7);
-//        }
-//
-//    }
+    public void extendTime(double time) {
 
-//    public void stopCollect() {
-//
-//        collectFL.setPower(0);
-//        collectFR.setPower(0);
-//        collectBL.setPower(0);
-//        collectBR.setPower(0);
-//
-//    }
+        ElapsedTime runTime = new ElapsedTime();
 
-    public void extend(double distanceOut, boolean in) {
+        while (runTime.seconds() < time) {
+            extend.setPower(0.8);
 
-        double initEncoder = extend.getCurrentPosition();
-        double accuracy = 0/* TEST VALUE */;
-
-        // Extends out
-        if (in) {
-            while (extend.getCurrentPosition() < (distanceOut - accuracy)) {
-                extend.setPower(0.8);
-            }
         }
-
-         // Retracts back
-        else if (!in) {
-            while (-(extend.getCurrentPosition()) < (initEncoder - accuracy)) {
-                extend.setPower(-0.6);
-            }
-        }
-
     }
 
     public void markerOut() {
@@ -108,31 +46,31 @@ public class Intake {
     }
 
     //================================= SAMPLING ===================================================
-    public void extendSampling(Drivetrain drivetrain, TensorFlowDetection vision){
-        vision = new TensorFlowDetection(opMode);
+    public void extendSampling(Drivetrain drivetrain) {
+        TensorFlowDetection vision = new TensorFlowDetection(opMode);
         vision.sample();
         switch(cubePosition)
         {
             case "left" :
-                drivetrain.turnGyro(0.3, 13, false, 4);
-                extend(300, true);
-                drivetrain.turnGyro(0.3,13, true,4);
+                drivetrain.turnGyro(0.4, 25, false, 4);
+                extendTime(3);
+                drivetrain.turnGyro(0.4,25, true,4);
                 break;
 
             case "center" :
-                extend(300, true);
+                extendTime(3);
                 break;
 
             case "right" :
-                drivetrain.turnGyro(0.3, 13, true, 4);
-                extend(300, true);
-                drivetrain.turnGyro(0.3,13, false,4);
+                drivetrain.turnGyro(0.4, 25, true, 4);
+                extendTime(3);
+                drivetrain.turnGyro(0.4,25, false,4);
                 break;
 
             default :
-                extend(300, true);
+                extendTime(3);
                 break;
         }
-        extend(300, false);
+        extendTime(3);
     }
 }
