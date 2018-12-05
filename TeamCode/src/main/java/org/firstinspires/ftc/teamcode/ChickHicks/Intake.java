@@ -25,7 +25,7 @@ public class Intake {
 
         extend = this.opMode.hardwareMap.dcMotor.get("extend");
 
-        marker.setPosition(0);
+        marker.setPosition(0.7);
 
     }
 
@@ -34,14 +34,29 @@ public class Intake {
         ElapsedTime runTime = new ElapsedTime();
 
         while (runTime.seconds() < time && opMode.opModeIsActive()) {
+
             extend.setPower(0.8);
 
         }
     }
 
+    public void retractTime(double time){
+
+        ElapsedTime runTime = new ElapsedTime();
+
+        while (runTime.seconds() < time && opMode.opModeIsActive()) {
+
+            extend.setPower(-0.8);
+
+        }
+
+    }
+
     public void markerOut() {
 
-        marker.setPosition(0.7);
+        marker.setPosition(0.1);
+
+        opMode.sleep(400);
 
     }
 
@@ -49,28 +64,47 @@ public class Intake {
     public void extendSampling(Drivetrain drivetrain) {
         TensorFlowDetection vision = new TensorFlowDetection(opMode);
         vision.sample();
+
+        opMode.telemetry.addData("Cube Position", TensorFlowDetection.cubePosition);
+        opMode.telemetry.update();
+
         switch(cubePosition)
         {
             case "left" :
                 drivetrain.turnGyro(0.4, 20, false, 4);
-                extendTime(2);
+                opMode.sleep(400);
+                extendTime(1.5);
+                opMode.sleep(400);
+                retractTime(1.5);
+                opMode.sleep(400);
                 drivetrain.turnGyro(0.4,20, true,4);
+                opMode.sleep(400);
                 break;
 
             case "center" :
-                extendTime(2);
+                extendTime(1.5);
+                opMode.sleep(400);
+                retractTime(1.5);
+                opMode.sleep(400);
                 break;
 
             case "right" :
                 drivetrain.turnGyro(0.4, 20, true, 4);
-                extendTime(2);
+                opMode.sleep(400);
+                extendTime(1.5);
+                opMode.sleep(400);
+                retractTime(1.5);
+                opMode.sleep(400);
                 drivetrain.turnGyro(0.4,20, false,4);
+                opMode.sleep(400);
                 break;
 
             default :
-                extendTime(2);
+                extendTime(1.5);
+                opMode.sleep(400);
+                retractTime(1.5);
+                opMode.sleep(400);
                 break;
         }
-        extendTime(3);
     }
 }

@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@Disabled
+//@Disabled
 @Autonomous
         (name = "ServoTesting", group = "Auto")
 
@@ -17,27 +17,27 @@ public class ServoPositions extends LinearOpMode {
 
     public void initialize() throws InterruptedException{
         marker = hardwareMap.servo.get("marker");
-        lockLiftL = hardwareMap.servo.get("lockLiftL");
-        lockLiftR = hardwareMap.servo.get("lockLiftR");
+        //lockLiftL = hardwareMap.servo.get("lockLiftL");
+        //lockLiftR = hardwareMap.servo.get("lockLiftR");
 
         Thread.sleep(2000);
 
-        lockLiftL.setPosition(0.2);
-        lockLiftR.setPosition(0.55);
-        marker.setPosition(0);
+        //lockLiftL.setPosition(0.2);
+        //lockLiftR.setPosition(0.55);
+        marker.setPosition(0.7);
 
         sleep(1000);
     }
-
+    @Override
     public void runOpMode() throws InterruptedException {
 
         initialize();
 
         waitForStart();
 
-        lockLiftL.setPosition(0.4);
-        lockLiftR.setPosition(0.25);
-        marker.setPosition(0.7);
+        //lockLiftL.setPosition(0.4);
+        //lockLiftR.setPosition(0.25);
+        marker.setPosition(0.1);
 
 
         Thread.sleep(5000);

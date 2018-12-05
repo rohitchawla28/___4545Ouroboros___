@@ -31,9 +31,6 @@ public class LM2Crater extends LinearOpMode{
 
         intake.extendSampling(drivetrain);
 
-        telemetry.addData("Cube Position", TensorFlowDetection.cubePosition);
-        telemetry.update();
-
         //move to not hit lander
         drivetrain.moveEncoder(0.5, 500, 4);
 
