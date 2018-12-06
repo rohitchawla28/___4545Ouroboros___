@@ -73,36 +73,36 @@ public class Intake {
             case "left" :
                 drivetrain.turnGyro(0.4, 20, false, 4);
                 opMode.sleep(400);
-                extendTime(1.5);
+                extendTime(1.25);
                 opMode.sleep(400);
-                retractTime(1.5);
+                retractTime(1.25);
                 opMode.sleep(400);
                 drivetrain.turnGyro(0.4,20, true,4);
                 opMode.sleep(400);
                 break;
 
             case "center" :
-                extendTime(1.5);
+                extendTime(1.25);
                 opMode.sleep(400);
-                retractTime(1.5);
+                retractTime(1.25);
                 opMode.sleep(400);
                 break;
 
             case "right" :
                 drivetrain.turnGyro(0.4, 20, true, 4);
                 opMode.sleep(400);
-                extendTime(1.5);
+                extendTime(1.25);
                 opMode.sleep(400);
-                retractTime(1.5);
+                retractTime(1.25);
                 opMode.sleep(400);
                 drivetrain.turnGyro(0.4,20, false,4);
                 opMode.sleep(400);
                 break;
 
             default :
-                extendTime(1.5);
+                extendTime(1.25);
                 opMode.sleep(400);
-                retractTime(1.5);
+                retractTime(1.25);
                 opMode.sleep(400);
                 break;
         }

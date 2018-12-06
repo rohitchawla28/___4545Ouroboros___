@@ -53,7 +53,7 @@ public class TensorFlowDetection {
         tfod.activate();
         ElapsedTime time = new ElapsedTime();
 
-        while (cubePosition.equals("") || time.seconds() < 0.75 && opMode.opModeIsActive()) {
+        while (cubePosition.equals("") || time.seconds() < 2 && opMode.opModeIsActive()) {
             // getUpdatedRecognitions() will return null if no new information is available since
             // the last time that call was made.
             List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();

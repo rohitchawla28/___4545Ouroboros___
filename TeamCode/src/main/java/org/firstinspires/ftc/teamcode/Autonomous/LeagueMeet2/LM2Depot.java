@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
+import org.firstinspires.ftc.teamcode.ChickHicks.Intake;
 import org.firstinspires.ftc.teamcode.ChickHicks.Lift;
 import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
 
@@ -15,15 +16,14 @@ public class LM2Depot extends LinearOpMode {
 
     Drivetrain drivetrain;
     Lift lift;
-    TensorFlowDetection vision;
-    //Intake intake;
+    Intake intake;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
         drivetrain = new Drivetrain(this);
 //        lift = new Lift(this);
-//        vision = new TensorFlowDetection(this);
+        intake = new Intake(this);
 
 //        telemetry.addData("Mineral Position", vision.cubePosition);
         telemetry.addLine("Initialized");
@@ -42,6 +42,8 @@ public class LM2Depot extends LinearOpMode {
          * default Cube is middle
          *
          */
+
+        intake.extendSampling(drivetrain);
 
         //move to not hit lander
         drivetrain.moveEncoder(0.5, 500, 4);
