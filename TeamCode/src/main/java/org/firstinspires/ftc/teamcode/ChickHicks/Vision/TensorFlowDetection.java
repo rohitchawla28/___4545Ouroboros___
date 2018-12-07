@@ -18,10 +18,7 @@ public class TensorFlowDetection {
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
     private static final String LABEL_SILVER_MINERAL = "Silver Mineral";
 
-    private static final String VUFORIA_KEY = "AVVhjKz/////AAABmSUTzsySy0l7nvSEO4/tklwYBNqq5gvpXVF2MnqOW+ENbnMruZbOaQHck" +
-            "DCi0mPF9M2LoOcqBnpHHowbYKy1ODgbLMmmwSLH4UZyYTGCcwEN6s+xfz6Sd35BQxcEJQ77zhY9ZklFWKnxZdIDYl11XkIQK+Yi2iU+zpK" +
-            "p5YTWCzOW570bcIdyPc0G/KTLWrxBrAOBIZu68HntklnQKvkciI6FQCN9n3T6MlqBDbx3SxXqaFALXWhZvbIs1cryGvmWSekjB9MeH642rZw" +
-            "SdLyOzQGa7xwcZGbek2Fj94vxmKaq8wTCz3hR0eBSqCVD22RPGMcJW8VoWz2+xVim2XS7A5XmbROKKZPNz95Xbfvt0eMb";
+    private static final String VUFORIA_KEY = "AcD8BwX/////AAABmQfyyiD3b0tXiwsm/UX+fHkiPPZJQu55dY7HGrCBT84yc2dP8K+9mWY/3l3gcOKEmSvG+xB9UTPZRTzLqONEuj4hrYpRZtfz6wDkC4IWUvxdgh3+On8UHBaue+CJveRpqla8XZtgMJUqzE3Mxt4QBk3SFkh815rM08JJ11a4XsZrxD4ZDVI6XcsrBmWFub8E/+weoU5gweajvJcE5tzVyLn7IaaYyshx9CHJdS0ObM29e3tHbVJjpwsU/zuoEEoXNRUL++LR0j8z6KY7WQvnsf0PyZXIpu6/tvFR1/WMn74Rc7IkWdO3sdiRQL3i96/rhOeAvQfjlg1VJhEyWKXqqLfQSJrOQSCKegayB4KFCXZf";
 
     private VuforiaLocalizer vuforia;
 
@@ -31,6 +28,8 @@ public class TensorFlowDetection {
     private int silverMineral1X = -1;
     private int silverMineral2X = -1;
 
+    int cameraViewMonitorId;
+
     public static String cubePosition = "";
 
     public TensorFlowDetection(LinearOpMode opMode) {
@@ -38,13 +37,16 @@ public class TensorFlowDetection {
         this.opMode = opMode;
         initVuforia();
 
+        opMode.telemetry.addLine("Vuforia init finished");
+        opMode.telemetry.update();
+
         if (ClassFactory.getInstance().canCreateTFObjectDetector()) {
             initTfod();
         } else {
             this.opMode.telemetry.addData("Sorry!", "This device is not compatible with TFOD");
         }
 
-        this.opMode.telemetry.addLine("Initialized");
+        this.opMode.telemetry.addLine("Tensor Flow Initialized");
         this.opMode.telemetry.update();
     }
 

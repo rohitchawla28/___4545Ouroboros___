@@ -26,28 +26,25 @@ public class DepotNoIntake extends LinearOpMode{
         drivetrain = new Drivetrain(this);
         intake = new Intake(this);
 //        lift = new Lift(this);
-        vision = new TensorFlowDetection(this);
+
 
         telemetry.addLine("Initialized");
         telemetry.update();
 
         waitForStart();
 
+        vision = new TensorFlowDetection(this);
         vision.sample();
-
-        telemetry.addData("Cube Position", TensorFlowDetection.cubePosition);
-        telemetry.update();
 
         switch(cubePosition) {
             case "left":
                 drivetrain.moveEncoder(0.3, 200, 4);
                 sleep(400);
-
                 drivetrain.turnGyro(0.4, 16, false, 4);
                 sleep(400);
-                drivetrain.moveEncoder(0.4, 950, 4);
+                drivetrain.moveEncoder(0.4, 1200, 4);
                 sleep(400);
-                drivetrain.moveEncoder(-0.4, 900, 4);
+                drivetrain.moveEncoder(-0.4, 1150, 4);
                 sleep(400);
                 drivetrain.turnGyro(0.4, 16, true, 4);
                 sleep(400);
@@ -56,7 +53,6 @@ public class DepotNoIntake extends LinearOpMode{
             case "center":
                 drivetrain.moveEncoder(0.3, 200, 4);
                 sleep(400);
-
                 drivetrain.moveEncoder(0.4, 1000, 4);
                 sleep(400);
                 drivetrain.moveEncoder(-0.4, 1000, 4);
@@ -66,12 +62,11 @@ public class DepotNoIntake extends LinearOpMode{
             case "right":
                 drivetrain.moveEncoder(0.3, 200, 4);
                 sleep(400);
-
                 drivetrain.turnGyro(0.4, 16, true, 4);
                 sleep(400);
-                drivetrain.moveEncoder(0.4, 950, 4);
+                drivetrain.moveEncoder(0.4, 1150, 4);
                 sleep(400);
-                drivetrain.moveEncoder(-0.4, 900, 4);
+                drivetrain.moveEncoder(-0.4, 1000, 4);
                 sleep(400);
                 drivetrain.turnGyro(0.4, 16, false, 4);
                 sleep(400);
@@ -80,10 +75,9 @@ public class DepotNoIntake extends LinearOpMode{
             default:
                 drivetrain.moveEncoder(0.3, 200, 4);
                 sleep(400);
-
-                drivetrain.moveEncoder(0.4, 900, 4);
+                drivetrain.moveEncoder(0.4, 1000, 4);
                 sleep(400);
-                drivetrain.moveEncoder(-0.4, 900, 4);
+                drivetrain.moveEncoder(-0.4, 1000, 4);
                 sleep(400);
                 break;
         }
@@ -99,7 +93,7 @@ public class DepotNoIntake extends LinearOpMode{
         sleep(400);
 
         //move to wall
-        drivetrain.moveEncoder(0.5, 1900, 4);
+        drivetrain.moveEncoder(0.5, 2050, 4);
 
         sleep(400);
 

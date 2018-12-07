@@ -6,6 +6,8 @@ import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 public class Sensors {
@@ -67,6 +69,15 @@ public class Sensors {
         updateGyroValues();
         return angles.thirdAngle;
 
+    }
+
+    public void updateGyroR()
+    {
+        angles = gyro.getAngularOrientation().toAxesReference(AxesReference.INTRINSIC).toAxesOrder(AxesOrder.ZYX);
+    }
+    public double getGyroYawR()
+    {
+        return -angles.firstAngle;
     }
 
     public double getGyroPitch() {
