@@ -25,6 +25,7 @@ public class DepotNoIntake extends LinearOpMode{
 
         drivetrain = new Drivetrain(this);
         intake = new Intake(this);
+        vision = new TensorFlowDetection(this);
 //        lift = new Lift(this);
 
 
@@ -32,8 +33,6 @@ public class DepotNoIntake extends LinearOpMode{
         telemetry.update();
 
         waitForStart();
-
-        vision = new TensorFlowDetection(this);
         vision.sample();
 
         switch(cubePosition) {
@@ -48,6 +47,43 @@ public class DepotNoIntake extends LinearOpMode{
                 sleep(400);
                 drivetrain.turnGyro(0.4, 16, true, 4);
                 sleep(400);
+                //move to not hit lander
+                drivetrain.moveEncoder(0.5, 500, 4);
+
+                sleep(400);
+
+                // Will turn to go around sampling
+                drivetrain.turnGyro(0.4, 60, false, 4);
+
+                sleep(400);
+
+                //move to wall
+                drivetrain.moveEncoder(0.5, 2050, 4);
+
+                sleep(400);
+
+                // Will turn towards the depot
+                drivetrain.turnGyro(0.4, 85, true, 4);
+
+                sleep(400);
+
+                //move to depot
+                drivetrain.moveEncoder(0.5, 2050, 4);
+
+                sleep(400);
+
+                //drop marker
+                intake.markerOut();
+
+                sleep(150);
+
+                //move to almost the crater
+                drivetrain.moveEncoder(-0.5, 2100, 4);
+
+                sleep(400);
+
+                //move to touch the crater
+                drivetrain.moveEncoder(-0.3, 320, 4);
                 break;
 
             case "center":
@@ -57,6 +93,43 @@ public class DepotNoIntake extends LinearOpMode{
                 sleep(400);
                 drivetrain.moveEncoder(-0.4, 1000, 4);
                 sleep(400);
+                //move to not hit lander
+                drivetrain.moveEncoder(0.5, 500, 4);
+
+                sleep(400);
+
+                // Will turn to go around sampling
+                drivetrain.turnGyro(0.4, 60, false, 4);
+
+                sleep(400);
+
+                //move to wall
+                drivetrain.moveEncoder(0.5, 2050, 4);
+
+                sleep(400);
+
+                // Will turn towards the depot
+                drivetrain.turnGyro(0.4, 85, true, 4);
+
+                sleep(400);
+
+                //move to depot
+                drivetrain.moveEncoder(0.5, 2050, 4);
+
+                sleep(400);
+
+                //drop marker
+                intake.markerOut();
+
+                sleep(150);
+
+                //move to almost the crater
+                drivetrain.moveEncoder(-0.5, 2050, 4);
+
+                sleep(400);
+
+                //move to touch the crater
+                drivetrain.moveEncoder(-0.3, 350, 4);
                 break;
 
             case "right":
@@ -70,6 +143,43 @@ public class DepotNoIntake extends LinearOpMode{
                 sleep(400);
                 drivetrain.turnGyro(0.4, 16, false, 4);
                 sleep(400);
+                //move to not hit lander
+                drivetrain.moveEncoder(0.5, 500, 4);
+
+                sleep(400);
+
+                // Will turn to go around sampling
+                drivetrain.turnGyro(0.4, 60, false, 4);
+
+                sleep(400);
+
+                //move to wall
+                drivetrain.moveEncoder(0.5, 1950, 4);
+
+                sleep(400);
+
+                // Will turn towards the depot
+                drivetrain.turnGyro(0.4, 85, true, 4);
+
+                sleep(400);
+
+                //move to depot
+                drivetrain.moveEncoder(0.5, 2050, 4);
+
+                sleep(400);
+
+                //drop marker
+                intake.markerOut();
+
+                sleep(150);
+
+                //move to almost the crater
+                drivetrain.moveEncoder(-0.5, 2250, 4);
+
+                sleep(400);
+
+                //move to touch the crater
+                drivetrain.moveEncoder(-0.3, 400, 4);
                 break;
 
             default:
@@ -79,45 +189,45 @@ public class DepotNoIntake extends LinearOpMode{
                 sleep(400);
                 drivetrain.moveEncoder(-0.4, 1000, 4);
                 sleep(400);
+
+                //move to not hit lander
+                drivetrain.moveEncoder(0.5, 500, 4);
+
+                sleep(400);
+
+                // Will turn to go around sampling
+                drivetrain.turnGyro(0.4, 60, false, 4);
+
+                sleep(400);
+
+                //move to wall
+                drivetrain.moveEncoder(0.5, 2050, 4);
+
+                sleep(400);
+
+                // Will turn towards the depot
+                drivetrain.turnGyro(0.4, 85, true, 4);
+
+                sleep(400);
+
+                //move to depot
+                drivetrain.moveEncoder(0.5, 2050, 4);
+
+                sleep(400);
+
+                //drop marker
+                intake.markerOut();
+
+                sleep(150);
+
+                //move to almost the crater
+                drivetrain.moveEncoder(-0.5, 2100, 4);
+
+                sleep(400);
+
+                //move to touch the crater
+                drivetrain.moveEncoder(-0.3, 320, 4);
                 break;
         }
-
-        //move to not hit lander
-        drivetrain.moveEncoder(0.5, 300, 4);
-
-        sleep(400);
-
-        // Will turn to go around sampling
-        drivetrain.turnGyro(0.4, 60, false, 4);
-
-        sleep(400);
-
-        //move to wall
-        drivetrain.moveEncoder(0.5, 2050, 4);
-
-        sleep(400);
-
-        // Will turn towards the depot
-        drivetrain.turnGyro(0.4, 85, true, 4);
-
-        sleep(400);
-
-        //move to depot
-        drivetrain.moveEncoder(0.5, 2050, 4);
-
-        sleep(400);
-
-        //drop marker
-        intake.markerOut();
-
-        sleep(150);
-
-        //move to almost the crater
-        drivetrain.moveEncoder(-0.5, 2100, 4);
-
-        sleep(400);
-
-        //move to touch the crater
-        drivetrain.moveEncoder(-0.3, 320, 4);
     }
 }

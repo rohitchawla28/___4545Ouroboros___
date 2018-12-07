@@ -41,12 +41,55 @@ public class CraterNoIntake extends LinearOpMode{
                 sleep(400);
                 drivetrain.turnGyro(0.4, 20, false, 4);
                 sleep(400);
-                drivetrain.moveEncoder(0.4, 1100, 4);
+                drivetrain.moveEncoder(0.4, 1150, 4);
                 sleep(400);
                 drivetrain.moveEncoder(-0.4, 950, 4);
                 sleep(400);
                 drivetrain.turnGyro(0.4, 20, true, 4);
                 sleep(400);
+                //move to not hit lander
+                drivetrain.moveEncoder(0.5, 400, 4);
+
+                sleep(500);
+
+                // Will turn to go around sampling
+                drivetrain.turnGyro(0.4, 55, false, 4);
+
+                sleep(500);
+
+                //move to wall
+                drivetrain.moveEncoder(0.5, 1975, 3);
+
+                sleep(500);
+
+                //turn to angle against wall
+                drivetrain.turnGyro(0.4, 18, false, 4);
+
+                sleep(500);
+
+                //move along wall
+                drivetrain.moveEncoder(0.6, 850, 4);
+
+                sleep(500);
+
+                drivetrain.turnGyro(0.4, 10, false, 4);
+
+                sleep(500);
+
+                drivetrain.moveEncoder(0.5, 1300, 3);
+
+                sleep(400);
+
+                //drop marker
+                intake.markerOut();
+
+                //backwards to almost crater
+                drivetrain.moveEncoder(-0.6, 1900, 4);
+
+                sleep(1000);
+
+                //touch crater
+                drivetrain.moveEncoder(-0.25, 400, 3);
                 break;
 
             case "center":
@@ -56,6 +99,49 @@ public class CraterNoIntake extends LinearOpMode{
                 sleep(400);
                 drivetrain.moveEncoder(-0.4, 850, 4);
                 sleep(400);
+                //move to not hit lander
+                drivetrain.moveEncoder(0.5, 400, 4);
+
+                sleep(500);
+
+                // Will turn to go around sampling
+                drivetrain.turnGyro(0.4, 55, false, 4);
+
+                sleep(500);
+
+                //move to wall
+                drivetrain.moveEncoder(0.5, 1975, 3);
+
+                sleep(500);
+
+                //turn to angle against wall
+                drivetrain.turnGyro(0.4, 20, false, 4);
+
+                sleep(500);
+
+                //move along wall
+                drivetrain.moveEncoder(0.6, 700, 4);
+
+                sleep(500);
+
+                drivetrain.turnGyro(0.4, 9, false, 4);
+
+                sleep(500);
+
+                drivetrain.moveEncoder(0.5, 1300, 3);
+
+                sleep(400);
+
+                //drop marker
+                intake.markerOut();
+
+                //backwards to almost crater
+                drivetrain.moveEncoder(-0.6, 1900, 4);
+
+                sleep(1000);
+
+                //touch crater
+                drivetrain.moveEncoder(-0.25, 400, 3);
                 break;
 
             case "right":
@@ -69,6 +155,49 @@ public class CraterNoIntake extends LinearOpMode{
                 sleep(400);
                 drivetrain.turnGyro(0.4, 18, false, 4);
                 sleep(400);
+                //move to not hit lander
+                drivetrain.moveEncoder(0.5, 400, 4);
+
+                sleep(500);
+
+                // Will turn to go around sampling
+                drivetrain.turnGyro(0.4, 55, false, 4);
+
+                sleep(500);
+
+                //move to wall
+                drivetrain.moveEncoder(0.5, 1975, 3);
+
+                sleep(500);
+
+                //turn to angle against wall
+                drivetrain.turnGyro(0.4, 20, false, 4);
+
+                sleep(500);
+
+                //move along wall
+                drivetrain.moveEncoder(0.6, 700, 4);
+
+                sleep(500);
+
+                drivetrain.turnGyro(0.4, 9, false, 4);
+
+                sleep(500);
+
+                drivetrain.moveEncoder(0.5, 1300, 3);
+
+                sleep(400);
+
+                //drop marker
+                intake.markerOut();
+
+                //backwards to almost crater
+                drivetrain.moveEncoder(-0.6, 1900, 4);
+
+                sleep(1000);
+
+                //touch crater
+                drivetrain.moveEncoder(-0.25, 400, 3);
                 break;
 
             default:
@@ -78,52 +207,50 @@ public class CraterNoIntake extends LinearOpMode{
                 sleep(400);
                 drivetrain.moveEncoder(-0.4, 950, 4);
                 sleep(400);
+                //move to not hit lander
+                drivetrain.moveEncoder(0.5, 400, 4);
+
+                sleep(500);
+
+                // Will turn to go around sampling
+                drivetrain.turnGyro(0.4, 55, false, 4);
+
+                sleep(500);
+
+                //move to wall
+                drivetrain.moveEncoder(0.5, 1975, 3);
+
+                sleep(500);
+
+                //turn to angle against wall
+                drivetrain.turnGyro(0.4, 20, false, 4);
+
+                sleep(500);
+
+                //move along wall
+                drivetrain.moveEncoder(0.6, 700, 4);
+
+                sleep(500);
+
+                drivetrain.turnGyro(0.4, 9, false, 4);
+
+                sleep(500);
+
+                drivetrain.moveEncoder(0.5, 1300, 3);
+
+                sleep(400);
+
+                //drop marker
+                intake.markerOut();
+
+                //backwards to almost crater
+                drivetrain.moveEncoder(-0.6, 1900, 4);
+
+                sleep(1000);
+
+                //touch crater
+                drivetrain.moveEncoder(-0.25, 400, 3);
                 break;
         }
-
-        //move to not hit lander
-        drivetrain.moveEncoder(0.5, 400, 4);
-
-        sleep(500);
-
-        // Will turn to go around sampling
-        drivetrain.turnGyro(0.4, 55, false, 4);
-
-        sleep(500);
-
-        //move to wall
-        drivetrain.moveEncoder(0.5, 1975, 3);
-
-        sleep(500);
-
-        //turn to angle against wall
-        drivetrain.turnGyro(0.4, 20, false, 4);
-
-        sleep(500);
-
-        //move along wall
-        drivetrain.moveEncoder(0.6, 700, 4);
-
-        sleep(500);
-
-        drivetrain.turnGyro(0.4, 9, false, 4);
-
-        sleep(500);
-
-        drivetrain.moveEncoder(0.5, 1300, 3);
-
-        sleep(400);
-
-        //drop marker
-        intake.markerOut();
-
-        //backwards to almost crater
-        drivetrain.moveEncoder(-0.6, 1900, 4);
-
-        sleep(1000);
-
-        //touch crater
-        drivetrain.moveEncoder(-0.25, 400, 3);
-
     }
 }
