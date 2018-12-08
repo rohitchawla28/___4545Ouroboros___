@@ -56,7 +56,7 @@ public class Intake {
 
         marker.setPosition(0.1);
 
-        opMode.sleep(400);
+        opMode.sleep(1000);
 
     }
 

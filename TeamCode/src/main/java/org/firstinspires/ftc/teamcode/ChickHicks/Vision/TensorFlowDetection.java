@@ -55,7 +55,7 @@ public class TensorFlowDetection {
         tfod.activate();
         ElapsedTime time = new ElapsedTime();
 
-        while (cubePosition.equals("") || time.seconds() < 2 && opMode.opModeIsActive()) {
+        while (cubePosition.equals("") && time.seconds() < 2 && opMode.opModeIsActive()) {
             // getUpdatedRecognitions() will return null if no new information is available since
             // the last time that call was made.
             List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
@@ -99,12 +99,18 @@ public class TensorFlowDetection {
     public void detect() {
         if (goldMineralX == -1) {
             cubePosition = "left";
+            opMode.telemetry.addData("Cube Position", cubePosition);
+            opMode.telemetry.update();
 
         } else if ((goldMineralX < silverMineral1X) || (goldMineralX < silverMineral2X) && (silverMineral2X == -1) || (silverMineral1X == -1)) {
             cubePosition = "center";
-
-        } else {
+            opMode.telemetry.addData("Cube Position", cubePosition);
+            opMode.telemetry.update();
+        }
+        else {
             cubePosition = "right";
+            opMode.telemetry.addData("Cube Position", cubePosition);
+            opMode.telemetry.update();
         }
     }
 }

@@ -16,8 +16,8 @@ public class Lift {
         private DcMotor liftL;
         private DcMotor liftR;
 
-        private Servo lockLiftL;
-        private Servo lockLiftR;
+        //private Servo lockLiftL;
+        //private Servo lockLiftR;
 
         private Sensors sensors;
 
@@ -31,7 +31,7 @@ public class Lift {
             liftL = this.opMode.hardwareMap.get(DcMotor.class , "liftL");
             liftR = this.opMode.hardwareMap.get(DcMotor.class, "liftR");
 
-            lockLiftR = this.opMode.hardwareMap.get(Servo.class, "lockLiftR");
+            //lockLiftR = this.opMode.hardwareMap.get(Servo.class, "lockLiftR");
 
             liftL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             liftR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -43,14 +43,14 @@ public class Lift {
 //            lockLiftR.setPosition(0.55);
         }
 
-        public void unlock() {
-
-            lockLiftL.setPosition(0.4);
-//            lockLiftR.setPosition(0.25);
-
-            opMode.sleep(2000);
-
-        }
+//        public void unlock() {
+//
+//            //lockLiftL.setPosition(0.4);
+////            lockLiftR.setPosition(0.25);
+//
+//            opMode.sleep(2000);
+//
+//        }
 
         public void detachRange() {
 
@@ -109,7 +109,7 @@ public class Lift {
             double timeout = 4000;
 
             //let go off robot
-            unlock();
+            //unlock();
 
             runTime.reset();
 

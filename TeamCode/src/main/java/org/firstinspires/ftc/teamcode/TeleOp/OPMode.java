@@ -21,8 +21,8 @@ public abstract class OPMode extends OpMode {
 
     public Servo marker;
 
-    public Servo lockLiftL;
-    public Servo lockLiftR;
+    //public Servo lockLiftL;
+    //public Servo lockLiftR;
 
     @Override
     public void init() {
@@ -37,8 +37,8 @@ public abstract class OPMode extends OpMode {
         liftL = hardwareMap.get(DcMotor.class, "liftL");
         liftR = hardwareMap.get(DcMotor.class, "liftR");
 
-        lockLiftL = hardwareMap.get(Servo.class, "lockLiftL");
-        lockLiftR = hardwareMap.get(Servo.class, "lockLiftR");
+        //lockLiftL = hardwareMap.get(Servo.class, "lockLiftL");
+        //lockLiftR = hardwareMap.get(Servo.class, "lockLiftR");
 
         fl.setDirection(DcMotor.Direction.FORWARD);
         fr.setDirection(DcMotor.Direction.REVERSE);
@@ -59,17 +59,17 @@ public abstract class OPMode extends OpMode {
 
     public void lockLift() {
 
-        //open
-        if (gamepad2.a){
-             lockLiftL.setPosition(0.2);
-             lockLiftR.setPosition(0.55);
-        }
-
-        //lock
-        if(gamepad2.b) {
-            lockLiftL.setPosition(0.4);
-            lockLiftR.setPosition(0.25);
-        }
+//        //open
+//        if (gamepad2.a){
+//             lockLiftL.setPosition(0.2);
+//             lockLiftR.setPosition(0.55);
+//        }
+//
+//        //lock
+//        if(gamepad2.b) {
+//            lockLiftL.setPosition(0.4);
+//            lockLiftR.setPosition(0.25);
+//        }
     }
 
     public void lift() {
