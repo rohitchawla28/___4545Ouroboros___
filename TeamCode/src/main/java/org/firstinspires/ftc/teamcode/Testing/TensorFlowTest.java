@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
 
 @Autonomous
-        (name = "ACTUALTensorFlowTest", group = "Auto")
+        (name = "TensorFlowTest", group = "Auto")
 
 public class TensorFlowTest extends LinearOpMode {
 

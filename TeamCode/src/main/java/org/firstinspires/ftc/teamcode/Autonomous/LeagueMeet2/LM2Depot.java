@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Autonomous.LeagueMeet2;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
@@ -8,7 +9,7 @@ import org.firstinspires.ftc.teamcode.ChickHicks.Intake;
 import org.firstinspires.ftc.teamcode.ChickHicks.Lift;
 import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
 
-
+@Disabled
 @Autonomous
         (name = "LM2Depot", group = "Auto")
 
