@@ -23,7 +23,7 @@
 // *
 // */
 //
-//public class Vision {
+//public class OpenCVDetection {
 //    public static int cubePositionAlt;
 //    private LinearOpMode opMode;
 //
