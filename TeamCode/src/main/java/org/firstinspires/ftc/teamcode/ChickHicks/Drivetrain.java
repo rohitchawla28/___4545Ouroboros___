@@ -455,8 +455,34 @@ public class Drivetrain {
 
     }
 
-    public void turnPID(double power, double angle, boolean turnRight, double kP, double kI, double kD, double accuracy, double timeout, double bias) {
+    public void turnP(double angleChange, boolean turnRight, double kP) {
 
+        double error;
+        double power;
+        double proportional;
+        double initAngle = sensors.getGyroYaw();
+
+        while (Math.abs(sensors.getGyroYaw() - initAngle) < angleChange && opMode.opModeIsActive()) {
+            error = angleChange - (sensors.getGyroYaw() - initAngle);
+            proportional = error * kP;
+
+            power = proportional;
+
+            turn(power, turnRight);
+
+            opMode.telemetry.addData("Angle Left", error);
+            opMode.telemetry.update();
+
+            opMode.idle();
+        }
+
+        stopMotors();
+
+    }
+
+    public void turnPID(double angle, boolean turnRight, double kP, double kI, double kD, double accuracy, double timeout, double bias) {
+
+        double power;
         double error;
         double proportional;
         double integral = 0;

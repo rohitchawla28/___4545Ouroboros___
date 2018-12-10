@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
 
-@Disabled
 @Autonomous
         (name = "PID", group = "Auto")
 
@@ -20,19 +19,7 @@ public class PID extends LinearOpMode{
 
         waitForStart();
 
-        if (gamepad1.a) {
-            //drivetrain.movePID();
-        }
-
-        if (gamepad1.b) {
-            //drivetrain.turnPID();
-        }
-
-        if (gamepad1.x) {
-            //drivetrain.moveGyroStabPID();
-        }
-
-
+        drivetrain.turnP(90 ,true, .6/90);
 
     }
 
