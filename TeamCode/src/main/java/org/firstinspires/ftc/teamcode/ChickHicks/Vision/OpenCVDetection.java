@@ -14,6 +14,7 @@ import org.opencv.imgproc.Imgproc;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 
 
 /**
@@ -79,8 +80,9 @@ public class OpenCVDetection {
 
         KeyPoint[] findBlobsArray = findBlobsOutput.toArray();
 
-
         findSampling(matImage, findBlobsArray);
+        opMode.telemetry.addData("Blobs", findBlobsArray[0]);
+        opMode.telemetry.update();
     }
 
     //================================ OUR SCANNING METHOD ======================================================

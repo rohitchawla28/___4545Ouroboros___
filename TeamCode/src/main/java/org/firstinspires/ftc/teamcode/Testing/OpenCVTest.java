@@ -30,9 +30,6 @@ public class OpenCVTest extends LinearOpMode {
         telemetry.addLine("Initialized");
         telemetry.update();
 
-
-
-
         while(opModeIsActive())
         {
             vision.process(vuforia.convertToMat());
