@@ -28,8 +28,6 @@ public class TensorFlowDetection {
     private int silverMineral1X = -1;
     private int silverMineral2X = -1;
 
-    int cameraViewMonitorId;
-
     public static String cubePosition = "";
 
     public TensorFlowDetection(LinearOpMode opMode) {

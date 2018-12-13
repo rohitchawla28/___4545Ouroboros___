@@ -13,9 +13,7 @@ import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
-import java.util.NoSuchElementException;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorCompletionService;
 
 
 public class Vuforia {
@@ -25,7 +23,7 @@ public class Vuforia {
     VuforiaLocalizer vuforia;
     private VuforiaLocalizer.Parameters parameters;
 
-    private static final String VUFORIA_KEY = "\"AcD8BwX/////AAABmQfyyiD3b0tXiwsm/UX+fHkiPPZJQu55dY7HGrCBT84yc2dP8K+9mWY/3l3gcOKEmSvG+xB9UTPZRTzLqONEuj4hrYpRZtfz6wDkC4IWUvxdgh3+On8UHBaue+CJveRpqla8XZtgMJUqzE3Mxt4QBk3SFkh815rM08JJ11a4XsZrxD4ZDVI6XcsrBmWFub8E/+weoU5gweajvJcE5tzVyLn7IaaYyshx9CHJdS0ObM29e3tHbVJjpwsU/zuoEEoXNRUL++LR0j8z6KY7WQvnsf0PyZXIpu6/tvFR1/WMn74Rc7IkWdO3sdiRQL3i96/rhOeAvQfjlg1VJhEyWKXqqLfQSJrOQSCKegayB4KFCXZf";
+    private static final String VUFORIA_KEY = "AcD8BwX/////AAABmQfyyiD3b0tXiwsm/UX+fHkiPPZJQu55dY7HGrCBT84yc2dP8K+9mWY/3l3gcOKEmSvG+xB9UTPZRTzLqONEuj4hrYpRZtfz6wDkC4IWUvxdgh3+On8UHBaue+CJveRpqla8XZtgMJUqzE3Mxt4QBk3SFkh815rM08JJ11a4XsZrxD4ZDVI6XcsrBmWFub8E/+weoU5gweajvJcE5tzVyLn7IaaYyshx9CHJdS0ObM29e3tHbVJjpwsU/zuoEEoXNRUL++LR0j8z6KY7WQvnsf0PyZXIpu6/tvFR1/WMn74Rc7IkWdO3sdiRQL3i96/rhOeAvQfjlg1VJhEyWKXqqLfQSJrOQSCKegayB4KFCXZf";
 
     private VuforiaLocalizer.CameraDirection CAMERA_CHOICE = VuforiaLocalizer.CameraDirection.BACK;
 
@@ -42,7 +40,7 @@ public class Vuforia {
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
     }
 
-    public Bitmap convertToBitmap()throws InterruptedException{
+    public Bitmap convertToBitmap() throws InterruptedException{
         Image rgb = null;
         com.vuforia.Vuforia.setFrameFormat(PIXEL_FORMAT.RGB565, true);
         Bitmap imageBitmap;
@@ -52,7 +50,6 @@ public class Vuforia {
 
         opMode.telemetry.addLine("Starting Bitmap Conversion");
         opMode.telemetry.update();
-
 
         frame = vuforia.getFrameQueue();
 
@@ -69,7 +66,6 @@ public class Vuforia {
         //    rgb = frame.getImage(i);
         //}
 
-
         //if(rgb == null) {
 
           //  count++;
@@ -83,7 +79,6 @@ public class Vuforia {
                     break;
                 }
             }
-
 
         // create a new bitmap and copy the byte buffer returned by rgb.getPixels() to it
         imageBitmap = Bitmap.createBitmap(rgb.getWidth(), rgb.getHeight(), Bitmap.Config.RGB_565);

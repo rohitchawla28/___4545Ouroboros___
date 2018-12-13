@@ -41,14 +41,12 @@ public class OpenCVDetection {
 
         this.opMode.waitForStart();
 
-
         cubePositionAlt = 0;
         hslThresholdOutput = new Mat();
         blurOutput = new Mat();
         findBlobsOutput = new MatOfKeyPoint();
 
     }
-
 
     /**
      * This is the primary method that runs the entire pipeline and updates the outputs.
