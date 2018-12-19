@@ -48,9 +48,6 @@ public class Vuforia {
         vuforia.enableConvertFrameToBitmap();
         VuforiaLocalizer.CloseableFrame picture;
 
-        opMode.telemetry.addLine("Starting Bitmap Conversion");
-        opMode.telemetry.update();
-
         frame = vuforia.getFrameQueue();
 
         picture = frame.take();
@@ -99,12 +96,7 @@ public class Vuforia {
 
         // construct an OpenCV mat from the bitmap using Utils.bitmapToMat()
         Mat imageMat = new Mat(convertToBitmap().getWidth(), convertToBitmap().getHeight(), CvType.CV_8UC4);
-
         Utils.bitmapToMat(convertToBitmap(), imageMat);
-
-        opMode.telemetry.addLine("Finished Mat Conversion");
-        opMode.telemetry.update();
-
         return imageMat;
 
     }

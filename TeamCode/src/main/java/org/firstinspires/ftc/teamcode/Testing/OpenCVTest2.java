@@ -13,18 +13,18 @@ import org.firstinspires.ftc.teamcode.ChickHicks.Vision.Vuforia;
 
 //@Disabled
 @Autonomous
-        (name = "OpenCVTest", group = "Auto")
+        (name = "OpenCVTest2", group = "Auto")
 
-public class OpenCVTest extends LinearOpMode {
+public class OpenCVTest2 extends LinearOpMode {
 
-  private OpenCVDetection vision;
-  private Vuforia vuforia;
+    private AlternativeVision vision;
+    private Vuforia vuforia;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
 
-        vision = new OpenCVDetection(this);
+        vision = new AlternativeVision(this);
 
         vuforia = new Vuforia(this);
 
@@ -34,8 +34,7 @@ public class OpenCVTest extends LinearOpMode {
         while(opModeIsActive())
         {
             vision.process(vuforia.convertToMat());
-            telemetry.addData("Cube Postion", OpenCVDetection.cubePositionAlt);
-            telemetry.update();
+            telemetry.addData("Cube Position", AlternativeVision.cubePosition3);
         }
     }
 }
