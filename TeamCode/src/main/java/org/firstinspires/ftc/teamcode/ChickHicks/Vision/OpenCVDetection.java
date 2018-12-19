@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.ChickHicks.Vision;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.sun.tools.javac.code.Attribute;
 
 import org.opencv.core.Core;
 import org.opencv.core.KeyPoint;
@@ -55,10 +56,7 @@ public class OpenCVDetection {
      * This is the primary method that runs the entire pipeline and updates the outputs.
      */
     //@Override
-    public void process(Mat matImage) {
-
-        opMode.telemetry.addLine("Starting process");
-        opMode.telemetry.update();
+    public void process(Mat matImage) throws ArrayIndexOutOfBoundsException {
 
         // GRIP input for HSL threshold
         double[] hslThresholdHue = {0.0, 142.0};
@@ -88,39 +86,17 @@ public class OpenCVDetection {
 
     //================================ OUR SCANNING METHOD ======================================================
 
-    public void findSampling(Mat image, KeyPoint[] array){
-        // Variables for number of pixels found from FindBlobs in each third (divided by columns) of image
-        int leftBlobs = 0;
-        int middleBlobs = 0;
-        int rightBlobs = 0;
-        // Variables for number of columns and rows
-        // Columns must be multiplied by channels since channels accounts for a 3D possibility
-        // In our case, channels() is always 1 since we aren't using 3-D
-        int nCol = image.channels();
-        int nRow = image.rows();
-
-
-
+    private void findSampling(Mat image, KeyPoint[] array) throws ArrayIndexOutOfBoundsException{
         for (KeyPoint point: array){
-
-            //(5/9) value needs to be tested, but by starting our row scanning process from there,
-            // we won't waste time with the useless top half of our portrait picture
-            // pic[index].pt.x gets x position of pixel
-            if (point.pt.x < LEFT_CONST * 0.80 && point.pt.x > LEFT_CONST * 1.20 )
-            {
+            if (point.pt.x <= (LEFT_CONST * 0.80) || point.pt.x >= (LEFT_CONST * 1.20) )
                 cubePositionAlt = 1;
-            }
-            else if (point.pt.x < MIDDLE_CONST* 0.80 && point.pt.x > MIDDLE_CONST* 1.20 )
-            {
+            else if (point.pt.x <= MIDDLE_CONST* 0.80 || point.pt.x >= MIDDLE_CONST* 1.20 )
                 cubePositionAlt = 2;
-            }
-            else if (point.pt.x < RIGHT_CONST* 0.80 && point.pt.x > RIGHT_CONST* 1.20 )
-            {
+            else if (point.pt.x <= RIGHT_CONST* 0.80 || point.pt.x >= RIGHT_CONST* 1.20 )
                 cubePositionAlt = 3;
-            }
+            else
+                cubePositionAlt = 0;
         }
-        // We need to add some kind of return function if it doesn't work or if there are equal number of pixels
-        // We can add a retry or something like that with a different filter maybe
     }
 
     //================================ ACTUAL GRIP FILTERS BELOW ================================================

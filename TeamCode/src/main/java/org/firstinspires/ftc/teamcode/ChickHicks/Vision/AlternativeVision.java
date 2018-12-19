@@ -45,8 +45,6 @@ public class AlternativeVision  {
 
         System.loadLibrary("opencv_java3");
 
-        this.opMode.waitForStart();
-
         cubePosition3 = null;
         hsvThresholdOutput = new Mat();
         blur0Output = new Mat();
@@ -55,17 +53,15 @@ public class AlternativeVision  {
         maskOutput = new Mat();
         findBlobsOutput = new MatOfKeyPoint();
     }
-
-
     /**
      * This is the primary method that runs the entire pipeline and updates the outputs.
      */
-    public void process(Mat matImage) {
+    public void process (Mat matImage) throws ArrayIndexOutOfBoundsException {
         // Step HSV_Threshold0:
         Mat hsvThresholdInput = matImage;
-        double[] hsvThresholdHue = {0.0, 100.13651877133107};
-        double[] hsvThresholdSaturation = {100.89928057553956, 255.0};
-        double[] hsvThresholdValue = {151.3489208633094, 255.0};
+        double[] hsvThresholdHue = {0.0, 100.0};
+        double[] hsvThresholdSaturation = {100.0, 255.0};
+        double[] hsvThresholdValue = {151.0, 255.0};
         hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);
 
         // Step Blur0:
@@ -86,7 +82,7 @@ public class AlternativeVision  {
         // Step Blur1:
         Mat blur1Input = cvErodeOutput;
         BlurType blur1Type = BlurType.get("Median Filter");
-        double blur1Radius = 22.522522522522525;
+        double blur1Radius = 22.523;
         blur(blur1Input, blur1Type, blur1Radius, blur1Output);
 
         // Step Mask0:
@@ -103,45 +99,21 @@ public class AlternativeVision  {
 
         KeyPoint[] keyPointArray = findBlobsOutput.toArray();
 
-        findSampling(matImage, keyPointArray);
-
+        findSampling(keyPointArray);
+        opMode.telemetry.addData("Blobs", keyPointArray[0]);
+        opMode.telemetry.update();
     }
-    public void findSampling(Mat image, KeyPoint[] array) throws IndexOutOfBoundsException{
-        // Variables for number of pixels found from FindBlobs in each third (divided by columns) of image
-        int leftBlobs = 0;
-        int middleBlobs = 0;
-        int rightBlobs = 0;
-        // Variables for number of columns and rows
-        // Columns must be multiplied by channels since channels accounts for a 3D possibility
-        // In our case, channels() is always 1 since we aren't using 3-D
-        int nCol = image.channels();
-        int nRow = image.rows();
-
-        if (opMode.opModeIsActive() && cubePosition3 ==  null) {
-            for (KeyPoint point: array){
-
-                //(5/9) value needs to be tested, but by starting our row scanning process from there,
-                // we won't waste time with the useless top half of our portrait picture
-                // pic[index].pt.x gets x position of pixel
-                if (point.pt.x < LEFT_CONST * 0.80 && point.pt.x > LEFT_CONST * 1.20 )
-                {
+    private void findSampling(KeyPoint[] array) throws ArrayIndexOutOfBoundsException{
+        for (KeyPoint point: array){
+                if (point.pt.x <= (LEFT_CONST * 0.80) || point.pt.x >= (LEFT_CONST * 1.20 ))
                     cubePosition3 = "left";
-                }
-                else if (point.pt.x < MIDDLE_CONST* 0.80 && point.pt.x > MIDDLE_CONST* 1.20 )
-                {
+                else if (point.pt.x <= (MIDDLE_CONST* 0.80) || point.pt.x >= (MIDDLE_CONST* 1.20) )
                     cubePosition3 = "middle";
-                }
-                else if (point.pt.x < RIGHT_CONST* 0.80 && point.pt.x > RIGHT_CONST* 1.20 )
-                {
+                else if (point.pt.x <= (RIGHT_CONST* 0.80) || point.pt.x >= (RIGHT_CONST* 1.20 ))
                     cubePosition3 = "right";
-                }
-                else{
+                else
                     cubePosition3 = "failed";
-                }
             }
-        }
-        // We need to add some kind of return function if it doesn't work or if there are equal number of pixels
-        // We can add a retry or something like that with a different filter maybe
     }
 
     /**

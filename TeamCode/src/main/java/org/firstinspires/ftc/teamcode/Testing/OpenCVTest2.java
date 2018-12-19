@@ -31,10 +31,13 @@ public class OpenCVTest2 extends LinearOpMode {
         telemetry.addLine("Initialized");
         telemetry.update();
 
+        waitForStart();
+
         while(opModeIsActive())
         {
             vision.process(vuforia.convertToMat());
             telemetry.addData("Cube Position", AlternativeVision.cubePosition3);
+            telemetry.update();
         }
     }
 }
