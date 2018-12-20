@@ -23,10 +23,10 @@ public class OpenCVTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-
-        vision = new OpenCVDetection(this);
-
         vuforia = new Vuforia(this);
+        vision = new OpenCVDetection(this, vuforia);
+
+
 
         telemetry.addLine("Initialized");
         telemetry.update();

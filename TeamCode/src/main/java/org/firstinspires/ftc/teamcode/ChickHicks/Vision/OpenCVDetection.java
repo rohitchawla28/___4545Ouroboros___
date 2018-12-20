@@ -27,7 +27,10 @@ import java.util.Arrays;
 
 public class OpenCVDetection {
     public static int cubePositionAlt;
+
     private LinearOpMode opMode;
+    private Vuforia vuforia;
+    private int recCount;
 
     //Outputs
     private Mat hslThresholdOutput;
@@ -37,51 +40,61 @@ public class OpenCVDetection {
     private final double RIGHT_CONST = 110.0;
     private final double MIDDLE_CONST = 600.0 ;
 
-    public OpenCVDetection(LinearOpMode opMode) throws InterruptedException {
+    public OpenCVDetection(LinearOpMode opMode, Vuforia vuforia) throws InterruptedException {
 
         this.opMode = opMode;
+        this.vuforia = vuforia;
 
         System.loadLibrary("opencv_java3");
 
         this.opMode.waitForStart();
 
         cubePositionAlt = 0;
+        recCount = 0;
+
         hslThresholdOutput = new Mat();
         blurOutput = new Mat();
         findBlobsOutput = new MatOfKeyPoint();
-
-    }
+        }
 
     /**
      * This is the primary method that runs the entire pipeline and updates the outputs.
      */
     //@Override
-    public void process(Mat matImage) throws ArrayIndexOutOfBoundsException {
+    public void process(Mat matImage) throws InterruptedException {
+        while (recCount < 2) {
+            // GRIP input for HSL threshold
+            double[] hslThresholdHue = {0.0, 142.0};
+            double[] hslThresholdSaturation = {117.0, 255.0};
+            double[] hslThresholdLuminance = {0, 255.0};
+            hslThreshold(matImage, hslThresholdHue, hslThresholdSaturation, hslThresholdLuminance, hslThresholdOutput);
 
-        // GRIP input for HSL threshold
-        double[] hslThresholdHue = {0.0, 142.0};
-        double[] hslThresholdSaturation = {117.0, 255.0};
-        double[] hslThresholdLuminance = {0, 255.0};
-        hslThreshold(matImage, hslThresholdHue, hslThresholdSaturation, hslThresholdLuminance, hslThresholdOutput);
+            // GRIP input for median blur
+            Mat blurInput = hslThresholdOutput;
+            BlurType blurType = BlurType.get("Median Filter");
+            double blurRadius = 30.0;
+            blur(blurInput, blurType, blurRadius, blurOutput);
 
-        // GRIP input for median blur
-        Mat blurInput = hslThresholdOutput;
-        BlurType blurType = BlurType.get("Median Filter");
-        double blurRadius = 30.0;
-        blur(blurInput, blurType, blurRadius, blurOutput);
+            // GRIP input for find blobs
+            Mat findBlobsInput = blurOutput;
+            double findBlobsMinArea = 1.0;
+            double[] findBlobsCircularity = {0.65, 1.0};
+            boolean findBlobsDarkBlobs = false;
+            findBlobs(findBlobsInput, findBlobsMinArea, findBlobsCircularity, findBlobsDarkBlobs, findBlobsOutput);
 
-        // GRIP input for find blobs
-        Mat findBlobsInput = blurOutput;
-        double findBlobsMinArea = 1.0;
-        double[] findBlobsCircularity = {0.65, 1.0};
-        boolean findBlobsDarkBlobs = false;
-        findBlobs(findBlobsInput, findBlobsMinArea, findBlobsCircularity, findBlobsDarkBlobs, findBlobsOutput);
+            KeyPoint[] findBlobsArray = findBlobsOutput.toArray();
+            try{
+                findSampling(matImage, findBlobsArray);
+                opMode.telemetry.addData("Blobs", findBlobsArray[0]);
+                opMode.telemetry.update();
+            }catch (ArrayIndexOutOfBoundsException E){
 
-        KeyPoint[] findBlobsArray = findBlobsOutput.toArray();
-
-        findSampling(matImage, findBlobsArray);
-        opMode.telemetry.addData("Blobs", findBlobsArray[0]);
-        opMode.telemetry.update();
+                opMode.telemetry.addLine("OutOfBoundsE - Trying to Scan Again");
+                opMode.telemetry.update();
+                process(vuforia.convertToMat());
+                recCount++;
+            }
+        }
     }
 
     //================================ OUR SCANNING METHOD ======================================================

@@ -5,9 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.Arrays;
-
 
 import org.opencv.core.*;
 import org.opencv.features2d.FeatureDetector;
@@ -25,6 +22,8 @@ import org.opencv.imgproc.*;
 public class AlternativeVision  {
 
     private LinearOpMode opMode;
+    private Vuforia vuforia;
+    private int recCount;
     // Cube Position
     public static String cubePosition3;
     //Outputs
@@ -39,9 +38,9 @@ public class AlternativeVision  {
     private final double RIGHT_CONST = 150.0;
     private final double MIDDLE_CONST = 600.0 ;
 
-    public AlternativeVision(LinearOpMode opMode)
-    {
+    public AlternativeVision(LinearOpMode opMode, Vuforia vuforia) {
         this.opMode = opMode;
+        this.vuforia = vuforia;
 
         System.loadLibrary("opencv_java3");
 
@@ -53,55 +52,66 @@ public class AlternativeVision  {
         maskOutput = new Mat();
         findBlobsOutput = new MatOfKeyPoint();
     }
+
     /**
      * This is the primary method that runs the entire pipeline and updates the outputs.
      */
-    public void process (Mat matImage) throws ArrayIndexOutOfBoundsException {
-        // Step HSV_Threshold0:
-        Mat hsvThresholdInput = matImage;
-        double[] hsvThresholdHue = {0.0, 100.0};
-        double[] hsvThresholdSaturation = {100.0, 255.0};
-        double[] hsvThresholdValue = {151.0, 255.0};
-        hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);
+    public void process (Mat matImage) throws InterruptedException {
+        while (recCount < 2) {
+            // Step HSV_Threshold0:
+            Mat hsvThresholdInput = matImage;
+            double[] hsvThresholdHue = {0.0, 100.0};
+            double[] hsvThresholdSaturation = {100.0, 255.0};
+            double[] hsvThresholdValue = {150.0, 255.0};
+            hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);
 
-        // Step Blur0:
-        Mat blur0Input = hsvThresholdOutput;
-        BlurType blur0Type = BlurType.get("Median Filter");
-        double blur0Radius = 100.0;
-        blur(blur0Input, blur0Type, blur0Radius, blur0Output);
+            // Step Blur0:
+            Mat blur0Input = hsvThresholdOutput;
+            BlurType blur0Type = BlurType.get("Median Filter");
+            double blur0Radius = 100.0;
+            blur(blur0Input, blur0Type, blur0Radius, blur0Output);
 
-        // Step CV_erode0:
-        Mat cvErodeSrc = blur0Output;
-        Mat cvErodeKernel = new Mat();
-        Point cvErodeAnchor = new Point(-1, -1);
-        double cvErodeIterations = 12.0;
-        int cvErodeBordertype = Core.BORDER_CONSTANT;
-        Scalar cvErodeBordervalue = new Scalar(-1);
-        cvErode(cvErodeSrc, cvErodeKernel, cvErodeAnchor, cvErodeIterations, cvErodeBordertype, cvErodeBordervalue, cvErodeOutput);
+            // Step CV_erode0:
+            Mat cvErodeSrc = blur0Output;
+            Mat cvErodeKernel = new Mat();
+            Point cvErodeAnchor = new Point(-1, -1);
+            double cvErodeIterations = 12.0;
+            int cvErodeBordertype = Core.BORDER_CONSTANT;
+            Scalar cvErodeBordervalue = new Scalar(-1);
+            cvErode(cvErodeSrc, cvErodeKernel, cvErodeAnchor, cvErodeIterations, cvErodeBordertype, cvErodeBordervalue, cvErodeOutput);
 
-        // Step Blur1:
-        Mat blur1Input = cvErodeOutput;
-        BlurType blur1Type = BlurType.get("Median Filter");
-        double blur1Radius = 22.523;
-        blur(blur1Input, blur1Type, blur1Radius, blur1Output);
+            // Step Blur1:
+            Mat blur1Input = cvErodeOutput;
+            BlurType blur1Type = BlurType.get("Median Filter");
+            double blur1Radius = 22.5;
+            blur(blur1Input, blur1Type, blur1Radius, blur1Output);
 
-        // Step Mask0:
-        Mat maskInput = matImage;
-        Mat maskMask = blur1Output;
-        mask(maskInput, maskMask, maskOutput);
+            // Step Mask0:
+            Mat maskInput = matImage;
+            Mat maskMask = blur1Output;
+            mask(maskInput, maskMask, maskOutput);
 
-        // Step Find_Blobs0:
-        Mat findBlobsInput = maskOutput;
-        double findBlobsMinArea = 1;
-        double[] findBlobsCircularity = {0.0, 1.0};
-        boolean findBlobsDarkBlobs = false;
-        findBlobs(findBlobsInput, findBlobsMinArea, findBlobsCircularity, findBlobsDarkBlobs, findBlobsOutput);
+            // Step Find_Blobs0:
+            Mat findBlobsInput = maskOutput;
+            double findBlobsMinArea = 1;
+            double[] findBlobsCircularity = {0.0, 1.0};
+            boolean findBlobsDarkBlobs = false;
+            findBlobs(findBlobsInput, findBlobsMinArea, findBlobsCircularity, findBlobsDarkBlobs, findBlobsOutput);
 
-        KeyPoint[] keyPointArray = findBlobsOutput.toArray();
+            KeyPoint[] findBlobsArray = findBlobsOutput.toArray();
 
-        findSampling(keyPointArray);
-        opMode.telemetry.addData("Blobs", keyPointArray[0]);
-        opMode.telemetry.update();
+            try{
+                findSampling(findBlobsArray);
+                opMode.telemetry.addData("Blobs", findBlobsArray[0]);
+                opMode.telemetry.update();
+            }catch (ArrayIndexOutOfBoundsException E){
+
+                opMode.telemetry.addLine("OutOfBoundsE - Trying to Scan Again");
+                opMode.telemetry.update();
+                process(vuforia.convertToMat());
+                recCount++;
+            }
+        }
     }
     private void findSampling(KeyPoint[] array) throws ArrayIndexOutOfBoundsException{
         for (KeyPoint point: array){
@@ -136,33 +146,25 @@ public class AlternativeVision  {
      * This method is a generated getter for the output of a CV_erode.
      * @return Mat output from CV_erode.
      */
-    public Mat cvErodeOutput() {
-        return cvErodeOutput;
-    }
+    public Mat cvErodeOutput() { return cvErodeOutput; }
 
     /**
      * This method is a generated getter for the output of a Blur.
      * @return Mat output from Blur.
      */
-    public Mat blur1Output() {
-        return blur1Output;
-    }
+    public Mat blur1Output() { return blur1Output; }
 
     /**
      * This method is a generated getter for the output of a Mask.
      * @return Mat output from Mask.
      */
-    public Mat maskOutput() {
-        return maskOutput;
-    }
+    public Mat maskOutput() { return maskOutput; }
 
     /**
      * This method is a generated getter for the output of a Find_Blobs.
      * @return MatOfKeyPoint output from Find_Blobs.
      */
-    public MatOfKeyPoint findBlobsOutput() {
-        return findBlobsOutput;
-    }
+    public MatOfKeyPoint findBlobsOutput() { return findBlobsOutput; }
 
 
     /**
