@@ -16,8 +16,6 @@ public class Drivetrain {
     private LinearOpMode opMode;
     private Sensors sensors;
 
-    private ElapsedTime runTime = new ElapsedTime();
-
     private DcMotor fl;
     private DcMotor fr;
     private DcMotor bl;
@@ -108,13 +106,14 @@ public class Drivetrain {
 
     //====================================== TIME METHODS ==========================================
 
-    public void moveTime(double power, double time) {
+    public void moveTime(double power, double seconds) {
+        ElapsedTime time = new ElapsedTime();
 
-        runTime.reset();
+        time.reset();
 
-        while (runTime.seconds() < time && opMode.opModeIsActive()) {
+        while (time.seconds() < seconds && opMode.opModeIsActive()) {
 
-            opMode.telemetry.addData("Current Time Left - ", (time - runTime.seconds()));
+            opMode.telemetry.addData("Current Time Left - ", (seconds - time.seconds()));
             opMode.telemetry.update();
 
             startMotors(power);
@@ -125,13 +124,15 @@ public class Drivetrain {
 
     }
 
-    public void turnTime(double power, double time, boolean turnRight) {
+    public void turnTime(double power, double seconds, boolean turnRight) {
 
-        runTime.reset();
+        ElapsedTime time = new ElapsedTime();
 
-        while (runTime.seconds() < time && opMode.opModeIsActive()) {
+        time.reset();
 
-            opMode.telemetry.addData("Current Time Left - ", (time - runTime.seconds()));
+        while (time.seconds() < seconds && opMode.opModeIsActive()) {
+
+            opMode.telemetry.addData("Current Time Left - ", (seconds - time.seconds()));
             opMode.telemetry.update();
 
             turn(power, turnRight);
@@ -145,21 +146,17 @@ public class Drivetrain {
 
 
     public double getEncoderAvg() {
-
         int countZeros = 0;
 
         if (fl.getCurrentPosition() == 0) {
             countZeros++;
         }
-
         if (fr.getCurrentPosition() == 0) {
             countZeros++;
         }
-
         if (bl.getCurrentPosition() == 0) {
             countZeros++;
         }
-
         if (br.getCurrentPosition() == 0) {
             countZeros++;
         }
@@ -178,17 +175,14 @@ public class Drivetrain {
     }
 
     public double getRightEncoderAvg() {
-
         int countZeros = 0;
 
         if (fr.getCurrentPosition() == 0) {
             countZeros++;
         }
-
         if (br.getCurrentPosition() == 0) {
             countZeros++;
         }
-
         if (countZeros == 2) {
             return 0;
         }
@@ -199,17 +193,14 @@ public class Drivetrain {
     }
 
     public double getLeftEncoderAvg() {
-
         int countZeros = 0;
 
         if (fl.getCurrentPosition() == 0) {
             countZeros++;
         }
-
         if (bl.getCurrentPosition() == 0) {
             countZeros++;
         }
-
         if (countZeros == 2) {
             return 0;
         }
@@ -220,17 +211,18 @@ public class Drivetrain {
     }
 
     public void moveEncoder(double power, double distance, double timeout) {
+        ElapsedTime time = new ElapsedTime();
 
         resetEncoders();
 
         double initEncoder = getEncoderAvg();
-        runTime.reset();
+        time.reset();
 
         opMode.telemetry.addData("Init Encoder", initEncoder);
         opMode.telemetry.update();
 
 
-        while (Math.abs(getEncoderAvg() - initEncoder) < distance && runTime.seconds() < timeout && opMode.opModeIsActive()) {
+        while (Math.abs(getEncoderAvg() - initEncoder) < distance && time.seconds() < timeout && opMode.opModeIsActive()) {
 
             startMotors(power);
 
@@ -244,17 +236,18 @@ public class Drivetrain {
     }
 
     public void moveEncBadHardwareForward(double power, double distance, double timeout) {
+        ElapsedTime time = new ElapsedTime();
 
         resetEncoders();
 
         double initEncoder = getEncoderAvg();
-        runTime.reset();
+        time.reset();
 
         opMode.telemetry.addData("Init Encoder", initEncoder);
         opMode.telemetry.update();
 
 
-        while (Math.abs(getEncoderAvg() - initEncoder) < distance && runTime.seconds() < timeout && opMode.opModeIsActive()) {
+        while (Math.abs(getEncoderAvg() - initEncoder) < distance && time.seconds() < timeout && opMode.opModeIsActive()) {
 
             fl.setPower(power);
             fr.setPower(power * 0.75);
@@ -271,17 +264,18 @@ public class Drivetrain {
     }
 
     public void moveEncBadHardwareBackward(double power, double distance, double timeout) {
+        ElapsedTime time = new ElapsedTime();
 
         resetEncoders();
 
         double initEncoder = getEncoderAvg();
-        runTime.reset();
+        time.reset();
 
         opMode.telemetry.addData("Init Encoder", initEncoder);
         opMode.telemetry.update();
 
 
-        while (Math.abs(getEncoderAvg() - initEncoder) < distance && runTime.seconds() < timeout && opMode.opModeIsActive()) {
+        while (Math.abs(getEncoderAvg() - initEncoder) < distance && time.seconds() < timeout && opMode.opModeIsActive()) {
 
             fl.setPower(power);
             fr.setPower(power);
@@ -298,11 +292,12 @@ public class Drivetrain {
     }
 
     public void leftTurnEncoder(double power, double distance, double timeout) {
+        ElapsedTime time = new ElapsedTime();
 
         double initEncoder = getRightEncoderAvg();
-        runTime.reset();
+        time.reset();
 
-        while (((getRightEncoderAvg() - initEncoder) < distance) && opMode.opModeIsActive() && (runTime.seconds() < timeout)) {
+        while (((getRightEncoderAvg() - initEncoder) < distance) && opMode.opModeIsActive() && (time.seconds() < timeout)) {
 
             turn(-power, false);
 
@@ -317,10 +312,12 @@ public class Drivetrain {
 
     public void rightTurnEncoder(double power, double distance, double timeout) {
 
-        double initEncoder = getLeftEncoderAvg();
-        runTime.reset();
+        ElapsedTime time = new ElapsedTime();
 
-        while ((getLeftEncoderAvg() - initEncoder) < distance && runTime.seconds() < timeout && opMode.opModeIsActive()) {
+        double initEncoder = getLeftEncoderAvg();
+        time.reset();
+
+        while ((getLeftEncoderAvg() - initEncoder) < distance && time.seconds() < timeout && opMode.opModeIsActive()) {
 
             turn(power, true);
 
@@ -337,7 +334,7 @@ public class Drivetrain {
 
     public void turnGyro(double power, double targetAngleChange, boolean turnRight, int timeout) {
 
-        runTime.reset();
+        ElapsedTime time = new ElapsedTime();
 
         double initAngle = sensors.getGyroYaw();
         opMode.telemetry.addData("Initial Angle", initAngle);
@@ -347,67 +344,20 @@ public class Drivetrain {
         opMode.telemetry.addData("CurrAngleChange", currAngleChange);
         opMode.telemetry.update();
 
-        while (Math.abs((sensors.getGyroYaw() - initAngle)) < targetAngleChange && opMode.opModeIsActive() && runTime.seconds() < timeout) {
-
+        while (Math.abs((sensors.getGyroYaw() - initAngle)) < targetAngleChange && opMode.opModeIsActive() && time.seconds() < timeout) {
             turn(power, turnRight);
 
             opMode.telemetry.addData("Angle left", targetAngleChange - currAngleChange);
             opMode.telemetry.update();
 
         }
-
         stopMotors();
-
     }
-
 
     //====================================== PID METHODS ===========================================
 
-    public void movePID(double power, double distance, double kP, double kI, double kD, double accuracy, double timeout, double bias) {
-
-        double error;
-        double proportional;
-        double integral = 0;
-        double derivative;
-        double lastRunTime;
-        double lastError = distance - getEncoderAvg();
-        double initEncoder = getEncoderAvg();
-
-        resetEncoders();
-
-        ElapsedTime runTime = new ElapsedTime();
-
-        runTime.reset();
-
-        while ((getEncoderAvg() - initEncoder) < (distance - accuracy) && runTime.seconds() < timeout && opMode.opModeIsActive()) {
-
-            lastRunTime = runTime.seconds();
-
-            error = distance - getEncoderAvg();
-
-            proportional = (error * kP);
-            integral += (error * (runTime.seconds() - lastRunTime) * kI);
-            derivative = ((error - lastError) / (runTime.seconds() - lastRunTime)) * kD;
-
-            power = proportional + integral - derivative + bias;
-
-            startMotors(power);
-
-            opMode.telemetry.addData("Distance Remaining: ", error + "");
-            opMode.telemetry.update();
-
-            lastError = error;
-
-            opMode.idle();
-
-        }
-
-        stopMotors();
-
-    }
-
-    public void moveGyroStabPID(double power, double distance, double kP, double kI, double kD, double gyrokP, double accuracy, double timeout, double bias) {
-
+    public void moveGyroStabPID(double distance, double kP, double kI, double kD, double gyrokP, double timeout) {
+        double power;
         double error;
         double proportional;
         double integral = 0;
@@ -419,21 +369,20 @@ public class Drivetrain {
 
         resetEncoders();
 
-        ElapsedTime runTime = new ElapsedTime();
+        ElapsedTime time = new ElapsedTime();
 
-        runTime.reset();
+        time.reset();
 
-        while ((getEncoderAvg() - initEncoder) < (distance - accuracy) && runTime.seconds() < timeout && opMode.opModeIsActive()) {
-
-            lastRunTime = runTime.seconds();
+        while ((getEncoderAvg() - initEncoder) < distance && time.seconds() < timeout && opMode.opModeIsActive()) {
+            lastRunTime = time.seconds();
 
             error = distance - getEncoderAvg();
 
             proportional = (error * kP);
-            integral += (error * (runTime.seconds() - lastRunTime) * kI);
-            derivative = ((error - lastError) / (runTime.seconds() - lastRunTime)) * kD;
+            integral += (error * (time.seconds() - lastRunTime) * kI);
+            derivative = ((error - lastError) / (time.seconds() - lastRunTime)) * kD;
 
-            power = proportional + integral - derivative + bias;
+            power = proportional + integral - derivative;
 
             startMotors(power * gyrokP);
 
@@ -445,9 +394,7 @@ public class Drivetrain {
             opMode.idle();
 
         }
-
         stopMotors();
-
     }
 
     public void turnP(double angleChange, boolean turnRight, double kP) {
@@ -470,12 +417,46 @@ public class Drivetrain {
 
             opMode.idle();
         }
-
         stopMotors();
 
     }
 
-    public void turnPID(double angle, boolean turnRight, double kP, double kI, double kD, double accuracy, double timeout, double bias) {
+    public void turnPI(double angleChange, boolean turnRight, double kP, double kI) {
+
+        ElapsedTime time = new ElapsedTime();
+
+        double error;
+        double power;
+        double proportional;
+        double integral = 0;
+
+        double prevRunTime;
+        double initAngle = sensors.getGyroYaw();
+
+        time.reset();
+
+        while (Math.abs(sensors.getGyroYaw() - initAngle) < angleChange && opMode.opModeIsActive()) {
+            prevRunTime = time.seconds();
+
+            error = angleChange - (sensors.getGyroYaw() - initAngle);
+            proportional = error * kP;
+            integral += (error * (time.seconds() - prevRunTime)) * kI;
+
+            power = proportional + integral;
+
+            turn(power, turnRight);
+
+            opMode.telemetry.addData("Angle Left", error);
+            opMode.telemetry.update();
+
+            opMode.idle();
+        }
+        stopMotors();
+
+    }
+
+
+    public void turnPID(double angle, boolean turnRight, double kP, double kI, double kD, double timeout) {
 
         double power;
         double error;
@@ -485,21 +466,21 @@ public class Drivetrain {
         double lastRunTime;
         double lastError = angle - sensors.getGyroYaw();
 
-        ElapsedTime runTime = new ElapsedTime();
+        ElapsedTime time = new ElapsedTime();
 
-        runTime.reset();
+        time.reset();
 
-        while (sensors.getGyroYaw() < (angle - accuracy) && runTime.seconds() < timeout && opMode.opModeIsActive()) {
+        while (sensors.getGyroYaw() < (angle) && time.seconds() < timeout && opMode.opModeIsActive()) {
 
-            lastRunTime = runTime.seconds();
+            lastRunTime = time.seconds();
 
             error = angle - sensors.getGyroYaw();
 
             proportional = (error * kP);
-            integral += (error * (runTime.seconds() - lastRunTime) * kI);
-            derivative = ((error - lastError) / (runTime.seconds() - lastRunTime)) * kD;
+            integral += (error * (time.seconds() - lastRunTime) * kI);
+            derivative = ((error - lastError) / (time.seconds() - lastRunTime)) * kD;
 
-            power = proportional + integral - derivative + bias;
+            power = proportional + integral - derivative;
 
             turn(power, turnRight);
 
@@ -511,7 +492,6 @@ public class Drivetrain {
             opMode.idle();
 
         }
-
         stopMotors();
 
     }
@@ -535,8 +515,5 @@ public class Drivetrain {
             opMode.telemetry.addData("Encoder Average", getEncoderAvg());
         }
     }
-
-
-    //================================= MOTION PROFILING METHODS ===================================
 
 }

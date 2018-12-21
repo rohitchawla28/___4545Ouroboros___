@@ -88,7 +88,6 @@ public class Vuforia {
     //specific method from vuforia api to convert to bitmap
     //currently not using
     public Bitmap vufConvertToBitmap(Frame frame) {
-
         return vuforia.convertFrameToBitmap(frame);
     }
 

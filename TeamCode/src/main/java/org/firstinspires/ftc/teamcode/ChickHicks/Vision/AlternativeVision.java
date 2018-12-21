@@ -80,6 +80,9 @@ public class AlternativeVision  {
             Scalar cvErodeBordervalue = new Scalar(-1);
             cvErode(cvErodeSrc, cvErodeKernel, cvErodeAnchor, cvErodeIterations, cvErodeBordertype, cvErodeBordervalue, cvErodeOutput);
 
+            opMode.telemetry.addLine("CV Erode finished");
+            opMode.telemetry.update();
+
             // Step Blur1:
             Mat blur1Input = cvErodeOutput;
             BlurType blur1Type = BlurType.get("Median Filter");
@@ -91,6 +94,9 @@ public class AlternativeVision  {
             Mat maskMask = blur1Output;
             mask(maskInput, maskMask, maskOutput);
 
+            opMode.telemetry.addLine("Mask finished");
+            opMode.telemetry.update();
+
             // Step Find_Blobs0:
             Mat findBlobsInput = maskOutput;
             double findBlobsMinArea = 1;
@@ -100,7 +106,7 @@ public class AlternativeVision  {
 
             KeyPoint[] findBlobsArray = findBlobsOutput.toArray();
 
-            try{
+            try {
                 findSampling(findBlobsArray);
                 opMode.telemetry.addData("Blobs", findBlobsArray[0]);
                 opMode.telemetry.update();

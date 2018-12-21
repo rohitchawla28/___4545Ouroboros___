@@ -19,7 +19,7 @@ public class PID extends LinearOpMode{
 
         waitForStart();
 
-        drivetrain.turnP(90 ,true, .6/90);
+        drivetrain.turnPI(90 ,true, .45/90, 0);
 
     }
 

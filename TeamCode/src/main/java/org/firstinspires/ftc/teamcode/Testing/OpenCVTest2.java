@@ -23,22 +23,17 @@ public class OpenCVTest2 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         vuforia = new Vuforia(this);
-
         vision = new AlternativeVision(this, vuforia);
-
-
 
         telemetry.addLine("Initialized");
         telemetry.update();
 
         waitForStart();
 
-        while(opModeIsActive())
-        {
-            vision.process(vuforia.convertToMat());
-            telemetry.addData("Cube Position", AlternativeVision.cubePosition3);
-            telemetry.update();
-        }
+        vision.process(vuforia.convertToMat());
+        telemetry.addData("Cube Position", AlternativeVision.cubePosition3);
+        telemetry.update();
+
     }
 }
 
