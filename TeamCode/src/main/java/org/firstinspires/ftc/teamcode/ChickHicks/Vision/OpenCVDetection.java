@@ -26,18 +26,18 @@ import java.util.Arrays;
  */
 
 public class OpenCVDetection {
-    public static int cubePositionAlt;
+    public static String cubePositionAlt;
 
     private LinearOpMode opMode;
-    private Vuforia vuforia;
     private int recCount;
+    private Vuforia vuforia;
 
     //Outputs
     private Mat hslThresholdOutput;
     private Mat blurOutput;
     private MatOfKeyPoint findBlobsOutput;
-    private final double LEFT_CONST = 1300.0;
-    private final double RIGHT_CONST = 110.0;
+    private final double RIGHT_CONST = 1100.0;
+    private final double LEFT_CONST = 110.0;
     private final double MIDDLE_CONST = 600.0 ;
 
     public OpenCVDetection(LinearOpMode opMode, Vuforia vuforia) throws InterruptedException {
@@ -47,15 +47,13 @@ public class OpenCVDetection {
 
         System.loadLibrary("opencv_java3");
 
-        this.opMode.waitForStart();
-
-        cubePositionAlt = 0;
+        cubePositionAlt = "";
         recCount = 0;
 
         hslThresholdOutput = new Mat();
         blurOutput = new Mat();
         findBlobsOutput = new MatOfKeyPoint();
-        }
+    }
 
     /**
      * This is the primary method that runs the entire pipeline and updates the outputs.
@@ -85,6 +83,7 @@ public class OpenCVDetection {
             KeyPoint[] findBlobsArray = findBlobsOutput.toArray();
             try{
                 findSampling(matImage, findBlobsArray);
+                recCount = 2;
                 opMode.telemetry.addData("Blobs", findBlobsArray[0]);
                 opMode.telemetry.update();
             }catch (ArrayIndexOutOfBoundsException E){
@@ -101,14 +100,14 @@ public class OpenCVDetection {
 
     private void findSampling(Mat image, KeyPoint[] array) throws ArrayIndexOutOfBoundsException{
         for (KeyPoint point: array){
-            if (point.pt.x <= (LEFT_CONST * 0.80) || point.pt.x >= (LEFT_CONST * 1.20) )
-                cubePositionAlt = 1;
-            else if (point.pt.x <= MIDDLE_CONST* 0.80 || point.pt.x >= MIDDLE_CONST* 1.20 )
-                cubePositionAlt = 2;
-            else if (point.pt.x <= RIGHT_CONST* 0.80 || point.pt.x >= RIGHT_CONST* 1.20 )
-                cubePositionAlt = 3;
+            if (point.pt.x >= (LEFT_CONST * 0.80) && point.pt.x <= (LEFT_CONST * 1.20))
+                cubePositionAlt = "left";
+            else if (point.pt.x >= (MIDDLE_CONST * 0.80) && point.pt.x <= (MIDDLE_CONST * 1.20))
+                cubePositionAlt = "center";
+            else if (point.pt.x >= (RIGHT_CONST * 0.80) && point.pt.x <= (RIGHT_CONST* 1.50))
+                cubePositionAlt = "right";
             else
-                cubePositionAlt = 0;
+                cubePositionAlt = "unknown";
         }
     }
 

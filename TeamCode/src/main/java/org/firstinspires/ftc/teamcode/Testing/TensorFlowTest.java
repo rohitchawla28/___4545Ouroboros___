@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.Testing;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
 
+@Disabled
 @Autonomous
         (name = "TensorFlowTest", group = "Auto")
 

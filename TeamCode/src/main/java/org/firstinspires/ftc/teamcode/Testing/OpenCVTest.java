@@ -11,7 +11,6 @@ import org.firstinspires.ftc.teamcode.ChickHicks.Vision.Vuforia;
 //import ChickHicks.Vision;
 //import ChickHicks.Vuforia;
 
-//@Disabled
 @Autonomous
         (name = "OpenCVTest", group = "Auto")
 
@@ -26,10 +25,10 @@ public class OpenCVTest extends LinearOpMode {
         vuforia = new Vuforia(this);
         vision = new OpenCVDetection(this, vuforia);
 
-
-
         telemetry.addLine("Initialized");
         telemetry.update();
+
+        waitForStart();
 
         while(opModeIsActive())
         {

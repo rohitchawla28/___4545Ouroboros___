@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.Autonomous.LeagueMeet2;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
 import org.firstinspires.ftc.teamcode.ChickHicks.Lift;
 
+@Disabled
 @Autonomous
         (name = "StrateLineCrater2", group = "Auto")
 

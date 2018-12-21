@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Autonomous.LeagueMeet2;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
@@ -10,15 +11,15 @@ import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
 
 import static org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection.cubePosition;
 
-
+@Disabled
 @Autonomous
         (name = "CraterNoIntake", group = "Auto")
 
 public class CraterNoIntake extends LinearOpMode{
-    private Drivetrain drivetrain;
+    Drivetrain drivetrain;
     Lift lift;
-    private Intake intake;
-    private TensorFlowDetection vision;
+    Intake intake;
+    TensorFlowDetection vision;
 
     @Override
     public void runOpMode() throws InterruptedException {

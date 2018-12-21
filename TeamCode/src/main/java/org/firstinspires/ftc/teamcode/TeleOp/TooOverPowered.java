@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class TooOverPowered extends OPMode {
 
     public void loop() {
-
+        tankDrive();
+        //arcadeDrive();
         lift();
-        extend();
     }
 }

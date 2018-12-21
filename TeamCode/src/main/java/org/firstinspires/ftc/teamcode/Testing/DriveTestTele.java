@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Disabled
 @TeleOp
         (name = "DriveTestTele", group = "Controlled")
 
@@ -16,11 +15,11 @@ public class DriveTestTele extends OpMode {
     private DcMotor bl;
     private DcMotor br;
 
-    private double halfSpeedMod = 1;
-    private int reverseDriveMod = 1;
-
-    boolean halfCount = false;
-    boolean reverseCount = false;
+//    private double halfSpeedMod = 1;
+//    private int reverseDriveMod = 1;
+//
+//    boolean halfCount = false;
+//    boolean reverseCount = false;
 
     @Override
     public void init() {
@@ -41,9 +40,6 @@ public class DriveTestTele extends OpMode {
         bl.setDirection(DcMotor.Direction.FORWARD);
         br.setDirection(DcMotor.Direction.REVERSE);
 
-        //4" position
-        //while (extend.setPower(0);
-
         telemetry.addLine("Initialized");
         telemetry.update();
 
@@ -51,89 +47,69 @@ public class DriveTestTele extends OpMode {
 
     public void tankDrive() {
 
-        double leftDrive = gamepad1.left_stick_y * halfSpeedMod * reverseDriveMod;
-        double rightDrive = gamepad1.right_stick_y * halfSpeedMod * reverseDriveMod;
+        double leftDrive = gamepad1.left_stick_y /* * halfSpeedMod * reverseDriveMod*/;
+        double rightDrive = gamepad1.right_stick_y /* * halfSpeedMod * reverseDriveMod*/;
 
-        if (leftDrive > .1) {
-
+        if (Math.abs(leftDrive) > .1) {
             fl.setPower(leftDrive);
             bl.setPower(leftDrive);
-
-        }
-        else if (leftDrive < -.1) {
-
-            fl.setPower(leftDrive);
-            bl.setPower(leftDrive);
-
         }
         else {
-
             fl.setPower(0);
             bl.setPower(0);
-
         }
 
-        if (rightDrive > .1) {
-
+        if (Math.abs(rightDrive) > .1) {
             fr.setPower(rightDrive);
             br.setPower(rightDrive);
-
-        }
-        else if (rightDrive < -.1) {
-
-            fr.setPower(rightDrive);
-            br.setPower(rightDrive);
-
         }
         else {
-
             fr.setPower(0);
             br.setPower(0);
-
         }
 
-        if (gamepad1.b && !halfCount) {
-            while (gamepad1.b){
-            }
-            halfCount = !halfCount;
-            halfSpeedMod = 0.5;
+//        if (gamepad1.b && !halfCount) {
+//            while (gamepad1.b){
+//            }
+//            halfCount = !halfCount;
+//            halfSpeedMod = 0.5;
+//
+//            telemetry.addLine("Half Speed On");
+//            telemetry.update();
+//
+//        }
+//
+//        if (gamepad1.b && halfCount) {
+//            while(gamepad1.b){
+//            }
+//            halfCount = !halfCount;
+//            halfSpeedMod = 1;
+//
+//            telemetry.addLine("Half Speed Off");
+//            telemetry.update();
+//
+//        }
 
-            telemetry.addLine("Half Speed On");
-            telemetry.update();
-
-        }
-
-        if (gamepad1.b && halfCount) {
-            while(gamepad1.b){
-            }
-            halfCount = !halfCount;
-            halfSpeedMod = 1;
-
-            telemetry.addLine("Half Speed Off");
-            telemetry.update();
-
-        }
-
-        if (gamepad1.y && !reverseCount) {
-            while (gamepad1.y) {
-            }
-            reverseDriveMod = -1;
-            reverseCount = !reverseCount;
-
-            telemetry.addLine("Reverse Mode On");
-            telemetry.update();
-
-        }
-        if (gamepad1.y && reverseCount) {
-            while (gamepad1.y){
-            }
-            reverseDriveMod = 1;
-            reverseCount = !reverseCount;
-
-            telemetry.addLine("Reverse Mode Off");
-            telemetry.update();
-
-        }
+//        if (gamepad1.y && !reverseCount) {
+//            while (gamepad1.y) {
+//            }
+//            reverseDriveMod = -1;
+//            reverseCount = !reverseCount;
+//
+//            telemetry.addLine("Reverse Mode On");
+//            telemetry.update();
+//
+//        }
+//        if (gamepad1.y && reverseCount) {
+//            while (gamepad1.y){
+//            }
+//            reverseDriveMod = 1;
+//            reverseCount = !reverseCount;
+//
+//            telemetry.addLine("Reverse Mode Off");
+//            telemetry.update();
+//
+//        }
     }
 
     public void loop() {
