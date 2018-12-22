@@ -35,7 +35,7 @@ public class AlternativeVision  {
     private MatOfKeyPoint findBlobsOutput;
 
     private final double LEFT_CONST = 1300.0;
-    private final double RIGHT_CONST = 150.0;
+    private final double RIGHT_CONST = 200.0;
     private final double MIDDLE_CONST = 600.0 ;
 
     public AlternativeVision(LinearOpMode opMode, Vuforia vuforia) {

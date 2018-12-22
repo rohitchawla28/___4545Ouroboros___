@@ -24,24 +24,22 @@ public class Crater extends LinearOpMode{
 
         drivetrain = new Drivetrain(this);
         vuforia = new Vuforia(this);
-
-        telemetry.addLine("Vuforia init finished");
-        telemetry.update();
-
         vision = new OpenCVDetection(this, vuforia);
 
-        telemetry.addLine("Vision init finished");
+        telemetry.addLine(" Init finished");
         telemetry.update();
 
         //lift = new Lift(this);
 
         waitForStart();
 
-        vision.process(vuforia.convertToMat());
+        while (opModeIsActive())
+        {
+            vision.process(vuforia.convertToMat());
 
-        telemetry.addLine("The cube is in position " + vision.cubePositionAlt);
-        telemetry.update();
+            telemetry.addLine("The cube is in position " + vision.cubePositionAlt);
+            telemetry.update();
 
-
+        }
     }
 }
