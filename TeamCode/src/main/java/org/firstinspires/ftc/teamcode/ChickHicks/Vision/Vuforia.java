@@ -75,6 +75,12 @@ public class Vuforia {
                     rgb = picture.getImage(i);
                     break;
                 }
+
+                /**Need to add something to return out if format isnt 565 */
+
+//                if (rgb == null) {
+//                    return;
+//                }
             }
 
         // create a new bitmap and copy the byte buffer returned by rgb.getPixels() to it

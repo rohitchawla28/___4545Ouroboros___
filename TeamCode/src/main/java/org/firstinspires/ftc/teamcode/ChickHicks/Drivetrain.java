@@ -37,6 +37,10 @@ public class Drivetrain {
         bl.setDirection(DcMotor.Direction.REVERSE);
         br.setDirection(DcMotor.Direction.FORWARD);
 
+        fl.setZeroPowerBehavior(ZeroPowerBehavior.FLOAT);
+        fr.setZeroPowerBehavior(ZeroPowerBehavior.FLOAT);
+        bl.setZeroPowerBehavior(ZeroPowerBehavior.FLOAT);
+        br.setZeroPowerBehavior(ZeroPowerBehavior.FLOAT);
     }
 
     //================================= UTILITY METHODS ============================================
@@ -398,14 +402,13 @@ public class Drivetrain {
     }
 
     public void turnP(double angleChange, boolean turnRight, double kP) {
-
         double error;
         double power;
         double proportional;
         double initAngle = sensors.getGyroYaw();
 
         while (Math.abs(sensors.getGyroYaw() - initAngle) < angleChange && opMode.opModeIsActive()) {
-            error = angleChange - (sensors.getGyroYaw() - initAngle);
+            error = angleChange - Math.abs((sensors.getGyroYaw() - initAngle));
             proportional = error * kP;
 
             power = proportional;
@@ -421,32 +424,55 @@ public class Drivetrain {
 
     }
 
-    public void turnPI(double angleChange, boolean turnRight, double kP, double kI) {
+    public void turnPD(double angleChange, boolean turnRight, double kP, double kD) {
+
+    }
+
+    public void turnPI(double angleChange, boolean turnRight, double kP, double kI, double timeout) {
 
         ElapsedTime time = new ElapsedTime();
+        ElapsedTime timeoutTimer = new ElapsedTime();
 
         double error;
         double power;
         double proportional;
         double integral = 0;
+        double bias = 0.15;
 
         double prevRunTime;
         double initAngle = sensors.getGyroYaw();
-
+        boolean isNegative;
         time.reset();
+        timeoutTimer.reset();
 
-        while (Math.abs(sensors.getGyroYaw() - initAngle) < angleChange && opMode.opModeIsActive()) {
+        while (Math.abs(sensors.getGyroYaw() - (angleChange + initAngle)) > 0 && opMode.opModeIsActive() && timeoutTimer.seconds() < 15) {
             prevRunTime = time.seconds();
 
-            error = angleChange - (sensors.getGyroYaw() - initAngle);
+            error = angleChange - (Math.abs(sensors.getGyroYaw() - initAngle));
             proportional = error * kP;
             integral += (error * (time.seconds() - prevRunTime)) * kI;
 
             power = proportional + integral;
+            isNegative = false;
 
-            turn(power, turnRight);
+            if (power < 0) {
+                isNegative = true;
+            }
 
-            opMode.telemetry.addData("Angle Left", error);
+            if (Math.abs(power) < bias) {
+                power = 0;
+            }
+
+            if (isNegative) {
+                turn(power - bias, turnRight);
+            }
+            else turn(power + bias, turnRight);
+
+            opMode.telemetry.addData("error ", error);
+            opMode.telemetry.addData("bias ", bias);
+            opMode.telemetry.addData("P", proportional);
+            opMode.telemetry.addData("I", integral);
+            opMode.telemetry.addData("Power", power);
             opMode.telemetry.update();
 
             opMode.idle();
@@ -478,9 +504,9 @@ public class Drivetrain {
 
             proportional = (error * kP);
             integral += (error * (time.seconds() - lastRunTime) * kI);
-            derivative = ((error - lastError) / (time.seconds() - lastRunTime)) * kD;
+            derivative = (Math.abs(error - lastError) / (Math.abs(time.seconds() - lastRunTime))) * kD;
 
-            power = proportional + integral - derivative;
+            power = proportional + integral + derivative;
 
             turn(power, turnRight);
 
