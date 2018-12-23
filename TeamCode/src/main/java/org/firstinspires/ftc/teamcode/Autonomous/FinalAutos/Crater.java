@@ -15,16 +15,16 @@ import org.firstinspires.ftc.teamcode.ChickHicks.Vision.Vuforia;
 public class Crater extends LinearOpMode{
     Drivetrain drivetrain;
 //    Lift lift;
-    OpenCVDetection vision;
-    Vuforia vuforia;
+    //OpenCVDetection vision;
+   // Vuforia vuforia;
 
 
     @Override
     public void runOpMode() throws InterruptedException {
 
         drivetrain = new Drivetrain(this);
-        vuforia = new Vuforia(this);
-        vision = new OpenCVDetection(this, vuforia);
+       // vuforia = new Vuforia(this);
+       // vision = new OpenCVDetection(this, vuforia);
 
         telemetry.addLine(" Init finished");
         telemetry.update();
@@ -33,13 +33,15 @@ public class Crater extends LinearOpMode{
 
         waitForStart();
 
-        while (opModeIsActive())
-        {
-            vision.process(vuforia.convertToMat());
+//        while (opModeIsActive())
+//        {
+//            vision.process(vuforia.convertToMat());
+//
+//            telemetry.addLine("The cube is in position " + vision.cubePositionAlt);
+//            telemetry.update();
+//
+//        }
 
-            telemetry.addLine("The cube is in position " + vision.cubePositionAlt);
-            telemetry.update();
-
-        }
+        drivetrain.turnPI(90, true, .33/90, 0.013, 2);
     }
 }
