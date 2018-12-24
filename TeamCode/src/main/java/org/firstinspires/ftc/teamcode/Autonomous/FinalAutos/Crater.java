@@ -42,6 +42,6 @@ public class Crater extends LinearOpMode{
 //
 //        }
 
-        drivetrain.turnPI(90, true, .33/90, 0.013, 2);
+        drivetrain.turnPI(90, true, .33/90, 0.013, 15);
     }
 }

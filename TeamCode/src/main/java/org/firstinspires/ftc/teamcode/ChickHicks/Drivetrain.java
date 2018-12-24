@@ -360,16 +360,13 @@ public class Drivetrain {
 
     //====================================== PID METHODS ===========================================
 
-    public void moveGyroStabPID(double distance, double kP, double kI, double kD, double gyrokP, double timeout) {
+    public void movePI(double distance, double kP, double kI, double timeout) {
         double power;
         double error;
         double proportional;
         double integral = 0;
-        double derivative;
         double lastRunTime;
-        double lastError = distance - getEncoderAvg();
         double initEncoder = getEncoderAvg();
-        double heading = sensors.getGyroYaw();
 
         resetEncoders();
 
@@ -384,16 +381,14 @@ public class Drivetrain {
 
             proportional = (error * kP);
             integral += (error * (time.seconds() - lastRunTime) * kI);
-            derivative = ((error - lastError) / (time.seconds() - lastRunTime)) * kD;
 
-            power = proportional + integral - derivative;
+            power = proportional + integral;
 
-            startMotors(power * gyrokP);
+            startMotors(power);
 
-            opMode.telemetry.addData("Distance Remaining: ", error + "");
+            opMode.telemetry.addData("P", proportional);
+            opMode.telemetry.addData("I", integral);
             opMode.telemetry.update();
-
-            lastError = error;
 
             opMode.idle();
 
@@ -424,10 +419,6 @@ public class Drivetrain {
 
     }
 
-    public void turnPD(double angleChange, boolean turnRight, double kP, double kD) {
-
-    }
-
     public void turnPI(double angleChange, boolean turnRight, double kP, double kI, double timeout) {
 
         ElapsedTime time = new ElapsedTime();
@@ -445,7 +436,7 @@ public class Drivetrain {
         time.reset();
         timeoutTimer.reset();
 
-        while (Math.abs(sensors.getGyroYaw() - (angleChange + initAngle)) > 0 && opMode.opModeIsActive() && timeoutTimer.seconds() < 15) {
+        while (Math.abs(sensors.getGyroYaw() - (angleChange + initAngle)) > 0 && opMode.opModeIsActive() && timeoutTimer.seconds() < timeout) {
             prevRunTime = time.seconds();
 
             error = angleChange - (Math.abs(sensors.getGyroYaw() - initAngle));
@@ -481,36 +472,58 @@ public class Drivetrain {
 
     }
 
+    public void turnPID(double angleChange, boolean turnRight, double kP, double kI, double kD, double timeout) {
 
-    public void turnPID(double angle, boolean turnRight, double kP, double kI, double kD, double timeout) {
+        ElapsedTime time = new ElapsedTime();
+        ElapsedTime timeoutTimer = new ElapsedTime();
 
-        double power;
         double error;
+        double power;
+        boolean isNegative;
+        double prevRunTime;
+
         double proportional;
         double integral = 0;
         double derivative;
-        double lastRunTime;
-        double lastError = angle - sensors.getGyroYaw();
+        double bias = 0.15;
 
-        ElapsedTime time = new ElapsedTime();
+        double initAngle = sensors.getGyroYaw();
+        double lastError = angleChange - (Math.abs(sensors.getGyroYaw() - initAngle));
 
         time.reset();
+        timeoutTimer.reset();
 
-        while (sensors.getGyroYaw() < (angle) && time.seconds() < timeout && opMode.opModeIsActive()) {
+        while (Math.abs(sensors.getGyroYaw() - (angleChange + initAngle)) > 0 && opMode.opModeIsActive() && timeoutTimer.seconds() < timeout) {
+            prevRunTime = time.seconds();
 
-            lastRunTime = time.seconds();
+            error = angleChange - (Math.abs(sensors.getGyroYaw() - initAngle));
 
-            error = angle - sensors.getGyroYaw();
+            proportional = error * kP;
+            integral += (error * (time.seconds() - prevRunTime)) * kI;
+            derivative = (error - lastError) / (time.seconds() - lastTime);
 
-            proportional = (error * kP);
-            integral += (error * (time.seconds() - lastRunTime) * kI);
-            derivative = (Math.abs(error - lastError) / (Math.abs(time.seconds() - lastRunTime))) * kD;
+            power = proportional + integral;
+            isNegative = false;
 
-            power = proportional + integral + derivative;
+            if (power < 0) {
+                isNegative = true;
+            }
 
-            turn(power, turnRight);
+            if (Math.abs(power) < bias) {
+                power = 0;
+            }
 
-            opMode.telemetry.addData("Angle Remaining: ", error + "");
+            if (isNegative) {
+                turn(power - bias, turnRight);
+            }
+            else turn(power + bias, turnRight);
+
+            opMode.telemetry.addData("error ", error);
+            opMode.telemetry.addData("bias ", bias);
+            opMode.telemetry.addData("P", proportional);
+            opMode.telemetry.addData("I", integral);
+            opMode.telemetry.addData("D", derivative);
+            opMode.telemetry.addData("Power", power);
             opMode.telemetry.update();
 
             lastError = error;
