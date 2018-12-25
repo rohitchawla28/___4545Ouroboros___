@@ -46,7 +46,6 @@ public class Drivetrain {
     //================================= UTILITY METHODS ============================================
 
     public void resetEncoders() {
-
         fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         opMode.idle();
         fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -64,10 +63,10 @@ public class Drivetrain {
         opMode.idle();
         br.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         opMode.idle();
+
     }
 
     public void stopMotors() {
-
         fl.setPower(0);
         fr.setPower(0);
         bl.setPower(0);
@@ -76,7 +75,6 @@ public class Drivetrain {
     }
 
     public void startMotors(double power) {
-
         fl.setPower(power);
         fr.setPower(power);
         bl.setPower(power);
@@ -85,10 +83,8 @@ public class Drivetrain {
     }
 
     public void turn(double power, boolean turnRight) {
-
         //Turns right
         if (turnRight) {
-
             fl.setPower(power);
             fr.setPower(-power);
             bl.setPower(power);
@@ -98,7 +94,6 @@ public class Drivetrain {
 
         // Turns left
         else {
-
             fl.setPower(-power);
             fr.setPower(power);
             bl.setPower(-power);
@@ -116,32 +111,28 @@ public class Drivetrain {
         time.reset();
 
         while (time.seconds() < seconds && opMode.opModeIsActive()) {
-
             opMode.telemetry.addData("Current Time Left - ", (seconds - time.seconds()));
             opMode.telemetry.update();
 
             startMotors(power);
 
         }
-
         stopMotors();
 
     }
 
     public void turnTime(double power, double seconds, boolean turnRight) {
-
         ElapsedTime time = new ElapsedTime();
 
         time.reset();
 
         while (time.seconds() < seconds && opMode.opModeIsActive()) {
-
             opMode.telemetry.addData("Current Time Left - ", (seconds - time.seconds()));
             opMode.telemetry.update();
 
             turn(power, turnRight);
-        }
 
+        }
         stopMotors();
 
     }
@@ -165,9 +156,6 @@ public class Drivetrain {
             countZeros++;
         }
 
-        opMode.telemetry.addData("Zeros", countZeros);
-        opMode.telemetry.update();
-
         if (countZeros == 4) {
             return 0;
         }
@@ -176,6 +164,7 @@ public class Drivetrain {
                 Math.abs(fr.getCurrentPosition()) +
                 Math.abs(bl.getCurrentPosition()) +
                 Math.abs(br.getCurrentPosition())) / (4 - countZeros);
+
     }
 
     public double getRightEncoderAvg() {
@@ -215,44 +204,35 @@ public class Drivetrain {
     }
 
     public void moveEncoder(double power, double distance, double timeout) {
-        ElapsedTime time = new ElapsedTime();
-
         resetEncoders();
 
+        ElapsedTime time = new ElapsedTime();
+
         double initEncoder = getEncoderAvg();
+
         time.reset();
 
-        opMode.telemetry.addData("Init Encoder", initEncoder);
-        opMode.telemetry.update();
-
-
         while (Math.abs(getEncoderAvg() - initEncoder) < distance && time.seconds() < timeout && opMode.opModeIsActive()) {
-
             startMotors(power);
 
             opMode.telemetry.addData("Encoder distance left", (distance - getEncoderAvg()));
             opMode.telemetry.update();
 
         }
-
         stopMotors();
 
     }
 
     public void moveEncBadHardwareForward(double power, double distance, double timeout) {
-        ElapsedTime time = new ElapsedTime();
-
         resetEncoders();
 
+        ElapsedTime time = new ElapsedTime();
+
         double initEncoder = getEncoderAvg();
+
         time.reset();
 
-        opMode.telemetry.addData("Init Encoder", initEncoder);
-        opMode.telemetry.update();
-
-
         while (Math.abs(getEncoderAvg() - initEncoder) < distance && time.seconds() < timeout && opMode.opModeIsActive()) {
-
             fl.setPower(power);
             fr.setPower(power * 0.75);
             bl.setPower(power);
@@ -268,19 +248,15 @@ public class Drivetrain {
     }
 
     public void moveEncBadHardwareBackward(double power, double distance, double timeout) {
-        ElapsedTime time = new ElapsedTime();
-
         resetEncoders();
 
+        ElapsedTime time = new ElapsedTime();
+
         double initEncoder = getEncoderAvg();
+
         time.reset();
 
-        opMode.telemetry.addData("Init Encoder", initEncoder);
-        opMode.telemetry.update();
-
-
         while (Math.abs(getEncoderAvg() - initEncoder) < distance && time.seconds() < timeout && opMode.opModeIsActive()) {
-
             fl.setPower(power);
             fr.setPower(power);
             bl.setPower(power);
@@ -290,87 +266,85 @@ public class Drivetrain {
             opMode.telemetry.update();
 
         }
-
         stopMotors();
 
     }
 
     public void leftTurnEncoder(double power, double distance, double timeout) {
+        resetEncoders();
+
         ElapsedTime time = new ElapsedTime();
 
         double initEncoder = getRightEncoderAvg();
+
         time.reset();
 
         while (((getRightEncoderAvg() - initEncoder) < distance) && opMode.opModeIsActive() && (time.seconds() < timeout)) {
-
-            turn(-power, false);
+            turn(power, false);
 
             opMode.telemetry.addData("Encoder distance left - ", (distance - getRightEncoderAvg()));
             opMode.telemetry.update();
 
         }
-
         stopMotors();
 
     }
 
     public void rightTurnEncoder(double power, double distance, double timeout) {
+        resetEncoders();
 
         ElapsedTime time = new ElapsedTime();
 
         double initEncoder = getLeftEncoderAvg();
+
         time.reset();
 
         while ((getLeftEncoderAvg() - initEncoder) < distance && time.seconds() < timeout && opMode.opModeIsActive()) {
-
             turn(power, true);
 
             opMode.telemetry.addData("Encoder distance left - ", (distance - getLeftEncoderAvg()));
             opMode.telemetry.update();
 
         }
-
         stopMotors();
 
     }
 
     //===================================== GYRO METHODS ===========================================
 
-    public void turnGyro(double power, double targetAngleChange, boolean turnRight, int timeout) {
-
+    public void turnGyro(double power, double angleChange, boolean turnRight, double timeout) {
         ElapsedTime time = new ElapsedTime();
 
         double initAngle = sensors.getGyroYaw();
-        opMode.telemetry.addData("Initial Angle", initAngle);
-        opMode.telemetry.update();
 
-        double currAngleChange = sensors.getGyroYaw() - initAngle;
-        opMode.telemetry.addData("CurrAngleChange", currAngleChange);
-        opMode.telemetry.update();
+        time.reset();
 
-        while (Math.abs((sensors.getGyroYaw() - initAngle)) < targetAngleChange && opMode.opModeIsActive() && time.seconds() < timeout) {
+        while (Math.abs((sensors.getGyroYaw() - initAngle)) < angleChange && opMode.opModeIsActive() && time.seconds() < timeout) {
             turn(power, turnRight);
 
-            opMode.telemetry.addData("Angle left", targetAngleChange - currAngleChange);
+            opMode.telemetry.addData("Angle left", (angleChange - Math.abs((sensors.getGyroYaw() - initAngle))));
             opMode.telemetry.update();
 
         }
         stopMotors();
+
     }
 
     //====================================== PID METHODS ===========================================
 
     public void movePI(double distance, double kP, double kI, double timeout) {
-        double power;
-        double error;
-        double proportional;
-        double integral = 0;
-        double lastRunTime;
-        double initEncoder = getEncoderAvg();
+        ElapsedTime time = new ElapsedTime();
 
         resetEncoders();
 
-        ElapsedTime time = new ElapsedTime();
+        double power;
+        double error;
+
+        double proportional;
+        double integral = 0;
+        double lastRunTime;
+
+        double initEncoder = getEncoderAvg();
 
         time.reset();
 
@@ -394,16 +368,24 @@ public class Drivetrain {
 
         }
         stopMotors();
+
     }
 
-    public void turnP(double angleChange, boolean turnRight, double kP) {
-        double error;
+    public void turnP(double angleChange, boolean turnRight, double kP, double timeout) {
+        ElapsedTime time = new ElapsedTime();
+
         double power;
+        double error;
+
         double proportional;
+
         double initAngle = sensors.getGyroYaw();
 
-        while (Math.abs(sensors.getGyroYaw() - initAngle) < angleChange && opMode.opModeIsActive()) {
+        time.reset();
+
+        while (Math.abs(sensors.getGyroYaw() - (angleChange + initAngle)) < 1 && opMode.opModeIsActive()) {
             error = angleChange - Math.abs((sensors.getGyroYaw() - initAngle));
+
             proportional = error * kP;
 
             power = proportional;
@@ -414,32 +396,36 @@ public class Drivetrain {
             opMode.telemetry.update();
 
             opMode.idle();
+
         }
         stopMotors();
 
     }
 
     public void turnPI(double angleChange, boolean turnRight, double kP, double kI, double timeout) {
-
         ElapsedTime time = new ElapsedTime();
         ElapsedTime timeoutTimer = new ElapsedTime();
 
         double error;
         double power;
+        boolean isNegative;
+
         double proportional;
         double integral = 0;
         double bias = 0.15;
 
         double prevRunTime;
+
         double initAngle = sensors.getGyroYaw();
-        boolean isNegative;
+
         time.reset();
         timeoutTimer.reset();
 
-        while (Math.abs(sensors.getGyroYaw() - (angleChange + initAngle)) > 0 && opMode.opModeIsActive() && timeoutTimer.seconds() < timeout) {
+        while (Math.abs(sensors.getGyroYaw() - (angleChange + initAngle)) > 1 && timeoutTimer.seconds() < timeout && timeoutTimer.seconds() < timeout) {
             prevRunTime = time.seconds();
 
             error = angleChange - (Math.abs(sensors.getGyroYaw() - initAngle));
+
             proportional = error * kP;
             integral += (error * (time.seconds() - prevRunTime)) * kI;
 
@@ -473,19 +459,19 @@ public class Drivetrain {
     }
 
     public void turnPID(double angleChange, boolean turnRight, double kP, double kI, double kD, double timeout) {
-
         ElapsedTime time = new ElapsedTime();
         ElapsedTime timeoutTimer = new ElapsedTime();
 
         double error;
         double power;
         boolean isNegative;
-        double prevRunTime;
 
         double proportional;
         double integral = 0;
         double derivative;
         double bias = 0.15;
+
+        double prevRunTime;
 
         double initAngle = sensors.getGyroYaw();
         double lastError = angleChange - (Math.abs(sensors.getGyroYaw() - initAngle));
@@ -500,7 +486,7 @@ public class Drivetrain {
 
             proportional = error * kP;
             integral += (error * (time.seconds() - prevRunTime)) * kI;
-            derivative = (error - lastError) / (time.seconds() - lastTime);
+            derivative = (error - lastError) / (time.seconds() - prevRunTime);
 
             power = proportional + integral;
             isNegative = false;
@@ -535,8 +521,7 @@ public class Drivetrain {
 
     }
 
-    //================================= OPENCV METHODS =============================================
-
+    //=======================================  TELEMETRY METHODS ===================================
 
     //returns values of gyro axis for testing purposes
     public void composeTelemetryGyro() {
