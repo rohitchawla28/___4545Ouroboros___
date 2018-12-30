@@ -20,8 +20,8 @@ public abstract class OPMode extends OpMode {
     public DcMotor liftR;
 
     public Servo door;
-    public Servo collectPivotL;
-    public Servo collectPivotR;
+    public Servo intakePivotL;
+    public Servo intakePivotR;
 
     public CRServo collectL;
     public CRServo collectR;
@@ -32,11 +32,13 @@ public abstract class OPMode extends OpMode {
     double arcLeftStick = gamepad1.left_stick_y;
     double arcRightStick = gamepad1.right_stick_x;
 
-    int pos = 0;
+    private int intakePivotPos = 0;
+    private int doorPos = 0;
+    private int collectIn = 0;
+    private int collectOut = 0;
 
     @Override
     public void init() {
-
         fl = hardwareMap.dcMotor.get("fl");
         fr = hardwareMap.dcMotor.get("fr");
         bl = hardwareMap.dcMotor.get("bl");
@@ -48,8 +50,8 @@ public abstract class OPMode extends OpMode {
 //        liftR = hardwareMap.dcMotor.get("liftR");
 
 //        door = hardwareMap.servo.get("door");
-//        collectPivotL = hardwareMap.servo.get("collectPivotL");
-//        collectPivotR = hardwareMap.servo.get("collectPivotR");
+//        intakePivotL = hardwareMap.servo.get("intakePivotL");
+//        intakePivotR = hardwareMap.servo.get("intakePivotR");
 //        collectL = hardwareMap.crservo.get("collectL");
 //        collectR = hardwareMap.crservo.get("colllectR");
 
@@ -81,18 +83,25 @@ public abstract class OPMode extends OpMode {
         if (Math.abs(tankLeftPower) > .08) {
             fl.setPower(tankLeftPower);
             bl.setPower(tankLeftPower);
-        } else {
+
+        }
+        else {
             fl.setPower(0);
             bl.setPower(0);
+
         }
 
         if (Math.abs(tankRightPower) > 0.8) {
             fr.setPower(tankRightPower);
             br.setPower(tankRightPower);
-        } else {
+
+        }
+        else {
             fr.setPower(0);
             br.setPower(0);
+
         }
+
     }
 
     public void arcadeDrive() {
@@ -104,10 +113,12 @@ public abstract class OPMode extends OpMode {
             bl.setPower(leftPower);
             fr.setPower(rightPower);
             br.setPower(rightPower);
+
         }
+
     }
 
-    //=====================================  MANIPULATOR  ==========================================
+    //=================================  MANIPULATOR METHODS  ======================================
 
     public void lift() {
         double liftPower = gamepad2.right_stick_y;
@@ -115,64 +126,108 @@ public abstract class OPMode extends OpMode {
         if (Math.abs(liftPower) > .1) {
             liftL.setPower(liftPower);
             liftR.setPower(liftPower);
+
         }
         else {
             liftL.setPower(0);
             liftR.setPower(0);
+
         }
+
     }
 
     public void armPivot() {
-        double pivotPower = gamepad2.left_stick_y/2;
+        double pivotPower = (gamepad2.left_stick_y / 2);
 
-        if (pivotPower > 0.1) {
+        if (Math.abs(pivotPower) > 0.1) {
             armPivotL.setPower(pivotPower);
             armPivotR.setPower(pivotPower);
+
         }
         else {
             armPivotL.setPower(0);
             armPivotR.setPower(0);
+
         }
 
     }
 
     public void intakePivot() {
         if (gamepad2.a) {
-            if (pos % 2 == 0) {
-//                collectPivotL.setPosition();
-//                collectPivotR.setPosition();
+            if (intakePivotPos % 2 == 0) {
+                intakePivotL.setPosition(0);
+                intakePivotR.setPosition(0);
+
             }
             else {
-//                collectPivotL.setPosition();
-//                collectPivotR.setPosition();
+                intakePivotL.setPosition(0.5);
+                intakePivotR.setPosition(0.5);
+
             }
-            pos++;
+            intakePivotPos++;
+
         }
+
+    }
+
+    public void door() {
+        if (gamepad2.b) {
+            if (doorPos % 2 == 0) {
+                door.setPosition(0);
+
+            }
+            else {
+                door.setPosition(0.5);
+
+            }
+
+        }
+        doorPos++;
+
     }
 
     public void collect() {
-        while (gamepad1.left_bumper) {
-            collectL.setPower(0.7);
-            collectR.setPower(0.7);
+        if (gamepad2.left_bumper) {
+            if (collectIn % 2 == 0) {
+                collectL.setPower(0.6);
+                collectR.setPower(0.6);
+
+            }
+            else {
+                collectL.setPower(0);
+                collectR.setPower(0);
+
+            }
+            collectIn++;
+
         }
 
-        while (gamepad1.right_bumper) {
-            collectL.setPower(-0.6);
-            collectR.setPower(-0.6);
+        if (gamepad2.right_bumper) {
+            if (collectOut % 2 == 0) {
+                collectL.setPower(-0.6);
+                collectR.setPower(-0.6);
+
+            }
+            else {
+                collectL.setPower(0);
+                collectR.setPower(0);
+
+            }
+            collectOut++;
+
         }
 
     }
-
 
     //================================== UTILITY METHODS ===========================================
 
     public void resetEncoders() {
-
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         liftL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         liftR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
     }
 
 }
