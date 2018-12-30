@@ -3,18 +3,20 @@ package org.firstinspires.ftc.teamcode.ChickHicks;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
+import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 public class Sensors {
 
     private LinearOpMode opMode;
 
-   // private Rev2mDistanceSensor range;
+    private Rev2mDistanceSensor range;
 
     public BNO055IMU gyro;
     private  Orientation angles;
@@ -39,51 +41,48 @@ public class Sensors {
             gyro.initialize(parameters);
         }
 
-       // range = this.opmode.hardwareMap.get(Rev2mDistanceSensor.class, "range");
+        range = this.opMode.hardwareMap.get(Rev2mDistanceSensor.class, "range");
 
     }
 
-//    public double getDistance() {
-//
-//        return range.getDistance(DistanceUnit.MM);
-//
-//    }
+    public double getDistance() {
 
-    // Note: Due to positioning of REV Hub, yaw  is the 1st Angle, roll 3rd Angle, and pitch 2nd Angle.
+        return (range.getDistance(DistanceUnit.INCH));
+
+    }
+
+    // Note: Due to positioning of REV Hub, yaw is the 1st Angle, roll 3rd Angle, and pitch 2nd Angle.
 
     public void updateGyroValues() {
-
         angles = gyro.getAngularOrientation();
 
     }
 
-    public double getGyroYaw() {
+    public void updateGyroR() {
+        angles = gyro.getAngularOrientation().toAxesReference(AxesReference.INTRINSIC).toAxesOrder(AxesOrder.ZYX);
 
+    }
+
+    public double getGyroYaw() {
         updateGyroValues();
         return angles.firstAngle;
 
     }
 
-    public double getGyroRoll() {
-
-        updateGyroValues();
-        return angles.thirdAngle;
-
-    }
-
-    public void updateGyroR()
-    {
-        angles = gyro.getAngularOrientation().toAxesReference(AxesReference.INTRINSIC).toAxesOrder(AxesOrder.ZYX);
-    }
-    public double getGyroYawR()
-    {
+    public double getGyroYawR() {
         return -angles.firstAngle;
+
     }
 
     public double getGyroPitch() {
-
         updateGyroValues();
         return angles.secondAngle;
+
+    }
+
+    public double getGyroRoll() {
+        updateGyroValues();
+        return angles.thirdAngle;
 
     }
     
