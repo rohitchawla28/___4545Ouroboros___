@@ -11,36 +11,28 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class ServoPositions extends LinearOpMode {
 
-    private Servo marker;
-    private Servo lockLiftL;
-    private Servo lockLiftR;
-
     public void initialize() throws InterruptedException{
-        marker = hardwareMap.servo.get("marker");
-        //lockLiftL = hardwareMap.servo.get("lockLiftL");
-        //lockLiftR = hardwareMap.servo.get("lockLiftR");
+        sleep(2000);
 
-        Thread.sleep(2000);
-
-        //lockLiftL.setPosition(0.2);
-        //lockLiftR.setPosition(0.55);
-        marker.setPosition(0.7);
+        // insert servo movements
 
         sleep(1000);
+
+        telemetry.addLine("Initialized");
+        telemetry.update();
+
     }
+
     @Override
     public void runOpMode() throws InterruptedException {
-
         initialize();
 
         waitForStart();
 
-        //lockLiftL.setPosition(0.4);
-        //lockLiftR.setPosition(0.25);
-        marker.setPosition(0.1);
+        // insert servo movements
 
+        sleep(1000);
 
-        Thread.sleep(5000);
     }
 
 }

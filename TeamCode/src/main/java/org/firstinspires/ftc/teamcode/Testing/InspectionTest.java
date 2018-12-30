@@ -10,7 +10,6 @@ import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
 
 import static org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection.cubePosition;
 
-
 @Autonomous
         (name = "InspectionTest", group = "Auto")
 
@@ -26,8 +25,7 @@ public class InspectionTest extends LinearOpMode{
 
         waitForStart();
 
-        sleep(450);
+        drivetrain.turn(0.4,true);
 
-        drivetrain.moveEncoder(0.4,200,3);
     }
 }
