@@ -60,34 +60,34 @@ public class Lift {
         }
 
         public void detachEncoder(Drivetrain drivetrain) {
-            // REMINDER - FIX THIS TO MAKE DETACTCHING SEPARATE FROM TURNING
             ElapsedTime time = new ElapsedTime();
 
             double initEncoder = (liftL.getCurrentPosition() + liftR.getCurrentPosition()) / 2;
-            double distance = 500;
+            double distance = 750;
             double timeout = 4000;
 
-            //let go off robot
-            //unlock();
+            resetEncoders();
 
             time.reset();
 
-            while ((((liftL.getCurrentPosition() + liftR.getCurrentPosition()) / 2) - initEncoder) < distance && time.milliseconds() < timeout && opMode.opModeIsActive()) {
+            while (((Math.abs((liftL.getCurrentPosition()) + Math.abs(liftR.getCurrentPosition())) / 2) - initEncoder) < distance
+                    && time.milliseconds() < timeout && opMode.opModeIsActive()) {
                 liftL.setPower(-0.4);
                 liftR.setPower(-0.4);
-                while ((int)Math.abs(sensors.getGyroYawR()) > 0) {
-                    if (sensors.getGyroYawR() > 0){
-                        drivetrain.turnGyro(0.3, Math.abs(sensors.getGyroYaw()), false, 3);
 
-                    }
-                    else if (sensors.getGyroYawR() < 0){
-                        drivetrain.turnGyro(0.3, Math.abs(sensors.getGyroYaw()), true, 3);
-
-                    }
-
-                }
                 opMode.telemetry.addData("Encoder distance left - ", (distance - ((liftL.getCurrentPosition() + liftR.getCurrentPosition()) / 2)));
                 opMode.telemetry.update();
+            }
+
+            while ((int)Math.abs(sensors.getGyroYawR()) > 0) {
+                if (sensors.getGyroYawR() > 0) {
+                    //test PI values
+                    drivetrain.turnPI(Math.abs(sensors.getGyroYaw()), false, 0.15 / 90, 0.013, 3);
+
+                } else if (sensors.getGyroYawR() < 0) {
+                    drivetrain.turnPI(Math.abs(sensors.getGyroYaw()), true, 0.15 / 90, 0.013, 3);
+
+                }
 
             }
 
@@ -160,6 +160,14 @@ public class Lift {
                     break;
 
             }
+
+        }
+
+        public void resetEncoders() {
+            liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            opMode.idle();
+            liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            opMode.idle();
 
         }
 
