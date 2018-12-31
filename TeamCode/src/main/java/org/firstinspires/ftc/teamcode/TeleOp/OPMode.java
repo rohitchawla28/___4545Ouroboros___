@@ -26,16 +26,22 @@ public abstract class OPMode extends OpMode {
     public CRServo collectL;
     public CRServo collectR;
 
-    double tankLeftPower = gamepad1.left_stick_y;
-    double tankRightPower = gamepad1.right_stick_y;
+    private double halfSpeedMod = 1;
 
-    double arcLeftStick = gamepad1.left_stick_y;
-    double arcRightStick = gamepad1.right_stick_x;
+    // I am probably just being really dumb right now, but do we need to put these variables for the tankLeftPower/tankRightPower
+    // inside the method so it keeps running in the loop? Because won't what I currently made just initialize the variable once?
 
-    private int intakePivotPos = 0;
-    private int doorPos = 0;
-    private int collectIn = 0;
-    private int collectOut = 0;
+    double tankLeftPower = gamepad1.left_stick_y * halfSpeedMod;
+    double tankRightPower = gamepad1.right_stick_y * halfSpeedMod;
+
+    double arcLeftStick = gamepad1.left_stick_y  /* * halfSpeedMod */ ;
+    double arcRightStick = gamepad1.right_stick_x /* * halfSpeedMod */ ;
+
+    private int halfSpeedCount = 0;
+    private int intakePivotPosCount = 0;
+    private int doorPosCount = 0;
+    private int collectInCount = 0;
+    private int collectOutCount = 0;
 
     @Override
     public void init() {
@@ -104,6 +110,26 @@ public abstract class OPMode extends OpMode {
 
     }
 
+    public void halfSpeed () {
+        if (gamepad1.a) {
+            while (gamepad1.a) {
+
+            }
+
+            if (halfSpeedCount % 2 == 0) {
+                halfSpeedMod = 0.5;
+
+            }
+            else {
+                halfSpeedMod = 1.0;
+
+            }
+            halfSpeedCount++;
+
+        }
+
+    }
+
     public void arcadeDrive() {
         double leftPower = arcLeftStick + arcRightStick;
         double rightPower = arcLeftStick - arcRightStick;
@@ -154,7 +180,7 @@ public abstract class OPMode extends OpMode {
 
     public void intakePivot() {
         if (gamepad2.a) {
-            if (intakePivotPos % 2 == 0) {
+            if (intakePivotPosCount % 2 == 0) {
                 intakePivotL.setPosition(0);
                 intakePivotR.setPosition(0);
 
@@ -164,7 +190,7 @@ public abstract class OPMode extends OpMode {
                 intakePivotR.setPosition(0.5);
 
             }
-            intakePivotPos++;
+            intakePivotPosCount++;
 
         }
 
@@ -172,7 +198,7 @@ public abstract class OPMode extends OpMode {
 
     public void door() {
         if (gamepad2.b) {
-            if (doorPos % 2 == 0) {
+            if (doorPosCount % 2 == 0) {
                 door.setPosition(0);
 
             }
@@ -182,13 +208,13 @@ public abstract class OPMode extends OpMode {
             }
 
         }
-        doorPos++;
+        doorPosCount++;
 
     }
 
     public void collect() {
         if (gamepad2.left_bumper) {
-            if (collectIn % 2 == 0) {
+            if (collectInCount % 2 == 0) {
                 collectL.setPower(0.6);
                 collectR.setPower(0.6);
 
@@ -198,12 +224,12 @@ public abstract class OPMode extends OpMode {
                 collectR.setPower(0);
 
             }
-            collectIn++;
+            collectInCount++;
 
         }
 
         if (gamepad2.right_bumper) {
-            if (collectOut % 2 == 0) {
+            if (collectOutCount % 2 == 0) {
                 collectL.setPower(-0.6);
                 collectR.setPower(-0.6);
 
@@ -213,7 +239,7 @@ public abstract class OPMode extends OpMode {
                 collectR.setPower(0);
 
             }
-            collectOut++;
+            collectOutCount++;
 
         }
 
