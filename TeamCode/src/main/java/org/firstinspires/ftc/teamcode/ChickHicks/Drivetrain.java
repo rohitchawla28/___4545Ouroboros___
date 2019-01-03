@@ -480,9 +480,10 @@ public class Drivetrain {
         timeoutTimer.reset();
 
         while (Math.abs(sensors.getGyroYaw() - (angleChange + initAngle)) > 0 && opMode.opModeIsActive() && timeoutTimer.seconds() < timeout) {
+            // ((getGyroYaw() - initAngle) - angleChange) != 0
             prevRunTime = time.seconds();
 
-            error = angleChange - (Math.abs(sensors.getGyroYaw() - initAngle));
+            error = angleChange - (sensors.getGyroYaw() - initAngle);
 
             proportional = error * kP;
             integral += (error * (time.seconds() - prevRunTime)) * kI;
