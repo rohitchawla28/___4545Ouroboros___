@@ -20,9 +20,8 @@ public class MotionTelemetry extends LinearOpMode {
 
         waitForStart();
 
-        drivetrain.composeTelemetryEncoders();
+        // drivetrain.composeTelemetryEncoders();
         drivetrain.composeTelemetryGyro();
-        telemetry.update();
 
         if (gamepad1.a) {
 

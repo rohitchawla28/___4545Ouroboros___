@@ -28,14 +28,11 @@ public abstract class OPMode extends OpMode {
 
     private double halfSpeedMod = 1;
 
-    // I am probably just being really dumb right now, but do we need to put these variables for the tankLeftPower/tankRightPower
-    // inside the method so it keeps running in the loop? Because won't what I currently made just initialize the variable once?
+    private double tankLeftPower;
+    private double tankRightPower;
 
-    double tankLeftPower = gamepad1.left_stick_y * halfSpeedMod;
-    double tankRightPower = gamepad1.right_stick_y * halfSpeedMod;
-
-    double arcLeftStick = gamepad1.left_stick_y  /* * halfSpeedMod */ ;
-    double arcRightStick = gamepad1.right_stick_x /* * halfSpeedMod */ ;
+    private double arcLeftStick;
+    private double arcRightStick;
 
     private int halfSpeedCount = 0;
     private int intakePivotPosCount = 0;
@@ -86,6 +83,9 @@ public abstract class OPMode extends OpMode {
     //====================================  DRIVETRAIN  ============================================
 
     public void tankDrive() {
+        tankLeftPower = gamepad1.left_stick_y * halfSpeedMod;
+        tankRightPower = gamepad1.right_stick_y * halfSpeedMod;
+
         if (Math.abs(tankLeftPower) > .08) {
             fl.setPower(tankLeftPower);
             bl.setPower(tankLeftPower);
@@ -131,10 +131,13 @@ public abstract class OPMode extends OpMode {
     }
 
     public void arcadeDrive() {
+        arcLeftStick = gamepad1.left_stick_y  /* * halfSpeedMod */ ;
+        arcRightStick = gamepad1.right_stick_x /* * halfSpeedMod */ ;
+
         double leftPower = arcLeftStick + arcRightStick;
         double rightPower = arcLeftStick - arcRightStick;
 
-        if (Math.abs(arcLeftStick) > 0.1 || Math.abs(arcRightStick) > 0.1) {
+        if (Math.abs(arcLeftStick) > 0.08 || Math.abs(arcRightStick) > 0.08) {
             fl.setPower(leftPower);
             bl.setPower(leftPower);
             fr.setPower(rightPower);
@@ -149,7 +152,7 @@ public abstract class OPMode extends OpMode {
     public void lift() {
         double liftPower = gamepad2.right_stick_y;
 
-        if (Math.abs(liftPower) > .1) {
+        if (Math.abs(liftPower) > .08) {
             liftL.setPower(liftPower);
             liftR.setPower(liftPower);
 
@@ -165,7 +168,7 @@ public abstract class OPMode extends OpMode {
     public void armPivot() {
         double pivotPower = (gamepad2.left_stick_y / 2);
 
-        if (Math.abs(pivotPower) > 0.1) {
+        if (Math.abs(pivotPower) > .08) {
             armPivotL.setPower(pivotPower);
             armPivotR.setPower(pivotPower);
 

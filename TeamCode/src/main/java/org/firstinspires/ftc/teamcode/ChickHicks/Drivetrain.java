@@ -22,7 +22,6 @@ public class Drivetrain {
     private DcMotor br;
 
     public Drivetrain(LinearOpMode opMode) throws InterruptedException {
-
         this.opMode = opMode;
 
         fl = this.opMode.hardwareMap.dcMotor.get("fl");
@@ -384,7 +383,7 @@ public class Drivetrain {
 
         time.reset();
 
-        while (Math.abs(sensors.getGyroYaw() - (angleChange + initAngle)) < 1 && opMode.opModeIsActive()) {
+        while (Math.abs(sensors.getGyroYaw() - (angleChange + initAngle)) < 1 && opMode.opModeIsActive() && time.seconds() < timeout) {
             error = angleChange - Math.abs((sensors.getGyroYaw() - initAngle));
 
             proportional = error * kP;
@@ -422,7 +421,7 @@ public class Drivetrain {
         time.reset();
         timeoutTimer.reset();
 
-        while (Math.abs(sensors.getGyroYaw() - (angleChange + initAngle)) > 1 && timeoutTimer.seconds() < timeout && timeoutTimer.seconds() < timeout) {
+        while (Math.abs(sensors.getGyroYaw() - (angleChange + initAngle)) > 1 && timeoutTimer.seconds() < timeout && opMode.opModeIsActive()) {
             prevRunTime = time.seconds();
 
             error = angleChange - (Math.abs(sensors.getGyroYaw() - initAngle));
@@ -489,7 +488,7 @@ public class Drivetrain {
             integral += (error * (time.seconds() - prevRunTime)) * kI;
             derivative = (error - lastError) / (time.seconds() - prevRunTime);
 
-            power = proportional + integral;
+            power = proportional + integral - derivative;
             isNegative = false;
 
             if (power < 0) {
@@ -527,18 +526,22 @@ public class Drivetrain {
     //returns values of gyro axis for testing purposes
     public void composeTelemetryGyro() {
         while (opMode.opModeIsActive()) {
-
-            opMode.telemetry.addData("Gyro Yaw", sensors.getGyroYaw());
-//            opMode.telemetry.addData("Gyro Pitch", sensors.getGyroPitch());
-//            opMode.telemetry.addData("Gyro Roll", sensors.getGyroRoll());
+            opMode.telemetry.addData("Yaw", sensors.getGyroYaw());
+            opMode.telemetry.addData("Pitch", sensors.getGyroPitch());
+            opMode.telemetry.addData("Roll", sensors.getGyroRoll());
+            opMode.telemetry.update();
 
         }
+
     }
 
     public void composeTelemetryEncoders () {
         while (opMode.opModeIsActive()) {
             opMode.telemetry.addData("Encoder Average", getEncoderAvg());
+            opMode.telemetry.update();
+
         }
+
     }
 
 }
