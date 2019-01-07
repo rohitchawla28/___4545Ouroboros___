@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous.LeagueMeet2;
+package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;

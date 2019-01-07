@@ -47,10 +47,10 @@ public abstract class OPMode extends OpMode {
         bl = hardwareMap.dcMotor.get("bl");
         br = hardwareMap.dcMotor.get("br");
 
-//        armPivotL = hardwareMap.dcMotor.get("armPivotL");
-//        armPivotR = hardwareMap.dcMotor.get("armPivotR");
-//        liftL = hardwareMap.dcMotor.get("liftL");
-//        liftR = hardwareMap.dcMotor.get("liftR");
+        armPivotL = hardwareMap.dcMotor.get("armPivotL");
+        armPivotR = hardwareMap.dcMotor.get("armPivotR");
+        liftL = hardwareMap.dcMotor.get("liftL");
+        liftR = hardwareMap.dcMotor.get("liftR");
 
 //        door = hardwareMap.servo.get("door");
 //        intakePivotL = hardwareMap.servo.get("intakePivotL");
@@ -63,10 +63,10 @@ public abstract class OPMode extends OpMode {
         bl.setDirection(DcMotor.Direction.FORWARD);
         br.setDirection(DcMotor.Direction.REVERSE);
 
-//        armPivotL.setDirection(DcMotor.Direction.FORWARD);
-//        armPivotR.setDirection(DcMotor.Direction.REVERSE);
-//        liftL.setDirection(DcMotor.Direction.FORWARD);
-//        liftR.setDirection(DcMotor.Direction.REVERSE);
+        armPivotL.setDirection(DcMotor.Direction.FORWARD);
+        armPivotR.setDirection(DcMotor.Direction.REVERSE);
+        liftL.setDirection(DcMotor.Direction.FORWARD);
+        liftR.setDirection(DcMotor.Direction.REVERSE);
 
 //        collectL.setDirection(DcMotor.Direction.FORWARD);
 //        collectR.setDirection(DcMotor.Direction.REVERSE);
