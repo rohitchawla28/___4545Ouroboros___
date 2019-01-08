@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous.LeagueMeet2;
+package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -13,9 +13,9 @@ import static org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetecti
 
 @Disabled
 @Autonomous
-        (name = "CraterNoIntake", group = "Auto")
+        (name = "TFCrater", group = "Auto")
 
-public class CraterNoIntake extends LinearOpMode{
+public class TFCrater extends LinearOpMode{
     Drivetrain drivetrain;
     Lift lift;
     Intake intake;

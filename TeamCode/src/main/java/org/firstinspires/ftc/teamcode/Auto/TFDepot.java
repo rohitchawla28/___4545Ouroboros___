@@ -12,9 +12,9 @@ import static org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetecti
 
 
 @Autonomous
-        (name = "DepotNoIntake", group = "Auto")
+        (name = "TFDepot", group = "Auto")
 
-public class DepotNoIntake extends LinearOpMode{
+public class TFDepot extends LinearOpMode{
     Drivetrain drivetrain;
     Lift lift;
     Intake intake;

@@ -36,9 +36,10 @@ public class OpenCVDetection {
     private Mat hslThresholdOutput;
     private Mat blurOutput;
     private MatOfKeyPoint findBlobsOutput;
-    private final double RIGHT_CONST = 1100.0;
+
     private final double LEFT_CONST = 110.0;
     private final double MIDDLE_CONST = 600.0 ;
+    private final double RIGHT_CONST = 1100.0;
 
     public OpenCVDetection(LinearOpMode opMode, Vuforia vuforia) throws InterruptedException {
 

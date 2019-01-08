@@ -42,4 +42,17 @@ public class Intake {
 
     }
 
+    public void markerOut() {
+        ElapsedTime time =  new ElapsedTime();
+
+        time.reset();
+
+        while (time.seconds() < 2) {
+            collectL.setPower(-0.6);
+            collectR.setPower(-0.6);
+
+        }
+
+    }
+
 }
