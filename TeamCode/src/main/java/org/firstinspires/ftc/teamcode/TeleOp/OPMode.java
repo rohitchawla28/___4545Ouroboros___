@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import com.qualcomm.robotcore.util.Range;
 
 public abstract class OPMode extends OpMode {
 
@@ -139,9 +140,16 @@ public abstract class OPMode extends OpMode {
 
         if (Math.abs(arcLeftStick) > 0.08 || Math.abs(arcRightStick) > 0.08) {
             fl.setPower(leftPower);
-            bl.setPower(leftPower);
             fr.setPower(rightPower);
+            bl.setPower(leftPower);
             br.setPower(rightPower);
+
+        }
+        else {
+            fl.setPower(0);
+            fr.setPower(0);
+            bl.setPower(0);
+            br.setPower(0);
 
         }
 
@@ -166,9 +174,12 @@ public abstract class OPMode extends OpMode {
     }
 
     public void armPivot() {
-        double pivotPower = (gamepad2.left_stick_y / 2);
+        double pivotPower = gamepad2.left_stick_y;
 
         if (Math.abs(pivotPower) > .08) {
+
+            pivotPower = Range.clip(pivotPower, -1, 1);
+
             armPivotL.setPower(pivotPower);
             armPivotR.setPower(pivotPower);
 

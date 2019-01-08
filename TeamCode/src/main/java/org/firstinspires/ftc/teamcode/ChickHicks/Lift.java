@@ -36,11 +36,11 @@ public class Lift {
         //===================================  DETATCH METHODS  ====================================
 
         public void detachRange() {
-            while (sensors.getDistance() > 0.1 && opMode.opModeIsActive()) {
-                liftL.setPower(-0.4);
-                liftR.setPower(-0.4);
-
-            }
+//            while (sensors.getDistance() > 0.1 && opMode.opModeIsActive()) {
+//                liftL.setPower(-0.4);
+//                liftR.setPower(-0.4);
+//
+//            }
 
         }
 

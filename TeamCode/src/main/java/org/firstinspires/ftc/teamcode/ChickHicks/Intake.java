@@ -22,8 +22,8 @@ public class Intake {
     public Intake(LinearOpMode opMode) {
         this.opMode = opMode;
 
-        collectL = this.opMode.hardwareMap.crservo.get("collectL");
-        collectR = this.opMode.hardwareMap.crservo.get("collectR");
+        //collectL = this.opMode.hardwareMap.crservo.get("collectL");
+        //collectR = this.opMode.hardwareMap.crservo.get("collectR");
 
     }
 

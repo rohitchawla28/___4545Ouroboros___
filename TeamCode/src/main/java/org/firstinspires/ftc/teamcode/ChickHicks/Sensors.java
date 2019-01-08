@@ -41,14 +41,14 @@ public class Sensors {
             gyro.initialize(parameters);
         }
 
-        range = this.opMode.hardwareMap.get(Rev2mDistanceSensor.class, "range");
+        //range = this.opMode.hardwareMap.get(Rev2mDistanceSensor.class, "range");
 
     }
 
     public double getDistance() {
 
-        return (range.getDistance(DistanceUnit.INCH));
-
+//        return (range.getDistance(DistanceUnit.INCH));
+        return 0;
     }
 
     // Note: Due to positioning of REV Hub, yaw is the 1st Angle, roll 3rd Angle, and pitch 2nd Angle.
