@@ -3,10 +3,7 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
-
-import com.qualcomm.robotcore.util.Range;
 
 public abstract class OPMode extends OpMode {
 
@@ -84,8 +81,8 @@ public abstract class OPMode extends OpMode {
     //====================================  DRIVETRAIN  ============================================
 
     public void tankDrive() {
-        tankLeftPower = gamepad1.left_stick_y * halfSpeedMod;
-        tankRightPower = gamepad1.right_stick_y * halfSpeedMod;
+        tankLeftPower = gamepad1.left_stick_y /* * halfSpeedMod */;
+        tankRightPower = gamepad1.right_stick_y /* * halfSpeedMod */;
 
         if (Math.abs(tankLeftPower) > .08) {
             fl.setPower(tankLeftPower);
@@ -111,29 +108,9 @@ public abstract class OPMode extends OpMode {
 
     }
 
-    public void halfSpeed () {
-        if (gamepad1.a) {
-            while (gamepad1.a) {
-
-            }
-
-            if (halfSpeedCount % 2 == 0) {
-                halfSpeedMod = 0.5;
-
-            }
-            else {
-                halfSpeedMod = 1.0;
-
-            }
-            halfSpeedCount++;
-
-        }
-
-    }
-
     public void arcadeDrive() {
-        arcLeftStick = gamepad1.left_stick_y  /* * halfSpeedMod */ ;
-        arcRightStick = gamepad1.right_stick_x /* * halfSpeedMod */ ;
+        arcLeftStick = gamepad1.left_stick_y  * halfSpeedMod;
+        arcRightStick = gamepad1.right_stick_x * halfSpeedMod;
 
         double leftPower = arcLeftStick + arcRightStick;
         double rightPower = arcLeftStick - arcRightStick;
@@ -150,6 +127,26 @@ public abstract class OPMode extends OpMode {
             fr.setPower(0);
             bl.setPower(0);
             br.setPower(0);
+
+        }
+
+    }
+
+    public void halfSpeed () {
+        if (gamepad1.a) {
+            while (gamepad1.a) {
+
+            }
+
+            if (halfSpeedCount % 2 == 0) {
+                halfSpeedMod = 0.5;
+
+            }
+            else {
+                halfSpeedMod = 1.0;
+
+            }
+            halfSpeedCount++;
 
         }
 
@@ -177,9 +174,6 @@ public abstract class OPMode extends OpMode {
         double pivotPower = gamepad2.left_stick_y;
 
         if (Math.abs(pivotPower) > .08) {
-
-            pivotPower = Range.clip(pivotPower, -1, 1);
-
             armPivotL.setPower(pivotPower);
             armPivotR.setPower(pivotPower);
 
@@ -228,34 +222,56 @@ public abstract class OPMode extends OpMode {
 
     public void collect() {
         if (gamepad2.left_bumper) {
-            if (collectInCount % 2 == 0) {
-                collectL.setPower(0.6);
-                collectR.setPower(0.6);
+            collectL.setPower(0.6);
+            collectR.setPower(0.6);
 
-            }
-            else {
-                collectL.setPower(0);
-                collectR.setPower(0);
-
-            }
-            collectInCount++;
+        }
+        else {
+            collectL.setPower(0);
+            collectR.setPower(0);
 
         }
 
         if (gamepad2.right_bumper) {
-            if (collectOutCount % 2 == 0) {
-                collectL.setPower(-0.6);
-                collectR.setPower(-0.6);
-
-            }
-            else {
-                collectL.setPower(0);
-                collectR.setPower(0);
-
-            }
-            collectOutCount++;
+            collectL.setPower(-0.6);
+            collectR.setPower(-0.6);
 
         }
+        else {
+            collectL.setPower(0);
+            collectR.setPower(0);
+
+        }
+
+//        if (gamepad2.left_bumper) {
+//            if (collectInCount % 2 == 0) {
+//                collectL.setPower(0.6);
+//                collectR.setPower(0.6);
+//
+//            }
+//            else {
+//                collectL.setPower(0);
+//                collectR.setPower(0);
+//
+//            }
+//            collectInCount++;
+//
+//        }
+//
+//        if (gamepad2.right_bumper) {
+//            if (collectOutCount % 2 == 0) {
+//                collectL.setPower(-0.6);
+//                collectR.setPower(-0.6);
+//
+//            }
+//            else {
+//                collectL.setPower(0);
+//                collectR.setPower(0);
+//
+//            }
+//            collectOutCount++;
+//
+//        }
 
     }
 
