@@ -81,8 +81,8 @@ public abstract class OPMode extends OpMode {
     //====================================  DRIVETRAIN  ============================================
 
     public void tankDrive() {
-        tankLeftPower = gamepad1.left_stick_y /* * halfSpeedMod */;
-        tankRightPower = gamepad1.right_stick_y /* * halfSpeedMod */;
+        tankLeftPower = gamepad1.left_stick_y * halfSpeedMod;
+        tankRightPower = gamepad1.right_stick_y * halfSpeedMod;
 
         if (Math.abs(tankLeftPower) > .08) {
             fl.setPower(tankLeftPower);
@@ -109,8 +109,8 @@ public abstract class OPMode extends OpMode {
     }
 
     public void arcadeDrive() {
-        arcLeftStick = gamepad1.left_stick_y  * halfSpeedMod;
-        arcRightStick = gamepad1.right_stick_x * halfSpeedMod;
+        arcLeftStick = gamepad1.left_stick_y /* * halfSpeedMod */;
+        arcRightStick = gamepad1.right_stick_x /* * halfSpeedMod */;
 
         double leftPower = arcLeftStick + arcRightStick;
         double rightPower = arcLeftStick - arcRightStick;

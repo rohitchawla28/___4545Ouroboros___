@@ -104,139 +104,84 @@ public class CVCrater extends LinearOpMode{
                 break;
 
             case "center":
-//                drivetrain.moveEncoder(0.3, 250, 4);
-//                sleep(400);
-//                drivetrain.moveEncoder(0.4, 850, 4);
-//                sleep(400);
-//                drivetrain.moveEncoder(-0.4, 850, 4);
-//                sleep(400);
-//                //move to not hit lander
-//                drivetrain.moveEncoder(0.5, 400, 4);
-//
-//                sleep(500);
-//
-//                // Will turn to go around sampling
-//                drivetrain.turnGyro(0.4, 55, false, 4);
-//
-//                sleep(500);
-//
-//                //move to wall
-//                drivetrain.moveEncoder(0.5, 1975, 3);
-//
-//                sleep(500);
-//
-//                //turn to angle against wall
-//                drivetrain.turnGyro(0.4, 20, false, 4);
-//
-//                sleep(500);
-//
-//                //move along wall
-//                drivetrain.moveEncoder(0.6, 700, 4);
-//
-//                sleep(500);
-//
-//                drivetrain.turnGyro(0.4, 9, false, 4);
-//
-//                sleep(500);
-//
-//                drivetrain.moveEncoder(0.5, 1300, 3);
-//
-//                sleep(400);
-//
-//                //drop marker
-//                intake.markerOut();
-//
-//                //backwards to almost crater
-//                drivetrain.moveEncoder(-0.6, 1900, 4);
-//
-//                sleep(1000);
-//
-//                //touch crater
-//                drivetrain.moveEncoder(-0.25, 400, 3);
+                drivetrain.moveEncoder(0.4, 690, 4);
+                sleep(750);
+
+                drivetrain.moveEncoder(-0.4, 340, 4);
+                sleep(750);
+
+                drivetrain.turnPI(95, false, .35/90, 0, 5);
+                sleep(750);
+
+                drivetrain.moveEncoder(0.4, 1400 /* 1800 */, 4);
+                sleep(750);
+
+                drivetrain.turnPI(40, false, .3/90, 0.013, 5);
+                sleep(750);
+
+                drivetrain.moveEncoder(0.5, 1600, 4);
+                sleep(750);
+
+                drivetrain.moveEncoder(-0.4, 2200,4);
+                sleep(750);
+
+                drivetrain.moveEncoder(-0.3, 200, 3);
                 break;
 
             case "right":
-//                drivetrain.moveEncoder(0.3, 250, 4);
-//                sleep(400);
-//                drivetrain.turnGyro(0.4, 18, true, 4);
-//                sleep(400);
-//                drivetrain.moveEncoder(0.4, 1050, 4);
-//                sleep(400);
-//                drivetrain.moveEncoder(-0.4, 950, 4);
-//                sleep(400);
-//                drivetrain.turnGyro(0.4, 18, false, 4);
-//                sleep(400);
-//                //move to not hit lander
-//                drivetrain.moveEncoder(0.5, 400, 4);
-//
-//                sleep(500);
-//
-//                // Will turn to go around sampling
-//                drivetrain.turnGyro(0.4, 55, false, 4);
-//
-//                sleep(500);
-//
-//                //move to wall
-//                drivetrain.moveEncoder(0.5, 1975, 3);
-//
-//                sleep(500);
-//
-//                //turn to angle against wall
-//                drivetrain.turnGyro(0.4, 20, false, 4);
-//
-//                sleep(500);
-//
-//                //move along wall
-//                drivetrain.moveEncoder(0.6, 700, 4);
-//
-//                sleep(500);
-//
-//                drivetrain.turnGyro(0.4, 9, false, 4);
-//
-//                sleep(500);
-//
-//                drivetrain.moveEncoder(0.5, 1300, 3);
-//
-//                sleep(400);
-//
-//                //drop marker
-//                intake.markerOut();
-//
-//                //backwards to almost crater
-//                drivetrain.moveEncoder(-0.6, 1900, 4);
-//
-//                sleep(1000);
-//
-//                //touch crater
-//                drivetrain.moveEncoder(-0.25, 400, 3);
+                drivetrain.turnPI(25, true, .54/90, 0.03, 5);
+                sleep(500);
+
+                drivetrain.moveEncoder(0.6, 725, 4);
+                sleep(500);
+
+                drivetrain.moveEncoder(-0.6, 375, 4);
+                sleep(500);
+
+                drivetrain.turnPI(95, false, .35/90, 0, 5);
+                sleep(500);
+
+                drivetrain.moveEncoder(0.6, 1400, 4);
+                sleep(500);
+
+                drivetrain.turnPI(40, false, .3/90, 0.013, 5);
+                sleep(500);
+
+                drivetrain.moveEncoder(0.6, 1600, 4);
+                sleep(500);
+
+                drivetrain.moveEncoder(-0.6, 2200,4);
+                sleep(500);
+
+                drivetrain.moveEncoder(-0.3, 200, 3);
                 break;
 
             default:
-                drivetrain.turnPI(25, true, .65/90, 0.0115, 3);
-                sleep(400);
-
-                drivetrain.moveEncoder(0.4, 750, 4);
-                sleep(400);
-
-                drivetrain.moveEncoder(-0.4, 400, 4);
-                sleep(400);
-
-                drivetrain.turnPI(100, false, .3/90, 0.016, 5);
-                sleep(400);
-
-                drivetrain.moveEncoder(0.4, 1400, 4);
-                sleep(400);
-
-                drivetrain.turnPI(40, false, .3/90, 0.013, 5);
-                sleep(400);
-
-                drivetrain.moveEncoder(0.5, 1600, 4);
-                sleep(400);
-
-                drivetrain.moveEncoder(-0.4, 2000,4);
+                drivetrain.turnPI(25, true, .55/90, 0.024, 5);
                 sleep(500);
 
-                drivetrain.moveEncoder(-0.6, 400, 3);
+                drivetrain.moveEncoder(0.6, 500, 4);
+                sleep(500);
+
+                drivetrain.moveEncoder(-0.6, 150, 4);
+                sleep(500);
+
+                drivetrain.turnPI(95, false, .17/95, 0.003, 5);
+                sleep(500);
+
+                drivetrain.moveEncoder(0.6, 1400, 4);
+                sleep(500);
+
+                drivetrain.turnPI(40, false, .3/90, 0.013, 5);
+                sleep(500);
+
+                drivetrain.moveEncoder(0.6, 1600, 4);
+                sleep(500);
+
+                drivetrain.moveEncoder(-0.6, 2200,4);
+                sleep(500);
+
+                drivetrain.moveEncoder(-0.3, 200, 3);
                 break;
         }
     }

@@ -10,8 +10,8 @@ public class TeleOP extends OPMode {
     public void loop() {
 
         // Driving methods based on driver preference
-        //tankDrive();
-        arcadeDrive();
+        tankDrive();
+        //arcadeDrive();
 
         // Manipulator methods
         lift();

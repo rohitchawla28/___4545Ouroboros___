@@ -412,7 +412,7 @@ public class Drivetrain {
 
         double proportional;
         double integral = 0;
-        double bias = 0.15;
+        double bias = 0.08;
 
         double prevRunTime;
 
@@ -421,7 +421,7 @@ public class Drivetrain {
         time.reset();
         timeoutTimer.reset();
 
-        while (Math.abs(sensors.getGyroYaw() - (angleChange + initAngle)) > 1 && timeoutTimer.seconds() < timeout && opMode.opModeIsActive()) {
+        while (Math.floor(Math.abs(sensors.getGyroYaw() - (angleChange + initAngle))) > 1 && timeoutTimer.seconds() < timeout && opMode.opModeIsActive()) {
             prevRunTime = time.seconds();
 
             error = angleChange - (Math.abs(sensors.getGyroYaw() - initAngle));
@@ -455,7 +455,6 @@ public class Drivetrain {
             opMode.idle();
         }
         stopMotors();
-
     }
 
     public void turnPID(double angleChange, boolean turnRight, double kP, double kI, double kD, double timeout) {
