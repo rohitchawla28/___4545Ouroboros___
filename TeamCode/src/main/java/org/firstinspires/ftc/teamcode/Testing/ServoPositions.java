@@ -5,15 +5,21 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@Disabled
+//@Disabled
 @Autonomous
         (name = "ServoTesting", group = "Auto")
 
 public class ServoPositions extends LinearOpMode {
 
+    private Servo door;
     public void initialize() throws InterruptedException{
         sleep(2000);
 
+        door = hardwareMap.servo.get("door");
+
+        sleep(300);
+
+        door.setPosition(0);
         // insert servo movements
 
         sleep(1000);
@@ -29,6 +35,7 @@ public class ServoPositions extends LinearOpMode {
 
         waitForStart();
 
+        door.setPosition(0.5);
         // insert servo movements
 
         sleep(1000);
