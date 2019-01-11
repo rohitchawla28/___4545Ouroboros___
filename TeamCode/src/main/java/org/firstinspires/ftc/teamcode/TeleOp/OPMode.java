@@ -84,7 +84,7 @@ public abstract class OPMode extends OpMode {
         tankLeftPower = gamepad1.left_stick_y * halfSpeedMod;
         tankRightPower = gamepad1.right_stick_y * halfSpeedMod;
 
-        if (Math.abs(tankLeftPower) > .08) {
+        if (Math.abs(tankLeftPower) > 0.08) {
             fl.setPower(tankLeftPower);
             bl.setPower(tankLeftPower);
 
@@ -95,7 +95,7 @@ public abstract class OPMode extends OpMode {
 
         }
 
-        if (Math.abs(tankRightPower) > 0.8) {
+        if (Math.abs(tankRightPower) > 0.08) {
             fr.setPower(tankRightPower);
             br.setPower(tankRightPower);
 

@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
 
-@Disabled
+//@Disabled
 @Autonomous
         (name = "TensorFlowTest", group = "Auto")
 

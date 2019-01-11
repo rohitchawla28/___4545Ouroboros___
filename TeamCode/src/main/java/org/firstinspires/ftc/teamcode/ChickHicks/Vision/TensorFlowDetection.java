@@ -49,21 +49,22 @@ public class TensorFlowDetection {
     }
 
     public void sample() {
+        cubePosition = "";
 
         tfod.activate();
         ElapsedTime time = new ElapsedTime();
 
-        while (cubePosition.equals("") && time.seconds() < 2 && opMode.opModeIsActive()) {
+        while (cubePosition.equals("") && opMode.opModeIsActive()) {
             // getUpdatedRecognitions() will return null if no new information is available since
             // the last time that call was made.
             List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
             if (updatedRecognitions != null) {
-                if (updatedRecognitions.size() == 2) {
+                if (updatedRecognitions.size() >= 1) {
 
                     for (Recognition recognition : updatedRecognitions) {
                         if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
                             goldMineralX = (int) recognition.getLeft();
-                        } else if (silverMineral1X == -1) {
+                        } else if (recognition.getLabel().equals(LABEL_SILVER_MINERAL) && silverMineral1X == -1) {
                             silverMineral1X = (int) recognition.getLeft();
                         } else {
                             silverMineral2X = (int) recognition.getLeft();
@@ -81,7 +82,7 @@ public class TensorFlowDetection {
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
-        parameters.cameraDirection = CameraDirection.BACK;
+        parameters.cameraDirection = CameraDirection.FRONT;
 
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
     }
@@ -100,7 +101,7 @@ public class TensorFlowDetection {
             opMode.telemetry.addData("Cube Position", cubePosition);
             opMode.telemetry.update();
 
-        } else if ((goldMineralX < silverMineral1X) || (goldMineralX < silverMineral2X) && (silverMineral2X == -1) || (silverMineral1X == -1)) {
+        } else if ((goldMineralX < silverMineral1X)) {
             cubePosition = "center";
             opMode.telemetry.addData("Cube Position", cubePosition);
             opMode.telemetry.update();

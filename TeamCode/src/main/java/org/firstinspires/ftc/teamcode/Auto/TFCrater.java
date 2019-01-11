@@ -11,13 +11,12 @@ import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
 
 import static org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection.cubePosition;
 
-@Disabled
+// @Disabled
 @Autonomous
         (name = "TFCrater", group = "Auto")
 
 public class TFCrater extends LinearOpMode{
     Drivetrain drivetrain;
-    Lift lift;
     Intake intake;
     TensorFlowDetection vision;
 
@@ -26,7 +25,6 @@ public class TFCrater extends LinearOpMode{
 
         drivetrain = new Drivetrain(this);
         intake = new Intake(this);
-//        lift = new Lift(this);
         vision = new TensorFlowDetection(this);
 
         telemetry.addLine("Initialized");
@@ -34,223 +32,126 @@ public class TFCrater extends LinearOpMode{
 
         waitForStart();
 
+        drivetrain.turnPI(15, true, .65/90, 0.03, 5);
+        sleep(500);
+
         vision.sample();
 
         switch(cubePosition) {
             case "left":
-                drivetrain.moveEncoder(0.3, 200, 4);
-                sleep(400);
-                drivetrain.turnGyro(0.4, 20, false, 4);
-                sleep(400);
-                drivetrain.moveEncoder(0.4, 1150, 4);
-                sleep(400);
-                drivetrain.moveEncoder(-0.4, 950, 4);
-                sleep(400);
-                drivetrain.turnGyro(0.4, 20, true, 4);
-                sleep(400);
-                //move to not hit lander
-                drivetrain.moveEncoder(0.5, 400, 4);
-
+                drivetrain.turnPI(40, false, .6/40, 0.03, 5);
                 sleep(500);
 
-                // Will turn to go around sampling
-                drivetrain.turnGyro(0.4, 55, false, 4);
-
+                drivetrain.moveEncoder(0.6, 475, 4);
                 sleep(500);
 
-                //move to wall
-                drivetrain.moveEncoder(0.5, 1975, 3);
-
+                drivetrain.moveEncoder(-0.6, 125, 4);
                 sleep(500);
 
-                //turn to angle against wall
-                drivetrain.turnGyro(0.4, 18, false, 4);
-
+                drivetrain.turnPI(70, false, .35/70, 0.003, 5);
                 sleep(500);
 
-                //move along wall
-                drivetrain.moveEncoder(0.6, 850, 4);
-
+                drivetrain.moveEncoder(0.6, 1150, 4);
                 sleep(500);
 
-                drivetrain.turnGyro(0.4, 10, false, 4);
-
+                drivetrain.turnPI(40, false, .3/90, 0.013, 5);
                 sleep(500);
 
-                drivetrain.moveEncoder(0.5, 1300, 3);
+                drivetrain.moveEncoder(0.6, 1375, 4);
+                sleep(500);
 
-                sleep(400);
+                // intake.markerOut();
 
-                //drop marker
-                intake.markerOut();
+                drivetrain.moveEncoder(-0.6, 2200,4);
+                sleep(500);
 
-                //backwards to almost crater
-                drivetrain.moveEncoder(-0.6, 1900, 4);
-
-                sleep(1000);
-
-                //touch crater
-                drivetrain.moveEncoder(-0.25, 400, 3);
+                drivetrain.moveEncoder(-0.3, 200, 3);
                 break;
 
             case "center":
-                drivetrain.moveEncoder(0.3, 250, 4);
-                sleep(400);
-                drivetrain.moveEncoder(0.4, 850, 4);
-                sleep(400);
-                drivetrain.moveEncoder(-0.4, 850, 4);
-                sleep(400);
-                //move to not hit lander
-                drivetrain.moveEncoder(0.5, 400, 4);
-
+                drivetrain.turnPI(15, false, .4/15, 0.03, 5);
                 sleep(500);
 
-                // Will turn to go around sampling
-                drivetrain.turnGyro(0.4, 55, false, 4);
-
+                drivetrain.moveEncoder(0.6, 475, 4);
                 sleep(500);
 
-                //move to wall
-                drivetrain.moveEncoder(0.5, 1975, 3);
-
+                drivetrain.moveEncoder(-0.6, 125, 4);
                 sleep(500);
 
-                //turn to angle against wall
-                drivetrain.turnGyro(0.4, 20, false, 4);
-
+                drivetrain.turnPI(75, false, 5./75, 0.013, 5);
                 sleep(500);
 
-                //move along wall
-                drivetrain.moveEncoder(0.6, 700, 4);
-
+                drivetrain.moveEncoder(0.6, 1150, 4);
                 sleep(500);
 
-                drivetrain.turnGyro(0.4, 9, false, 4);
-
+                drivetrain.turnPI(40, false, .45/40, 0.013, 5);
                 sleep(500);
 
-                drivetrain.moveEncoder(0.5, 1300, 3);
+                drivetrain.moveEncoder(0.6, 1375, 4);
+                sleep(500);
 
-                sleep(400);
+                // intake.markerOut();
 
-                //drop marker
-                intake.markerOut();
+                drivetrain.moveEncoder(-0.6, 2200,4);
+                sleep(500);
 
-                //backwards to almost crater
-                drivetrain.moveEncoder(-0.6, 1900, 4);
-
-                sleep(1000);
-
-                //touch crater
-                drivetrain.moveEncoder(-0.25, 400, 3);
+                drivetrain.moveEncoder(-0.3, 200, 3);
                 break;
-
             case "right":
-                drivetrain.moveEncoder(0.3, 250, 4);
-                sleep(400);
-                drivetrain.turnGyro(0.4, 18, true, 4);
-                sleep(400);
-                drivetrain.moveEncoder(0.4, 1050, 4);
-                sleep(400);
-                drivetrain.moveEncoder(-0.4, 950, 4);
-                sleep(400);
-                drivetrain.turnGyro(0.4, 18, false, 4);
-                sleep(400);
-                //move to not hit lander
-                drivetrain.moveEncoder(0.5, 400, 4);
-
+                drivetrain.turnPI(10, true, 0.4/20, 0.003, 3);
                 sleep(500);
 
-                // Will turn to go around sampling
-                drivetrain.turnGyro(0.4, 55, false, 4);
-
+                drivetrain.moveEncoder(0.6, 475, 4);
                 sleep(500);
 
-                //move to wall
-                drivetrain.moveEncoder(0.5, 1975, 3);
-
+                drivetrain.moveEncoder(-0.6, 125, 4);
                 sleep(500);
 
-                //turn to angle against wall
-                drivetrain.turnGyro(0.4, 20, false, 4);
-
+                drivetrain.turnPI(95, false, .35/95, 0.003, 5);
                 sleep(500);
 
-                //move along wall
-                drivetrain.moveEncoder(0.6, 700, 4);
-
+                drivetrain.moveEncoder(0.6, 1150, 4);
                 sleep(500);
 
-                drivetrain.turnGyro(0.4, 9, false, 4);
-
+                drivetrain.turnPI(40, false, .3/90, 0.013, 5);
                 sleep(500);
 
-                drivetrain.moveEncoder(0.5, 1300, 3);
+                drivetrain.moveEncoder(0.6, 1375, 4);
+                sleep(500);
 
-                sleep(400);
+                // intake.markerOut();
 
-                //drop marker
-                intake.markerOut();
+                drivetrain.moveEncoder(-0.6, 2200,4);
+                sleep(500);
 
-                //backwards to almost crater
-                drivetrain.moveEncoder(-0.6, 1900, 4);
-
-                sleep(1000);
-
-                //touch crater
-                drivetrain.moveEncoder(-0.25, 400, 3);
+                drivetrain.moveEncoder(-0.3, 200, 3);
                 break;
 
             default:
-                drivetrain.moveEncoder(0.3, 250, 4);
-                sleep(400);
-                drivetrain.moveEncoder(0.4, 950, 4);
-                sleep(400);
-                drivetrain.moveEncoder(-0.4, 950, 4);
-                sleep(400);
-                //move to not hit lander
-                drivetrain.moveEncoder(0.5, 400, 4);
-
+                drivetrain.moveEncoder(0.6, 475, 4);
                 sleep(500);
 
-                // Will turn to go around sampling
-                drivetrain.turnGyro(0.4, 55, false, 4);
-
+                drivetrain.moveEncoder(-0.6, 125, 4);
                 sleep(500);
 
-                //move to wall
-                drivetrain.moveEncoder(0.5, 1975, 3);
-
+                drivetrain.turnPI(95, false, .35/95, 0.003, 5);
                 sleep(500);
 
-                //turn to angle against wall
-                drivetrain.turnGyro(0.4, 20, false, 4);
-
+                drivetrain.moveEncoder(0.6, 1150, 4);
                 sleep(500);
 
-                //move along wall
-                drivetrain.moveEncoder(0.6, 700, 4);
-
+                drivetrain.turnPI(40, false, .3/90, 0.013, 5);
                 sleep(500);
 
-                drivetrain.turnGyro(0.4, 9, false, 4);
-
+                drivetrain.moveEncoder(0.6, 1375, 4);
                 sleep(500);
 
-                drivetrain.moveEncoder(0.5, 1300, 3);
+                // intake.markerOut();
 
-                sleep(400);
+                drivetrain.moveEncoder(-0.6, 2200,4);
+                sleep(500);
 
-                //drop marker
-                intake.markerOut();
-
-                //backwards to almost crater
-                drivetrain.moveEncoder(-0.6, 1900, 4);
-
-                sleep(1000);
-
-                //touch crater
-                drivetrain.moveEncoder(-0.25, 400, 3);
+                drivetrain.moveEncoder(-0.3, 200, 3);
                 break;
         }
     }

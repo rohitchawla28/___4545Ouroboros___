@@ -157,25 +157,25 @@ public class CVCrater extends LinearOpMode{
                 break;
 
             default:
-                drivetrain.turnPI(25, true, .55/90, 0.024, 5);
+                drivetrain.turnPI(25, true, .65/90, 0.03, 5);
                 sleep(500);
 
-                drivetrain.moveEncoder(0.6, 500, 4);
+                drivetrain.moveEncoder(0.6, 475, 4);
                 sleep(500);
 
-                drivetrain.moveEncoder(-0.6, 150, 4);
+                drivetrain.moveEncoder(-0.6, 125, 4);
                 sleep(500);
 
-                drivetrain.turnPI(95, false, .17/95, 0.003, 5);
+                drivetrain.turnPI(95, false, .35/95, 0.003, 5);
                 sleep(500);
 
-                drivetrain.moveEncoder(0.6, 1400, 4);
+                drivetrain.moveEncoder(0.6, 1150, 4);
                 sleep(500);
 
                 drivetrain.turnPI(40, false, .3/90, 0.013, 5);
                 sleep(500);
 
-                drivetrain.moveEncoder(0.6, 1600, 4);
+                drivetrain.moveEncoder(0.6, 1375, 4);
                 sleep(500);
 
                 drivetrain.moveEncoder(-0.6, 2200,4);
