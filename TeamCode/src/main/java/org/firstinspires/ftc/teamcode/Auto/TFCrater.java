@@ -32,14 +32,14 @@ public class TFCrater extends LinearOpMode{
 
         waitForStart();
 
-        drivetrain.turnPI(15, true, .65/90, 0.03, 5);
+        drivetrain.turnPI(15, true, .6/90, 0.05, 4);
         sleep(500);
 
         vision.sample();
 
         switch(cubePosition) {
             case "left":
-                drivetrain.turnPI(40, false, .6/40, 0.03, 5);
+                drivetrain.turnPI(40, false, .3/40, 0.05, 5);
                 sleep(500);
 
                 drivetrain.moveEncoder(0.6, 475, 4);
@@ -69,25 +69,25 @@ public class TFCrater extends LinearOpMode{
                 break;
 
             case "center":
-                drivetrain.turnPI(15, false, .4/15, 0.03, 5);
+                drivetrain.turnPI(15, false, .15/15, 0.04, 5);
                 sleep(500);
 
-                drivetrain.moveEncoder(0.6, 475, 4);
+                drivetrain.moveEncoder(0.6, 425, 4);
                 sleep(500);
 
                 drivetrain.moveEncoder(-0.6, 125, 4);
                 sleep(500);
 
-                drivetrain.turnPI(75, false, 5./75, 0.013, 5);
+                drivetrain.turnPI(60, false, .3/60, 0.015, 5);
                 sleep(500);
 
-                drivetrain.moveEncoder(0.6, 1150, 4);
+                drivetrain.moveEncoder(0.6, 800, 4);
                 sleep(500);
 
-                drivetrain.turnPI(40, false, .45/40, 0.013, 5);
+                drivetrain.turnPI(33, false, .45/33, 0.013, 5);
                 sleep(500);
 
-                drivetrain.moveEncoder(0.6, 1375, 4);
+                drivetrain.moveEncoder(0.6, 1000, 4);
                 sleep(500);
 
                 // intake.markerOut();

@@ -107,7 +107,7 @@ public class TensorFlowDetection {
             opMode.telemetry.update();
         }
         else {
-            cubePosition = "right";
+            cubePosition = "left";
             opMode.telemetry.addData("Cube Position", cubePosition);
             opMode.telemetry.update();
         }
