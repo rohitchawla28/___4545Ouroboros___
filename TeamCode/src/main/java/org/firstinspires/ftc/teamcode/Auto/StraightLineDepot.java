@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
 import org.firstinspires.ftc.teamcode.ChickHicks.Intake;
 import org.firstinspires.ftc.teamcode.ChickHicks.Lift;
 import org.firstinspires.ftc.teamcode.ChickHicks.Sensors;
-import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
+//import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
 
 @Disabled
 @Autonomous
@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
 public class StraightLineDepot extends LinearOpMode {
     Drivetrain drivetrain;
     Intake intake;
-    TensorFlowDetection vision;
+    //TensorFlowDetection vision;
 
 
     @Override
@@ -25,28 +25,28 @@ public class StraightLineDepot extends LinearOpMode {
 
         drivetrain = new Drivetrain(this);
         intake = new Intake(this);
-        vision = new TensorFlowDetection(this);
+        //vision = new TensorFlowDetection(this);
 
         telemetry.addLine("Initialized");
         telemetry.update();
 
         waitForStart();
 
-        vision.sample();
+        //vision.sample();
 
-        switch (vision.cubePosition) {
-            case "left" :
-
-            case "center" :
-                drivetrain.moveEncoder(0.5, 1500, 5);
-                intake.markerOut();
-//                drivetrain.moveEncoder(-0.5, 1000, 4);
-//                drivetrain.turnPI(105, true);
-//                drivetrain.moveEncoder(0.5, 1600, 5);
-
-            case "right" :
-            default :
-        }
+//        switch (vision.cubePosition) {
+//            case "left" :
+//
+//            case "center" :
+//                drivetrain.moveEncoder(0.5, 1500, 5);
+//                intake.markerOut();
+////                drivetrain.moveEncoder(-0.5, 1000, 4);
+////                drivetrain.turnPI(105, true);
+////                drivetrain.moveEncoder(0.5, 1600, 5);
+//
+//            case "right" :
+//            default :
+//        }
 
         drivetrain.moveEncoder(0.5, 1900, 4);
 

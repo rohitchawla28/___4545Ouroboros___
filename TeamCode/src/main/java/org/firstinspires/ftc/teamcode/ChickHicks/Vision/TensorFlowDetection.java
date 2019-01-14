@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.ChickHicks.Vision;
 
+import android.telecom.RemoteConference;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.util.List;
@@ -9,6 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
 
 public class TensorFlowDetection {
 
@@ -48,33 +52,39 @@ public class TensorFlowDetection {
         this.opMode.telemetry.update();
     }
 
-    public void sample() {
+    public void sample(Drivetrain drivetrain) {
         cubePosition = "";
 
         tfod.activate();
         ElapsedTime time = new ElapsedTime();
 
         while (cubePosition.equals("") && opMode.opModeIsActive()) {
-            // getUpdatedRecognitions() will return null if no new information is available since
-            // the last time that call was made.
             List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+
             if (updatedRecognitions != null) {
                 if (updatedRecognitions.size() >= 1) {
-
                     for (Recognition recognition : updatedRecognitions) {
                         if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
                             goldMineralX = (int) recognition.getLeft();
+
                         } else if (recognition.getLabel().equals(LABEL_SILVER_MINERAL) && silverMineral1X == -1) {
                             silverMineral1X = (int) recognition.getLeft();
+
                         } else {
                             silverMineral2X = (int) recognition.getLeft();
+
                         }
                     }
-                    detect();
+                    if (rightViewDetect()) {
+                        cubePosition = "left";
+                    } else if (leftViewDetect(drivetrain).equals("center")) {
+                        cubePosition = "center";
+                    } else {
+                        cubePosition = "";
+                    }
                 }
             }
         }
-
         tfod.shutdown();
     }
 
@@ -95,21 +105,37 @@ public class TensorFlowDetection {
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_GOLD_MINERAL, LABEL_SILVER_MINERAL);
     }
 
-    public void detect() {
+    public Boolean rightViewDetect() {
         if (goldMineralX == -1) {
-            cubePosition = "left";
-            opMode.telemetry.addData("Cube Position", cubePosition);
-            opMode.telemetry.update();
+            return true;
 
-        } else if ((goldMineralX < silverMineral1X)) {
-            cubePosition = "center";
-            opMode.telemetry.addData("Cube Position", cubePosition);
-            opMode.telemetry.update();
         }
-        else {
-            cubePosition = "left";
-            opMode.telemetry.addData("Cube Position", cubePosition);
-            opMode.telemetry.update();
+        return false;
+
+    }
+
+    public String leftViewDetect(Drivetrain drivetrain) {
+        drivetrain.turnPI(30, false, .6 / 90, 0.05, 4);
+        opMode.sleep(500);
+
+        List<Recognition> viewing = tfod.getUpdatedRecognitions();
+
+        if (viewing != null) {
+            if (viewing.size() >= 1) {
+                for (Recognition recognition : viewing) {
+                    if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
+                        goldMineralX = (int) recognition.getLeft();
+
+                    }
+
+                }
+
+            }
+
         }
+        if (goldMineralX > (viewing.get(0).getImageWidth())/2) {
+            return "center";
+        }
+        return "right";
     }
 }

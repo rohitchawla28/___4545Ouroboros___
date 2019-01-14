@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.ChickHicks.Vision.OpenCVDetection;
-import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
+//import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
 
-import static org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection.cubePosition;
+//import static org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection.cubePosition;
 
 public class Intake {
 

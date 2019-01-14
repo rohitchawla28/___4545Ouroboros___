@@ -25,6 +25,7 @@ public abstract class OPMode extends OpMode {
     public CRServo collectR;
 
     private double halfSpeedMod = 1;
+    private double halfSpeedPivot = 1;
 
     private double tankLeftPower;
     private double tankRightPower;
@@ -33,10 +34,6 @@ public abstract class OPMode extends OpMode {
     private double arcRightStick;
 
     private int halfSpeedCount = 0;
-    private int intakePivotPosCount = 0;
-    private int doorPosCount = 0;
-    private int collectInCount = 0;
-    private int collectOutCount = 0;
 
     @Override
     public void init() {
@@ -50,11 +47,11 @@ public abstract class OPMode extends OpMode {
         liftL = hardwareMap.dcMotor.get("liftL");
         liftR = hardwareMap.dcMotor.get("liftR");
 
-//        door = hardwareMap.servo.get("door");
-//        intakePivotL = hardwareMap.servo.get("intakePivotL");
-//        intakePivotR = hardwareMap.servo.get("intakePivotR");
-//        collectL = hardwareMap.crservo.get("collectL");
-//        collectR = hardwareMap.crservo.get("colllectR");
+        door = hardwareMap.servo.get("door");
+        intakePivotL = hardwareMap.servo.get("intakePivotL");
+        intakePivotR = hardwareMap.servo.get("intakePivotR");
+        collectL = hardwareMap.crservo.get("collectL");
+        collectR = hardwareMap.crservo.get("collectR");
 
         fl.setDirection(DcMotor.Direction.FORWARD);
         fr.setDirection(DcMotor.Direction.REVERSE);
@@ -66,12 +63,11 @@ public abstract class OPMode extends OpMode {
         liftL.setDirection(DcMotor.Direction.FORWARD);
         liftR.setDirection(DcMotor.Direction.REVERSE);
 
-//        collectL.setDirection(DcMotor.Direction.FORWARD);
-//        collectR.setDirection(DcMotor.Direction.REVERSE);
+        armPivotL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        armPivotR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-//        collectPivotL.setPosition();
-//        collectPivotR.setPosition();
-//        door.setPosition();
+        collectL.setDirection(DcMotor.Direction.FORWARD);
+        collectR.setDirection(DcMotor.Direction.REVERSE);
 
         telemetry.addLine("Initialized");
         telemetry.update();
@@ -135,7 +131,6 @@ public abstract class OPMode extends OpMode {
     public void halfSpeed () {
         if (gamepad1.a) {
             while (gamepad1.a) {
-
             }
 
             if (halfSpeedCount % 2 == 0) {
@@ -171,7 +166,7 @@ public abstract class OPMode extends OpMode {
     }
 
     public void armPivot() {
-        double pivotPower = gamepad2.left_stick_y;
+        double pivotPower = gamepad2.left_stick_y * halfSpeedPivot;
 
         if (Math.abs(pivotPower) > .08) {
             armPivotL.setPower(pivotPower);
@@ -187,51 +182,60 @@ public abstract class OPMode extends OpMode {
     }
 
     public void intakePivot() {
-        if (gamepad2.a) {
-            if (intakePivotPosCount % 2 == 0) {
-                intakePivotL.setPosition(0);
-                intakePivotR.setPosition(0);
-
+        if (gamepad2.b) {
+            while (gamepad2.b) {
             }
-            else {
-                intakePivotL.setPosition(0.5);
-                intakePivotR.setPosition(0.5);
-
-            }
-            intakePivotPosCount++;
+            //collection
+            intakePivotL.setPosition(0.4);
+            intakePivotR.setPosition(0.6);
 
         }
+
+        if (gamepad2.y) {
+            while (gamepad2.y) {
+
+            }
+            //deposit
+            intakePivotL.setPosition(0.9);
+            intakePivotR.setPosition(0.05);
+        }
+
 
     }
-
-    public void door() {
-        if (gamepad2.b) {
-            if (doorPosCount % 2 == 0) {
-                door.setPosition(0);
+    public void halfSpeedPivot(){
+        if (gamepad2.a){
+            while(gamepad2.a){
 
             }
-            else {
-                door.setPosition(0.5);
-
-            }
+            halfSpeedPivot = 0.5;
 
         }
-        doorPosCount++;
+
+        if (gamepad2.x) {
+            while (gamepad2.x) {
+
+            }
+            halfSpeedPivot = 1;
+        }
+    }
+
+
+    public void door() {
+        if (gamepad1.left_bumper) {
+            while (gamepad1.left_bumper) {
+            }
+            door.setPosition(0.6);
+        }
+
+        if (gamepad1.right_bumper) {
+            while (gamepad1.right_bumper) {
+            }
+            door.setPosition(0);
+        }
 
     }
 
     public void collect() {
-        if (gamepad2.left_bumper) {
-            collectL.setPower(0.6);
-            collectR.setPower(0.6);
-
-        }
-        else {
-            collectL.setPower(0);
-            collectR.setPower(0);
-
-        }
-
         if (gamepad2.right_bumper) {
             collectL.setPower(-0.6);
             collectR.setPower(-0.6);
@@ -243,35 +247,16 @@ public abstract class OPMode extends OpMode {
 
         }
 
-//        if (gamepad2.left_bumper) {
-//            if (collectInCount % 2 == 0) {
-//                collectL.setPower(0.6);
-//                collectR.setPower(0.6);
-//
-//            }
-//            else {
-//                collectL.setPower(0);
-//                collectR.setPower(0);
-//
-//            }
-//            collectInCount++;
-//
-//        }
-//
-//        if (gamepad2.right_bumper) {
-//            if (collectOutCount % 2 == 0) {
-//                collectL.setPower(-0.6);
-//                collectR.setPower(-0.6);
-//
-//            }
-//            else {
-//                collectL.setPower(0);
-//                collectR.setPower(0);
-//
-//            }
-//            collectOutCount++;
-//
-//        }
+        if (gamepad2.left_bumper) {
+            collectL.setPower(0.6);
+            collectR.setPower(0.6);
+
+        }
+        else {
+            collectL.setPower(0);
+            collectR.setPower(0);
+
+        }
 
     }
 

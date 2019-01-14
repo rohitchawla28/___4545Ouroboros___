@@ -11,14 +11,15 @@ public class TeleOP extends OPMode {
 
         // Driving methods based on driver preference
         tankDrive();
+        halfSpeed();
         //arcadeDrive();
 
         // Manipulator methods
         lift();
         armPivot();
-        //intakePivot();
-        //door();
-        //collect();
+        intakePivot();
+        door();
+        collect();
 
     }
 

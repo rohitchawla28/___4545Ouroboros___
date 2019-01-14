@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
+import org.firstinspires.ftc.teamcode.ChickHicks.Vision.NewTF;
 
 //@Disabled
 @Autonomous
@@ -12,19 +12,18 @@ import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
 
 public class TensorFlowTest extends LinearOpMode {
 
-    private TensorFlowDetection tensorFlowDetection;
+    private NewTF vision;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
+        vision = new NewTF(this);
+
         waitForStart();
 
-        tensorFlowDetection = new TensorFlowDetection(this);
+        vision.initialize();
 
-        tensorFlowDetection.sample();
-
-        telemetry.addData("Cube Position", TensorFlowDetection.cubePosition);
-        telemetry.update();
+        vision.sample();
 
     }
 }
