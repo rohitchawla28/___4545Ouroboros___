@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
 import org.firstinspires.ftc.teamcode.ChickHicks.Intake;
 import org.firstinspires.ftc.teamcode.ChickHicks.Lift;
-import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TFHang;
 
 public class LM3Depot extends LinearOpMode {
     Drivetrain drivetrain;
