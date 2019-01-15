@@ -4,39 +4,38 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.ChickHicks.Vision.HSL_OpenCVDetection;
+import org.firstinspires.ftc.teamcode.ChickHicks.Vision.AlternativeVision;
+import org.firstinspires.ftc.teamcode.ChickHicks.Vision.OpenCVDetection;
 import org.firstinspires.ftc.teamcode.ChickHicks.Vision.Vuforia;
 
-import static org.firstinspires.ftc.teamcode.ChickHicks.Vision.HSL_OpenCVDetection.cubePositionAlt;
+//import ChickHicks.Vision;
+//import ChickHicks.Vuforia;
 
-@Disabled
 @Autonomous
-        (name = "HSLOpenCVTest", group = "Auto")
+        (name = "OpenCVTest", group = "Auto")
 
-public class HSLOpenCVTest extends LinearOpMode {
+public class OpenCVTest extends LinearOpMode {
 
-  private HSL_OpenCVDetection vision;
+  private OpenCVDetection vision;
   private Vuforia vuforia;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
         vuforia = new Vuforia(this);
-        vision = new HSL_OpenCVDetection(this, vuforia);
+        vision = new OpenCVDetection(this, vuforia);
 
         telemetry.addLine("Initialized");
         telemetry.update();
 
         waitForStart();
 
-        while (opModeIsActive()) {
+        while(opModeIsActive())
+        {
             vision.process(vuforia.convertToMat());
-
-            telemetry.addData("Cube Position", cubePositionAlt);
+            telemetry.addData("Cube Postion", OpenCVDetection.cubePositionAlt);
             telemetry.update();
-
         }
-
     }
 }
 

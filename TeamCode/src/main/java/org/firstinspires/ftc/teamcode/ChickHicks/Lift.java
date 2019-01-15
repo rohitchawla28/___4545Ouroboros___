@@ -170,7 +170,7 @@ public class Lift {
 
 
 //        public void extendSampling(Drivetrain drivetrain, Vuforia vuforia) throws InterruptedException {
-////            HSL_OpenCVDetection vision = new HSL_OpenCVDetection(opMode, vuforia);
+////            OpenCVDetection vision = new OpenCVDetection(opMode, vuforia);
 ////            vision.process(vuforia.convertToMat());
 ////
 ////            opMode.telemetry.addData("Cube Position", TensorFlowDetection.cubePosition);

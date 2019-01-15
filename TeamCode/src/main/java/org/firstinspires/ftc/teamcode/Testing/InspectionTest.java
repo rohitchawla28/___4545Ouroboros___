@@ -4,12 +4,19 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
+import org.firstinspires.ftc.teamcode.ChickHicks.Intake;
+import org.firstinspires.ftc.teamcode.ChickHicks.Lift;
+//import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
+
+//import static org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection.cubePosition;
 
 @Autonomous
         (name = "InspectionTest", group = "Auto")
 
 public class InspectionTest extends LinearOpMode{
     private Drivetrain drivetrain;
+
+    private boolean blue = true;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -20,12 +27,9 @@ public class InspectionTest extends LinearOpMode{
 
         waitForStart();
 
-        // objective is to show inspectors that our robot can endlessly do a movement and then stop when needed
-        while (opModeIsActive()) {
-            drivetrain.turn(0.3, true);
-
+        while (blue && opModeIsActive()) {
+            drivetrain.turn(0.4, true);
         }
 
     }
-
 }

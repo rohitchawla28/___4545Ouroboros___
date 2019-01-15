@@ -7,15 +7,14 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
 
 @Disabled
-@Autonomous (name = "ArcTurnTest", group = "Auto")
+@Autonomous (name = "ArcTurn", group = "Auto")
 public class ArcTurn extends LinearOpMode {
 
     Drivetrain drivetrain;
 
     public void runOpMode() throws InterruptedException {
-        Drivetrain drivetrain = new Drivetrain(this);
 
-        waitForStart();
+        Drivetrain drivetrain = new Drivetrain(this);
 
 
     }

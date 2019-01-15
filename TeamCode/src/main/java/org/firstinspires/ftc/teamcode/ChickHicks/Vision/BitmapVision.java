@@ -1,7 +1,10 @@
 package org.firstinspires.ftc.teamcode.ChickHicks.Vision;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 
+import static android.graphics.Color.BLUE;
+import static android.graphics.Color.RED;
 import static android.graphics.Color.red;
 import static android.graphics.Color.green;
 import static android.graphics.Color.blue;
@@ -13,6 +16,9 @@ import com.vuforia.PIXEL_FORMAT;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.opencv.android.Utils;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
 
 import java.util.concurrent.BlockingQueue;
 
@@ -34,7 +40,7 @@ public class BitmapVision {
 
     private BlockingQueue<VuforiaLocalizer.CloseableFrame> frame;
 
-    public static String bitMapCubePosition;
+    String bitMapCubePosition;
 
     public BitmapVision (LinearOpMode opMode) {
         this.opMode = opMode;

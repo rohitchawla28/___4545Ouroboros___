@@ -5,11 +5,13 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.TeleOp.OPMode;
+
 //@Disabled
 @TeleOp
-        (name = "ControlledServoTest", group = "Controlled")
+        (name = "ServoTesting", group = "Auto")
 
-public class ControlledServoTest extends OpMode {
+public class ServoPositions extends OpMode {
 
     private Servo door;
     private Servo intakePivotL;
@@ -23,18 +25,16 @@ public class ControlledServoTest extends OpMode {
 
     private int position = 0;
 
-    @Override
     public void init() {
-        door = hardwareMap.servo.get("door");
+        // door = hardwareMap.servo.get("door");
+        //intakePivotL = hardwareMap.servo.get("intakePivotL");
+//        intakePivotR = hardwareMap.servo.get("intakePivotR");
+//        collectL = hardwareMap.crservo.get("collectL");
+//        collectR = hardwareMap.crservo.get("collectR");
+        //unhookL = hardwareMap.servo.get("unhookL");
+        //unhookR = hardwareMap.servo.get("unhookR");
 
-        intakePivotL = hardwareMap.servo.get("intakePivotL");
-        intakePivotR = hardwareMap.servo.get("intakePivotR");
-
-        collectL = hardwareMap.crservo.get("collectL");
-        collectR = hardwareMap.crservo.get("collectR");
-
-        unhookL = hardwareMap.servo.get("unhookL");
-        unhookR = hardwareMap.servo.get("unhookR");
+        intakePivotL.setPosition(0.5);
 
         telemetry.addLine("Initialized");
         telemetry.update();
