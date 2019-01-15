@@ -4,37 +4,37 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.ChickHicks.Vision.AlternativeVision;
-import org.firstinspires.ftc.teamcode.ChickHicks.Vision.OpenCVDetection;
+import org.firstinspires.ftc.teamcode.ChickHicks.Vision.HSV_OpenCVDetection;
 import org.firstinspires.ftc.teamcode.ChickHicks.Vision.Vuforia;
 
-//import ChickHicks.Vision;
-//import ChickHicks.Vuforia;
+import static org.firstinspires.ftc.teamcode.ChickHicks.Vision.HSV_OpenCVDetection.cubePosition;
 
-//@Disabled
+@Disabled
 @Autonomous
-        (name = "OpenCVTest2", group = "Auto")
+        (name = "HSVOpenCVTest", group = "Auto")
 
-public class OpenCVTest2 extends LinearOpMode {
+public class HSVOpenCVTest extends LinearOpMode {
 
-    private AlternativeVision vision;
+    private HSV_OpenCVDetection vision;
     private Vuforia vuforia;
 
     @Override
     public void runOpMode() throws InterruptedException {
         vuforia = new Vuforia(this);
-        vision = new AlternativeVision(this, vuforia);
+        vision = new HSV_OpenCVDetection(this, vuforia);
 
         telemetry.addLine("Initialized");
         telemetry.update();
 
         waitForStart();
 
+        // objective is to test the Hue Saturation Value GRIP filter
         vision.process(vuforia.convertToMat());
-        telemetry.addData("Cube Position", AlternativeVision.cubePosition3);
+        telemetry.addData("Cube Position", cubePosition);
         telemetry.update();
 
     }
+
 }
 
 

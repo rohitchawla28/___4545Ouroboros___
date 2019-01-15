@@ -6,9 +6,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
 
-//@Disabled
+@Disabled
 @Autonomous
-        (name = "MotionTelemetry", group = "Teleop")
+        (name = "MotionTelemetry", group = "Auto")
 
 public class MotionTelemetry extends LinearOpMode {
 
@@ -20,14 +20,11 @@ public class MotionTelemetry extends LinearOpMode {
 
         waitForStart();
 
-        // drivetrain.composeTelemetryEncoders();
+        // objective is to move the robot to desired position manually
+        // robot will return values for encoder ticks (distance) and gyro angle changes
+        // this makes it much much faster to put in values into autonomous movements when testing pathing
+        drivetrain.composeTelemetryEncoders();
         drivetrain.composeTelemetryGyro();
-
-        if (gamepad1.a) {
-
-            drivetrain.resetEncoders();
-
-        }
 
     }
 }

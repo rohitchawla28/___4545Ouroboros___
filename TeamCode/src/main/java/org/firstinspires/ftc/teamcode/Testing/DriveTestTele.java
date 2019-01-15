@@ -2,12 +2,12 @@ package org.firstinspires.ftc.teamcode.Testing;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.TeleOp.OPMode;
 
+@Disabled
 @TeleOp
-        (name = "ArcadeDrive", group = "Controlled")
+        (name = "DriveTest", group = "Controlled")
 
 public class DriveTestTele extends OPMode {
 

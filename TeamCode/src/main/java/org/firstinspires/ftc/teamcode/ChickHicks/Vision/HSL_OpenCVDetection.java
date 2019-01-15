@@ -25,7 +25,7 @@ import java.util.Arrays;
  *
  */
 
-public class OpenCVDetection {
+public class HSL_OpenCVDetection {
     public static String cubePositionAlt;
 
     private LinearOpMode opMode;
@@ -41,7 +41,7 @@ public class OpenCVDetection {
     private final double MIDDLE_CONST = 600.0 ;
     private final double RIGHT_CONST = 1100.0;
 
-    public OpenCVDetection(LinearOpMode opMode, Vuforia vuforia) throws InterruptedException {
+    public HSL_OpenCVDetection(LinearOpMode opMode, Vuforia vuforia) throws InterruptedException {
 
         this.opMode = opMode;
         this.vuforia = vuforia;

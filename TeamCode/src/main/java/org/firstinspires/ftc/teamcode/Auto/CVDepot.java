@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
 import org.firstinspires.ftc.teamcode.ChickHicks.Intake;
 import org.firstinspires.ftc.teamcode.ChickHicks.Lift;
-import org.firstinspires.ftc.teamcode.ChickHicks.Vision.OpenCVDetection;
+import org.firstinspires.ftc.teamcode.ChickHicks.Vision.HSL_OpenCVDetection;
 import org.firstinspires.ftc.teamcode.ChickHicks.Vision.Vuforia;
 
 
@@ -18,7 +18,7 @@ public class CVDepot extends LinearOpMode{
     Drivetrain drivetrain;
     Lift lift;
     Intake intake;
-    OpenCVDetection vision;
+    HSL_OpenCVDetection vision;
     Vuforia vuforia;
 
     @Override
@@ -27,7 +27,7 @@ public class CVDepot extends LinearOpMode{
         drivetrain = new Drivetrain(this);
         lift = new Lift(this);
         intake = new Intake(this);
-        vision = new OpenCVDetection(this, vuforia);
+        vision = new HSL_OpenCVDetection(this, vuforia);
         vuforia = new Vuforia(this);
 
         telemetry.addLine("Initialized");
