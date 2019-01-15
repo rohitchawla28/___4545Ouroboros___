@@ -7,36 +7,47 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public abstract class OPMode extends OpMode {
 
+    // Drive motors, example: fl = front left
     public DcMotor fl;
     public DcMotor fr;
     public DcMotor bl;
     public DcMotor br;
 
+    // arm pivot motors
     public DcMotor armPivotL;
     public DcMotor armPivotR;
+
+    // lift extension motors
     public DcMotor liftL;
     public DcMotor liftR;
 
+    // intake module servos
     public Servo door;
     public Servo intakePivotL;
     public Servo intakePivotR;
 
+    // continuous rotation collection Vex 393 motors
     public CRServo collectL;
     public CRServo collectR;
 
-    private double halfSpeedMod = 1;
+    // half speed variables for drivetrain and pivoting arm
+    private double halfSpeedDrive = 1;
+    private int halfSpeedDriveCount = 0;
     private double halfSpeedPivot = 1;
 
+    // variables for gamepad joysticks (tank drive)
     private double tankLeftPower;
     private double tankRightPower;
 
+    // variables for gamepad joysticks (arcade drive)
     private double arcLeftStick;
     private double arcRightStick;
 
-    private int halfSpeedCount = 0;
-
     @Override
+
+    // actions that occur when drive team presses init before match
     public void init() {
+        // hardware mapping of all devices
         fl = hardwareMap.dcMotor.get("fl");
         fr = hardwareMap.dcMotor.get("fr");
         bl = hardwareMap.dcMotor.get("bl");
@@ -53,6 +64,7 @@ public abstract class OPMode extends OpMode {
         collectL = hardwareMap.crservo.get("collectL");
         collectR = hardwareMap.crservo.get("collectR");
 
+        // setting reverse directions of right motors because they are mounted opposite
         fl.setDirection(DcMotor.Direction.FORWARD);
         fr.setDirection(DcMotor.Direction.REVERSE);
         bl.setDirection(DcMotor.Direction.FORWARD);
@@ -60,15 +72,20 @@ public abstract class OPMode extends OpMode {
 
         armPivotL.setDirection(DcMotor.Direction.FORWARD);
         armPivotR.setDirection(DcMotor.Direction.REVERSE);
+
         liftL.setDirection(DcMotor.Direction.FORWARD);
         liftR.setDirection(DcMotor.Direction.REVERSE);
-
-        armPivotL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        armPivotR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         collectL.setDirection(DcMotor.Direction.FORWARD);
         collectR.setDirection(DcMotor.Direction.REVERSE);
 
+        // setting arm pivot motors to BRAKE mode instead of FLOAT
+        // makes it easier for driver to control, won't just fall down because
+        // of added resistance to motors
+        armPivotL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        armPivotR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        // send message to phone to tell drive team when necessary actions have been completed
         telemetry.addLine("Initialized");
         telemetry.update();
 
@@ -76,10 +93,13 @@ public abstract class OPMode extends OpMode {
 
     //====================================  DRIVETRAIN  ============================================
 
+    // in tank drive, the left side (left drive motors) of the chassis is controlled by the left joystick
+    // and the right side is controlled by the right stick
     public void tankDrive() {
-        tankLeftPower = gamepad1.left_stick_y * halfSpeedMod;
-        tankRightPower = gamepad1.right_stick_y * halfSpeedMod;
+        tankLeftPower = gamepad1.left_stick_y /* * halfSpeedDrive */;
+        tankRightPower = gamepad1.right_stick_y /* * halfSpeedDrive */;
 
+        // 0.08 serves as a buffer zone so motors won't run if joystick resets to 0.00001 or small number other than 0
         if (Math.abs(tankLeftPower) > 0.08) {
             fl.setPower(tankLeftPower);
             bl.setPower(tankLeftPower);
@@ -104,9 +124,11 @@ public abstract class OPMode extends OpMode {
 
     }
 
+    // in arcade drive, the left stick controls all motors either moving forwards or backwards
+    // the right stick controls turning left or right
     public void arcadeDrive() {
-        arcLeftStick = gamepad1.left_stick_y /* * halfSpeedMod */;
-        arcRightStick = gamepad1.right_stick_x /* * halfSpeedMod */;
+        arcLeftStick = gamepad1.left_stick_y * halfSpeedDrive;
+        arcRightStick = gamepad1.right_stick_x * halfSpeedDrive;
 
         double leftPower = arcLeftStick + arcRightStick;
         double rightPower = arcLeftStick - arcRightStick;
@@ -123,25 +145,6 @@ public abstract class OPMode extends OpMode {
             fr.setPower(0);
             bl.setPower(0);
             br.setPower(0);
-
-        }
-
-    }
-
-    public void halfSpeed () {
-        if (gamepad1.a) {
-            while (gamepad1.a) {
-            }
-
-            if (halfSpeedCount % 2 == 0) {
-                halfSpeedMod = 0.5;
-
-            }
-            else {
-                halfSpeedMod = 1.0;
-
-            }
-            halfSpeedCount++;
 
         }
 
@@ -166,6 +169,7 @@ public abstract class OPMode extends OpMode {
     }
 
     public void armPivot() {
+        // added option for half speed on pivot arm so easier for driver to control when lining up to hang
         double pivotPower = gamepad2.left_stick_y * halfSpeedPivot;
 
         if (Math.abs(pivotPower) > .08) {
@@ -183,62 +187,46 @@ public abstract class OPMode extends OpMode {
 
     public void intakePivot() {
         if (gamepad2.b) {
-            while (gamepad2.b) {
-            }
-            //collection
+            // empty body while loop makes sure that action only gets carried out once
+            // if there wasn't a while loop before the servo movements the methods may get called multiple times which isn't needed
+            while (gamepad2.b) { }
+            //collection position
             intakePivotL.setPosition(0.4);
             intakePivotR.setPosition(0.6);
 
         }
 
         if (gamepad2.y) {
-            while (gamepad2.y) {
-
-            }
-            //deposit
+            while (gamepad2.y) { }
+            //deposit position
             intakePivotL.setPosition(0.9);
             intakePivotR.setPosition(0.05);
         }
 
-
     }
-    public void halfSpeedPivot(){
-        if (gamepad2.a){
-            while(gamepad2.a){
-
-            }
-            halfSpeedPivot = 0.5;
-
-        }
-
-        if (gamepad2.x) {
-            while (gamepad2.x) {
-
-            }
-            halfSpeedPivot = 1;
-        }
-    }
-
 
     public void door() {
         if (gamepad1.left_bumper) {
-            while (gamepad1.left_bumper) {
-            }
+            while (gamepad1.left_bumper) { }
+            // collection position
             door.setPosition(0.6);
+
         }
 
         if (gamepad1.right_bumper) {
-            while (gamepad1.right_bumper) {
-            }
+            while (gamepad1.right_bumper) { }
+            // deposit position
             door.setPosition(0);
+
         }
 
     }
 
     public void collect() {
-        if (gamepad2.right_bumper) {
-            collectL.setPower(-0.6);
-            collectR.setPower(-0.6);
+        if (gamepad2.left_bumper) {
+            // spin in
+            collectL.setPower(0.6);
+            collectR.setPower(0.6);
 
         }
         else {
@@ -247,9 +235,10 @@ public abstract class OPMode extends OpMode {
 
         }
 
-        if (gamepad2.left_bumper) {
-            collectL.setPower(0.6);
-            collectR.setPower(0.6);
+        if (gamepad2.right_bumper) {
+            // spin out
+            collectL.setPower(-0.6);
+            collectR.setPower(-0.6);
 
         }
         else {
@@ -263,11 +252,42 @@ public abstract class OPMode extends OpMode {
     //================================== UTILITY METHODS ===========================================
 
     public void resetEncoders() {
+        // method sets lift encoder counts to 0
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         liftL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         liftR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+    }
+
+    public void halfSpeed () {
+        if (gamepad1.a) {
+            while (gamepad1.a) { }
+            // counter variable allows us to use same button to change between half speed and normal
+            if (halfSpeedDriveCount % 2 == 0) {
+                halfSpeedDrive = 0.5;
+
+            }
+            else {
+                halfSpeedDrive = 1.0;
+
+            }
+            halfSpeedDriveCount++;
+
+        }
+
+        // TODO: CHANGE TO SAME BUTTON WITH MODULUS AND TEST
+        if (gamepad2.a) {
+            while(gamepad2.a){ }
+            halfSpeedPivot = 0.5;
+
+        }
+        if (gamepad2.x) {
+            while (gamepad2.x) { }
+            halfSpeedPivot = 1;
+
+        }
 
     }
 
