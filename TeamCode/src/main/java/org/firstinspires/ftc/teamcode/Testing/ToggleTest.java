@@ -10,49 +10,49 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 public class ToggleTest extends OpMode {
 
-    boolean a_halfSpd = false;
+    private boolean a_halfSpd = false;
 
-    boolean b_halfSpd = false;
+    private boolean b_halfSpd = false;
 
-    boolean y_halfSpd = false;
-    boolean lastPassed = false;
+    private boolean y_halfSpd = false;
+    private boolean lastPassed = false;
+
+    private int count = 0;
 
     public void init() {
         telemetry.addLine("Initialized");
+
     }
 
+    // objective is to test different methods of toggles to see which is the most accurate
     public void loop() {
-
         // method #1
         if (gamepad1.a) {
-            while (gamepad1.a) {
-
-            }
+            while (gamepad1.a) { }
             a_halfSpd = !a_halfSpd;
 
+            telemetry.addData("The toggle is ", a_halfSpd);
             telemetry.update();
 
-            telemetry.addData("The toggle is ", a_halfSpd);
         }
 
-
         // method #2
-        int count = 0;
-
         if (gamepad1.b && (count % 2 == 0)) {
             b_halfSpd = true;
             count++;
 
-            telemetry.update();
             telemetry.addData("The toggle is ", b_halfSpd);
+            telemetry.update();
+
         }
 
         if (gamepad1.b && (count % 2 == 1)) {
             b_halfSpd = false;
             count++;
 
-            telemetry.update();
             telemetry.addData("The toggle is ", b_halfSpd);
+            telemetry.update();
+
         }
 
         //method #3
@@ -62,19 +62,20 @@ public class ToggleTest extends OpMode {
 
             y_halfSpd = !y_halfSpd;
             if (y_halfSpd) {
-                telemetry.update();
                 telemetry.addLine("Switched to half speed");
+                telemetry.update();
+
             }
             else {
                 y_halfSpd = false;
 
-                telemetry.update();
                 telemetry.addLine("Switched back to normal speed");
+                telemetry.update();
+
             }
 
         }
         lastPassed = yPressed;
-
 
     }
 

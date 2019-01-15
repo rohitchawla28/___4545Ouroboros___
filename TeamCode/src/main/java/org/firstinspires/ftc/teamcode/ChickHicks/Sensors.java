@@ -1,33 +1,30 @@
 package org.firstinspires.ftc.teamcode.ChickHicks;
 
-
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
-import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 public class Sensors {
 
+    // importing LinearOpMode for our usage
     private LinearOpMode opMode;
 
-    private Rev2mDistanceSensor range;
-
+    // initalizing gyro
     public BNO055IMU gyro;
     private  Orientation angles;
     Acceleration gravity;
     private BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
-
+    // constructor for initializing Sensors class
     public Sensors(LinearOpMode opMode, boolean IMUenabled) throws InterruptedException {
-
         this.opMode = opMode;
 
+        // gyro init
         if (IMUenabled){
             BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
             parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
@@ -39,16 +36,9 @@ public class Sensors {
 
             gyro = this.opMode.hardwareMap.get(BNO055IMU.class, "imu");
             gyro.initialize(parameters);
+
         }
 
-        //range = this.opMode.hardwareMap.get(Rev2mDistanceSensor.class, "range");
-
-    }
-
-    public double getDistance() {
-
-//        return (range.getDistance(DistanceUnit.INCH));
-        return 0;
     }
 
     // Note: Due to positioning of REV Hub, yaw is the 1st Angle, roll 3rd Angle, and pitch 2nd Angle.

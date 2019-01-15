@@ -1,14 +1,11 @@
 package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
 import org.firstinspires.ftc.teamcode.ChickHicks.Intake;
 import org.firstinspires.ftc.teamcode.ChickHicks.Lift;
-import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TFHang;
-import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
 
 import static org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection.cubePosition;
 
