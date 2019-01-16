@@ -2,29 +2,31 @@ package org.firstinspires.ftc.teamcode.ChickHicks.Vision;
 
 import android.graphics.Bitmap;
 
-import static android.graphics.Color.red;
-import static android.graphics.Color.green;
-import static android.graphics.Color.blue;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.vuforia.Frame;
 import com.vuforia.Image;
 import com.vuforia.PIXEL_FORMAT;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.Parameters;
 
+import java.util.Arrays;
 import java.util.concurrent.BlockingQueue;
 
+import static android.graphics.Color.blue;
+import static android.graphics.Color.green;
+import static android.graphics.Color.red;
 
-public class BitmapVision {
+
+public class BitmapVisionWC {
 
     private LinearOpMode opMode;
     private VuforiaLocalizer vuforia;
     private Parameters parameters;
-    private CameraDirection CAMERA_CHOICE = CameraDirection.BACK;
+    // private CameraDirection CAMERA_CHOICE = CameraDirection.BACK;
 
     private final int RED_VAL = 244;
     private final int GREEN_VAL = 218;
@@ -34,15 +36,19 @@ public class BitmapVision {
 
     private BlockingQueue<VuforiaLocalizer.CloseableFrame> frame;
 
+    private WebcamName webcam;
+
     public static String bitmapCubePosition;
 
-    public BitmapVision (LinearOpMode opMode) {
+    public BitmapVisionWC(LinearOpMode opMode) {
         this.opMode = opMode;
 
+        webcam = this.opMode.hardwareMap.get(WebcamName.class, "Webcam");
+
         int cameraMonitorViewId = this.opMode.hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", this.opMode.hardwareMap.appContext.getPackageName());
-        parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+        parameters = new Parameters(cameraMonitorViewId);
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
-        parameters.cameraDirection = CAMERA_CHOICE;
+        // parameters.cameraDirection = CAMERA_CHOICE;
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
 
     }
@@ -99,13 +105,14 @@ public class BitmapVision {
                                         : "right";
                     break;
                 }
-                
+
             }
 
         }
         opMode.telemetry.addData("Cube Position", bitmapCubePosition);
         opMode.telemetry.update();
         return bitmapCubePosition;
+
     }
 
     public Bitmap vufConvertToBitmap(Frame frame) { return vuforia.convertFrameToBitmap(frame); }
