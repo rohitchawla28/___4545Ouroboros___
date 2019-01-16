@@ -327,76 +327,6 @@ public class Drivetrain {
 
     //====================================== PID METHODS ===========================================
 
-    public void movePI(double distance, double kP, double kI, double timeout) {
-        ElapsedTime time = new ElapsedTime();
-
-        resetEncoders();
-
-        double power;
-        double error;
-
-        double proportional;
-        double integral = 0;
-        double lastRunTime;
-
-        double initEncoder = getEncoderAvg();
-
-        time.reset();
-
-        while ((getEncoderAvg() - initEncoder) < distance && time.seconds() < timeout && opMode.opModeIsActive()) {
-            lastRunTime = time.seconds();
-
-            error = distance - getEncoderAvg();
-
-            proportional = (error * kP);
-            integral += (error * (time.seconds() - lastRunTime) * kI);
-
-            power = proportional + integral;
-
-            startMotors(power);
-
-            opMode.telemetry.addData("P", proportional);
-            opMode.telemetry.addData("I", integral);
-            opMode.telemetry.update();
-
-            opMode.idle();
-
-        }
-        stopMotors();
-
-    }
-
-    public void turnP(double angleChange, boolean turnRight, double kP, double timeout) {
-        ElapsedTime time = new ElapsedTime();
-
-        double power;
-        double error;
-
-        double proportional;
-
-        double initAngle = sensors.getGyroYaw();
-
-        time.reset();
-
-        while (Math.abs(sensors.getGyroYaw() - (angleChange + initAngle)) < 1 && opMode.opModeIsActive() && time.seconds() < timeout) {
-            error = angleChange - Math.abs((sensors.getGyroYaw() - initAngle));
-
-            proportional = error * kP;
-
-            power = proportional;
-
-            turn(power, turnRight);
-
-            opMode.telemetry.addData("Angle Left", error);
-            opMode.telemetry.update();
-
-            opMode.idle();
-
-        }
-        stopMotors();
-
-    }
-
     public void turnPI(double angleChange, boolean turnRight, double kP, double kI, double timeout) {
         ElapsedTime time = new ElapsedTime();
         ElapsedTime timeoutTimer = new ElapsedTime();
@@ -452,6 +382,69 @@ public class Drivetrain {
         stopMotors();
     }
 
+    public void turnPD(double angleChange, boolean turnRight, double kP, double kD, double timeout) {
+        ElapsedTime time = new ElapsedTime();
+        ElapsedTime timeoutTimer = new ElapsedTime();
+
+        double error;
+        double power;
+        boolean isNegative;
+        double floor = 0.08;
+
+        double proportional;
+        double derivative;
+
+        double prevRunTime;
+
+        double initAngle = sensors.getGyroYaw();
+        double lastError = angleChange - (Math.abs(sensors.getGyroYaw() - initAngle));
+
+        time.reset();
+        timeoutTimer.reset();
+
+        while (Math.abs(sensors.getGyroYaw() - (angleChange + initAngle)) > 0 && opMode.opModeIsActive() && timeoutTimer.seconds() < timeout) {
+            // ((getGyroYaw() - initAngle) - angleChange) != 0
+            prevRunTime = time.seconds();
+
+            error = angleChange - (sensors.getGyroYaw() - initAngle);
+
+            proportional = error * kP;
+            derivative = ((error - lastError) / (time.seconds() - prevRunTime)) * kD ;
+
+            power = proportional + derivative;
+            // isNegative = false;
+
+//            if (power < 0) {
+//                isNegative = true;
+//            }
+
+//            if (Math.abs(power) < bias) {
+//                power = 0;
+//            }
+
+//            if (isNegative) {
+//                turn(power - bias, turnRight);
+//            }
+//            else turn(power + bias, turnRight);
+
+            turn(power, turnRight);
+
+            opMode.telemetry.addData("error ", error);
+            // opMode.telemetry.addData("bias", bias);
+            opMode.telemetry.addData("P", proportional);
+            opMode.telemetry.addData("D", derivative);
+            opMode.telemetry.addData("Power", power);
+            opMode.telemetry.update();
+
+            lastError = error;
+
+            opMode.idle();
+
+        }
+        stopMotors();
+
+    }
+
     public void turnPID(double angleChange, boolean turnRight, double kP, double kI, double kD, double timeout) {
         ElapsedTime time = new ElapsedTime();
         ElapsedTime timeoutTimer = new ElapsedTime();
@@ -483,7 +476,7 @@ public class Drivetrain {
             integral += (error * (time.seconds() - prevRunTime)) * kI;
             derivative = (error - lastError) / (time.seconds() - prevRunTime);
 
-            power = proportional + integral - derivative;
+            power = proportional + integral + derivative;
             isNegative = false;
 
             if (power < 0) {

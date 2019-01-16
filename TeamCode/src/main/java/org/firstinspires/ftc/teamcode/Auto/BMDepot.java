@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
 import org.firstinspires.ftc.teamcode.ChickHicks.Intake;
 import org.firstinspires.ftc.teamcode.ChickHicks.Lift;
 import org.firstinspires.ftc.teamcode.ChickHicks.Vision.BitmapVision;
-import static org.firstinspires.ftc.teamcode.ChickHicks.Vision.BitmapVision.bitMapCubePosition;
+import static org.firstinspires.ftc.teamcode.ChickHicks.Vision.BitmapVision.bitmapCubePosition;
 
 @Autonomous
         (name = "BMDepot", group = "Auto")
@@ -32,7 +32,7 @@ public class BMDepot extends LinearOpMode{
 
         vision.sample();
 
-        switch(bitMapCubePosition) {
+        switch(bitmapCubePosition) {
             case "left":
                 drivetrain.moveEncoder(0.3, 200, 4);
                 sleep(400);

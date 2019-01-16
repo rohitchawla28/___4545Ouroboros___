@@ -34,7 +34,7 @@ public class BitmapVision {
 
     private BlockingQueue<VuforiaLocalizer.CloseableFrame> frame;
 
-    public static String bitMapCubePosition;
+    public static String bitmapCubePosition;
 
     public BitmapVision (LinearOpMode opMode) {
         this.opMode = opMode;
@@ -73,29 +73,39 @@ public class BitmapVision {
         imageBitmap.copyPixelsFromBuffer(rgb.getPixels());
 
         picture.close();
+
+        opMode.telemetry.addLine("Got bitmap");
+        opMode.telemetry.update();
+
         return imageBitmap;
     }
 
     public String sample() throws InterruptedException{
         Bitmap bitmap = getBitmap();
-
         for (int x = 0; x < bitmap.getHeight(); x++) {
+
+
             for (int y = 0; y < bitmap.getWidth(); y++) {
-                int pixel = bitmap.getPixel(x, y);
+
+                int pixel = bitmap.getPixel(y, x);
 
                 int R = red(pixel);
                 int G = green(pixel);
                 int B = blue(pixel);
 
-                if ((R <= RED_VAL + 10) && (R >= RED_VAL - 10) && (G <= GREEN_VAL + 10) && (G >= GREEN_VAL - 10)
-                        && (B >= BLUE_VAL - 10)) {
-                    bitMapCubePosition = (x >= 1450 && x <= 1600)? "center"
-                            : (x >= 225 && x <= 450)? "left"
-                           : "right";
+                if ((R <= RED_VAL + 10) && (R >= RED_VAL - 10) && (G <= GREEN_VAL + 10) && (G >= GREEN_VAL - 10) && (B >= BLUE_VAL - 10)) {
+                    bitmapCubePosition = (x >= 1450 && x <= 1600) ? "center"
+                                        : (x >= 225 && x <= 450)  ? "left"
+                                        : "right";
+                    break;
                 }
+                
             }
+
         }
-        return bitMapCubePosition;
+        opMode.telemetry.addData("Cube Position", bitmapCubePosition);
+        opMode.telemetry.update();
+        return bitmapCubePosition;
     }
 
     public Bitmap vufConvertToBitmap(Frame frame) { return vuforia.convertFrameToBitmap(frame); }

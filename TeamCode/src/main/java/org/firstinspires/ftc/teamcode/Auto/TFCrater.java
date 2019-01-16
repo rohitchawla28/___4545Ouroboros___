@@ -6,8 +6,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
 import org.firstinspires.ftc.teamcode.ChickHicks.Intake;
 import org.firstinspires.ftc.teamcode.ChickHicks.Lift;
+import org.firstinspires.ftc.teamcode.ChickHicks.Vision.NewTF;
 
-import static org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection.cubePosition;
+import static org.firstinspires.ftc.teamcode.ChickHicks.Vision.NewTF.cubePosition;
 
 // @Disabled
 @Autonomous
@@ -17,7 +18,7 @@ public class TFCrater extends LinearOpMode{
     Drivetrain drivetrain;
     Intake intake;
     Lift lift;
-    TFHang vision;
+    NewTF vision;
 
     @Override
     public void runOpMode() throws InterruptedException {
