@@ -18,6 +18,7 @@ public class Lift {
 
     private Servo unhookL;
     private Servo unhookR;
+    private Servo liftLock;
 
     private Sensors sensors;
 
@@ -33,6 +34,7 @@ public class Lift {
 
         //unhookL = this.opMode.hardwareMap.servo.get("unhookL");
         //unhookR = this.opMode.hardwareMap.servo.get("unhookR");
+        //liftLock = this.opMode.hardwareMap.servo.get("liftLock");
 
         liftL.setDirection(DcMotorSimple.Direction.FORWARD);
         liftR.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -59,27 +61,66 @@ public class Lift {
 
 
     //MAKE SURE THE METHOD KEEPS GOING LONG ENOUGH SO THAT IT RAISES ENOUGH TO TURN OUT
-    public void detachTime() {
+    public void detachTime1(Drivetrain drivetrain) {
         ElapsedTime time = new ElapsedTime();
+
+        liftLock.setPosition(0.5);//need to test for unlock position
+
+        opMode.sleep(2000);
+
         unhookL.setPosition(0.5);
         unhookR.setPosition(0.5);
 
-        opMode.sleep(2500);
+        armPivotL.setPower(0.3);
+        armPivotR.setPower(0.3);
+
+        opMode.sleep(2000);
 
         time.reset();
 
         while (time.milliseconds() < 1000 && opMode.opModeIsActive()) {
-            liftL.setPower(-0.5);
-            liftR.setPower(-0.5);
-
+            liftL.setPower(0.5);
+            liftR.setPower(0.5);
         }
-        opMode.sleep(5000);
+        drivetrain.moveEncoder(0.4, 300, 3);
 
         time.reset();
-        while (time.milliseconds() < 500 && opMode.opModeIsActive()) {
-            liftL.setPower(0.3);
-            liftR.setPower(0.3);
 
+        while(time.milliseconds() < 3000 && opMode.opModeIsActive()){
+            liftL.setPower(-0.5);
+            liftR.setPower(-0.5);
+        }
+    }
+
+    public void detachTime2(Drivetrain drivetrain) {
+        ElapsedTime time = new ElapsedTime();
+
+        unhookL.setPosition(0.5);
+        unhookR.setPosition(0.5);
+        time.reset();
+
+        while (time.milliseconds() < 2000 && opMode.opModeIsActive()) {
+            armPivotL.setPower(0.5);
+            armPivotR.setPower(0.5);
+        }
+
+        liftLock.setPosition(0.5);//need to test for unlock position
+
+        opMode.sleep(2000);
+
+        time.reset();
+
+        while (time.milliseconds() < 1000 && opMode.opModeIsActive()) {
+            liftL.setPower(0.5);
+            liftR.setPower(0.5);
+        }
+        drivetrain.moveEncoder(0.4, 300, 3);
+
+        time.reset();
+
+        while(time.milliseconds() < 3000 && opMode.opModeIsActive()){
+            liftL.setPower(-0.5);
+            liftR.setPower(-0.5);
         }
     }
 
