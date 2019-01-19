@@ -12,15 +12,20 @@ import org.firstinspires.ftc.teamcode.ChickHicks.Vision.BitmapVision;
 public class BitmapTesting extends LinearOpMode {
 
     BitmapVision bitmapVision;
+
     public void runOpMode() throws InterruptedException{
         bitmapVision = new BitmapVision(this);
 
-        telemetry.addLine("Initialization Complete");
-        telemetry.update();
+        while (!isStarted())
+        {
+            bitmapVision.sample();
+        }
+        //bitmapVision.sample();
 
         waitForStart();
 
-        bitmapVision.sample();
+        telemetry.addLine("Initialization Complete");
+        telemetry.update();
 
     }
 }

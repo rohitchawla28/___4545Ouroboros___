@@ -10,10 +10,8 @@ import com.vuforia.PIXEL_FORMAT;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.Parameters;
 
-import java.util.Arrays;
 import java.util.concurrent.BlockingQueue;
 
 import static android.graphics.Color.blue;
@@ -44,6 +42,7 @@ public class BitmapVisionWC {
         this.opMode = opMode;
 
         webcam = this.opMode.hardwareMap.get(WebcamName.class, "Webcam");
+        bitmapCubePosition = "";
 
         int cameraMonitorViewId = this.opMode.hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", this.opMode.hardwareMap.appContext.getPackageName());
         parameters = new Parameters(cameraMonitorViewId);
@@ -80,7 +79,7 @@ public class BitmapVisionWC {
 
         picture.close();
 
-        opMode.telemetry.addLine("Got bitmap");
+        opMode.telemetry.addLine("Bitmap & Vuforia Init Finished");
         opMode.telemetry.update();
 
         return imageBitmap;
@@ -88,32 +87,40 @@ public class BitmapVisionWC {
 
     public String sample() throws InterruptedException{
         Bitmap bitmap = getBitmap();
-        for (int x = 0; x < bitmap.getHeight(); x++) {
+        for (int y = 0; y < bitmap.getHeight(); y++) {
 
+            for (int x = 0; x < bitmap.getWidth(); x++) {
 
-            for (int y = 0; y < bitmap.getWidth(); y++) {
+                int pixel = bitmap.getPixel(x, y);
 
-                int pixel = bitmap.getPixel(y, x);
+                opMode.telemetry.addLine("Got pixel");
+                opMode.telemetry.update();
 
-                int R = red(pixel);
-                int G = green(pixel);
-                int B = blue(pixel);
+                int redPixel = red(pixel);
+                int greenPixel = green(pixel);
+                int bluePixel = blue(pixel);
 
-                if ((R <= RED_VAL + 10) && (R >= RED_VAL - 10) && (G <= GREEN_VAL + 10) && (G >= GREEN_VAL - 10) && (B >= BLUE_VAL - 10)) {
+                opMode.telemetry.addData("red val", redPixel);
+                opMode.telemetry.addData("blue val", bluePixel);
+                opMode.telemetry.addData("green val", greenPixel);
+                opMode.telemetry.update();
+
+                opMode.sleep(500);
+
+                if ((redPixel <= RED_VAL + 10) && (redPixel >= RED_VAL - 10) && (greenPixel <= GREEN_VAL + 10) && (greenPixel >= GREEN_VAL - 10) && (bluePixel >= BLUE_VAL - 10)) {
                     bitmapCubePosition = (x >= 1450 && x <= 1600) ? "center"
                                         : (x >= 225 && x <= 450)  ? "left"
-                                        : "right";
-                    break;
+                                        : "unknown";
+                break;
                 }
-
             }
 
         }
-        opMode.telemetry.addData("Cube Position", bitmapCubePosition);
-        opMode.telemetry.update();
+
         return bitmapCubePosition;
 
     }
+
 
     public Bitmap vufConvertToBitmap(Frame frame) { return vuforia.convertFrameToBitmap(frame); }
 
