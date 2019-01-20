@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public abstract class OPMode extends OpMode {
 
-    // Drive motors, example: fl = front left
+    // drive motors, example: fl = front left
     public DcMotor fl;
     public DcMotor fr;
     public DcMotor bl;
@@ -30,6 +30,9 @@ public abstract class OPMode extends OpMode {
     public CRServo collectL;
     public CRServo collectR;
 
+    // servo locks the lift in for auto
+    public Servo lockLift;
+
     // half speed variables for drivetrain and pivoting arm
     private double halfSpeedDrive = 1;
     private int halfSpeedDriveCount = 0;
@@ -44,7 +47,6 @@ public abstract class OPMode extends OpMode {
     private double arcRightStick;
 
     @Override
-
     // actions that occur when drive team presses init before match
     public void init() {
         // hardware mapping of all devices
@@ -61,8 +63,11 @@ public abstract class OPMode extends OpMode {
         door = hardwareMap.servo.get("door");
         intakePivotL = hardwareMap.servo.get("intakePivotL");
         intakePivotR = hardwareMap.servo.get("intakePivotR");
+
         collectL = hardwareMap.crservo.get("collectL");
         collectR = hardwareMap.crservo.get("collectR");
+
+        lockLift = hardwareMap.servo.get("lockLift");
 
         // setting reverse directions of right motors because they are mounted opposite
         fl.setDirection(DcMotor.Direction.FORWARD);

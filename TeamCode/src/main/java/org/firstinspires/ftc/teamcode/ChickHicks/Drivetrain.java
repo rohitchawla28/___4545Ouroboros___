@@ -474,7 +474,7 @@ public class Drivetrain {
 
             proportional = error * kP;
             integral += (error * (time.seconds() - prevRunTime)) * kI;
-            derivative = (error - lastError) / (time.seconds() - prevRunTime);
+            derivative = ((error - lastError) / (time.seconds() - prevRunTime)) * kD;
 
             power = proportional + integral + derivative;
             isNegative = false;

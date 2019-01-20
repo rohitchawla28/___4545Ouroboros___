@@ -15,25 +15,26 @@ import static org.firstinspires.ftc.teamcode.ChickHicks.Vision.NewTF.cubePositio
         (name = "TFCrater", group = "Auto")
 
 public class TFCrater extends LinearOpMode{
-    Drivetrain drivetrain;
-    Intake intake;
-    Lift lift;
+//    Drivetrain drivetrain;
+//    Intake intake;
+//    Lift lift;
     NewTF vision;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        drivetrain = new Drivetrain(this);
-        intake = new Intake(this);
-        lift = new Lift(this);
-        // vision = new TFHang(this);
+//        drivetrain = new Drivetrain(this);
+//        intake = new Intake(this);
+//        lift = new Lift(this);
+         vision = new NewTF(this);
 
         telemetry.addLine("Initialized");
         telemetry.update();
 
         waitForStart();
 
-        // vision.sample();
+        vision.initialize();
+        vision.sample();
 
         //lift.detachTime();
 
@@ -95,34 +96,34 @@ public class TFCrater extends LinearOpMode{
 //                drivetrain.moveEncoder(-0.3, 200, 3);
 //                break;
 //            case "right":
-                drivetrain.turnPI(25, true, 0.65/60, 0.004, 3);
-                sleep(500);
-
-                drivetrain.moveEncoder(0.6, 475, 4);
-                sleep(500);
-
-                drivetrain.moveEncoder(-0.6, 125, 4);
-                sleep(500);
-
-                drivetrain.turnPI(95, false, .35/95, 0.003, 4);
-                sleep(500);
-
-                drivetrain.moveEncoder(0.6, 1150, 4);
-                sleep(500);
-
-                drivetrain.turnPI(40, false, .3/90, 0.013, 4);
-                sleep(500);
-
-                drivetrain.moveEncoder(0.6, 1150, 4);
-                sleep(500);
-
-                lift.moveArmUp();
-                sleep(500);
-
-                drivetrain.moveEncoder(-0.6, 2200,4);
-                sleep(500);
-
-                drivetrain.moveEncoder(-0.3, 200, 3);
+//                drivetrain.turnPI(25, true, 0.65/60, 0.004, 3);
+//                sleep(500);
+//
+//                drivetrain.moveEncoder(0.6, 475, 4);
+//                sleep(500);
+//
+//                drivetrain.moveEncoder(-0.6, 125, 4);
+//                sleep(500);
+//
+//                drivetrain.turnPI(95, false, .35/95, 0.003, 4);
+//                sleep(500);
+//
+//                drivetrain.moveEncoder(0.6, 1150, 4);
+//                sleep(500);
+//
+//                drivetrain.turnPI(40, false, .3/90, 0.013, 4);
+//                sleep(500);
+//
+//                drivetrain.moveEncoder(0.6, 1150, 4);
+//                sleep(500);
+//
+//                lift.moveArmUp();
+//                sleep(500);
+//
+//                drivetrain.moveEncoder(-0.6, 2200,4);
+//                sleep(500);
+//
+//                drivetrain.moveEncoder(-0.3, 200, 3);
 
 //                break;
 //

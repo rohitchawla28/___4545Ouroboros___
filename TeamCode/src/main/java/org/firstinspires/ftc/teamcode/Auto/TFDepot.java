@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.ChickHicks.Drivetrain;
 import org.firstinspires.ftc.teamcode.ChickHicks.Intake;
 import org.firstinspires.ftc.teamcode.ChickHicks.Lift;
+import org.firstinspires.ftc.teamcode.ChickHicks.Vision.NewTF;
 //import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
 
 //import static org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection.cubePosition;
@@ -18,14 +19,14 @@ public class TFDepot extends LinearOpMode{
     Drivetrain drivetrain;
     Lift lift;
     Intake intake;
-    //TensorFlowDetection vision;
+    NewTF vision;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
         drivetrain = new Drivetrain(this);
         intake = new Intake(this);
-        //vision = new TensorFlowDetection(this);
+        vision = new NewTF(this);
 //        lift = new Lift(this);
 
 
@@ -33,7 +34,8 @@ public class TFDepot extends LinearOpMode{
         telemetry.update();
 
         waitForStart();
-        //vision.sample();
+        vision.initialize();
+        vision.sample();
 
 //        switch(cubePosition) {
 //            case "left":

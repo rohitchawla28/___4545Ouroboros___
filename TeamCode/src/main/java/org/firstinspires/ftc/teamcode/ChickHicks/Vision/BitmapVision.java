@@ -104,8 +104,6 @@ public class BitmapVision {
         picture = vuforia.getFrameQueue().take();
         Image rgb = picture.getImage(1);
 
-
-
         long numImages = picture.getNumImages();
 
         opMode.telemetry.addData("Num Images", numImages);
