@@ -32,7 +32,7 @@ public class BMCrater extends LinearOpMode{
 
         waitForStart();
 
-        drivetrain.turnPD(95, false, 0.75/95, 0, 15);
+        drivetrain.turnPID(95, false, 0.8/95,.003, .05/95, 15);
 
 //        vision.sample();
 //

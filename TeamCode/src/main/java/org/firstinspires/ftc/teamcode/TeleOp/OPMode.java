@@ -139,8 +139,8 @@ public abstract class OPMode extends OpMode {
         arcLeftStick = gamepad1.left_stick_y * halfSpeedDrive;
         arcRightStick = gamepad1.right_stick_x * halfSpeedDrive;
 
-        double leftPower = arcLeftStick + arcRightStick;
-        double rightPower = arcLeftStick - arcRightStick;
+        double leftPower = arcLeftStick - arcRightStick;
+        double rightPower = arcLeftStick + arcRightStick;
 
         if (Math.abs(arcLeftStick) > 0.08 || Math.abs(arcRightStick) > 0.08) {
             fl.setPower(leftPower);
@@ -298,10 +298,14 @@ public abstract class OPMode extends OpMode {
             // counter variable allows us to use same button to change between half speed and normal
             if (halfSpeedDriveCount % 2 == 0) {
                 halfSpeedDrive = 0.5;
+                telemetry.addLine("Half speed on");
+                telemetry.update();
 
             }
             else {
                 halfSpeedDrive = 1.0;
+                telemetry.addLine("Half speed off");
+                telemetry.update();
 
             }
             halfSpeedDriveCount++;

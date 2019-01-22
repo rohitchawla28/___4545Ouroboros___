@@ -438,7 +438,7 @@ public class Drivetrain {
 
             lastError = error;
 
-            opMode.idle();
+//            opMode.idle();
 
         }
         stopMotors();
@@ -450,13 +450,13 @@ public class Drivetrain {
         ElapsedTime timeoutTimer = new ElapsedTime();
 
         double error;
-        double power;
+        double power = 0;
         boolean isNegative;
 
         double proportional;
         double integral = 0;
         double derivative;
-        double bias = 0.15;
+        double bias;
 
         double prevRunTime;
 
@@ -466,7 +466,7 @@ public class Drivetrain {
         time.reset();
         timeoutTimer.reset();
 
-        while (Math.abs(sensors.getGyroYaw() - (angleChange + initAngle)) > 0 && opMode.opModeIsActive() && timeoutTimer.seconds() < timeout) {
+        while (Math.abs(sensors.getGyroYaw() - (angleChange + initAngle)) > 1 && timeoutTimer.seconds() < timeout && opMode.opModeIsActive()) {
             // ((getGyroYaw() - initAngle) - angleChange) != 0
             prevRunTime = time.seconds();
 
@@ -479,21 +479,31 @@ public class Drivetrain {
             power = proportional + integral + derivative;
             isNegative = false;
 
-            if (power < 0) {
-                isNegative = true;
-            }
+//            if (power < 0) {
+//                isNegative = true;
+//            }
+//
+//            if (Math.abs(power) < bias) {
+//                power = 0;
+//            }
+//
+//            if (isNegative) {
+//                turn(power - bias, turnRight);
+//            }
+//            else turn(power + bias, turnRight);
 
-            if (Math.abs(power) < bias) {
-                power = 0;
-            }
+            turn(power, turnRight);
 
-            if (isNegative) {
-                turn(power - bias, turnRight);
+            if ((Math.abs(sensors.getGyroYaw() - (angleChange + initAngle)) > 1) && power < 0.1) {
+                opMode.telemetry.addLine("Met break");
+                opMode.telemetry.update();
+
+                break;
+
             }
-            else turn(power + bias, turnRight);
 
             opMode.telemetry.addData("error ", error);
-            opMode.telemetry.addData("bias ", bias);
+            // opMode.telemetry.addData("bias ", bias);
             opMode.telemetry.addData("P", proportional);
             opMode.telemetry.addData("I", integral);
             opMode.telemetry.addData("D", derivative);
