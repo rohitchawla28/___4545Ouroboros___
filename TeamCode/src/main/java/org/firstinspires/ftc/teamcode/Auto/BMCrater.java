@@ -24,15 +24,15 @@ public class BMCrater extends LinearOpMode{
 
         drivetrain = new Drivetrain(this);
 //        intake = new Intake(this);
-//        lift = new Lift(this);
+        lift = new Lift(this);
 //        vision = new BitmapVision(this);
 
         telemetry.addLine("Initialized");
         telemetry.update();
 
         waitForStart();
-
-        drivetrain.turnPID(95, false, 0.8/95,.003, .05/95, 15);
+        lift.detachTime1(drivetrain);
+//        drivetrain.turnPID(95, false, 0.8/95,.003, .05/95, 15);
 
 //        vision.sample();
 //

@@ -69,7 +69,7 @@ public abstract class OPMode extends OpMode {
         collectL = hardwareMap.crservo.get("collectL");
         collectR = hardwareMap.crservo.get("collectR");
 
-        lockLift = hardwareMap.servo.get("lockLift");
+        lockLift = hardwareMap.servo.get("liftLock");
         unhookL = hardwareMap.servo.get("unhookL");
         unhookR = hardwareMap.servo.get("unhookR");
 

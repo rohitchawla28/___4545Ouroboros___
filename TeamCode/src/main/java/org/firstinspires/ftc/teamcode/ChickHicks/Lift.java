@@ -32,9 +32,9 @@ public class Lift {
         armPivotL = this.opMode.hardwareMap.dcMotor.get("armPivotL");
         armPivotR = this.opMode.hardwareMap.dcMotor.get("armPivotR");
 
-        //unhookL = this.opMode.hardwareMap.servo.get("unhookL");
-        //unhookR = this.opMode.hardwareMap.servo.get("unhookR");
-        //liftLock = this.opMode.hardwareMap.servo.get("liftLock");
+        unhookL = this.opMode.hardwareMap.servo.get("unhookL");
+        unhookR = this.opMode.hardwareMap.servo.get("unhookR");
+        liftLock = this.opMode.hardwareMap.servo.get("liftLock");
 
         liftL.setDirection(DcMotorSimple.Direction.FORWARD);
         liftR.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -63,33 +63,41 @@ public class Lift {
     //MAKE SURE THE METHOD KEEPS GOING LONG ENOUGH SO THAT IT RAISES ENOUGH TO TURN OUT
     public void detachTime1(Drivetrain drivetrain) {
         ElapsedTime time = new ElapsedTime();
+        //release pressure from the servo
+        liftL.setPower(0.5);
+        liftR.setPower(0.5);
 
-        liftLock.setPosition(0.5);//need to test for unlock position
+        //unlock lift
+        liftLock.setPosition(.63);
+
+        //allow lift to drop
+        liftL.setPower(0);
+        liftR.setPower(0);
 
         opMode.sleep(2000);
 
         unhookL.setPosition(0.5);
         unhookR.setPosition(0.5);
 
-        armPivotL.setPower(0.3);
-        armPivotR.setPower(0.3);
+//        armPivotL.setPower(0.3);
+//        armPivotR.setPower(0.3);
 
         opMode.sleep(2000);
-
-        time.reset();
-
-        while (time.milliseconds() < 1000 && opMode.opModeIsActive()) {
-            liftL.setPower(0.5);
-            liftR.setPower(0.5);
-        }
-        drivetrain.moveEncoder(0.4, 300, 3);
-
-        time.reset();
-
-        while(time.milliseconds() < 3000 && opMode.opModeIsActive()){
-            liftL.setPower(-0.5);
-            liftR.setPower(-0.5);
-        }
+//
+//        time.reset();
+//
+//        while (time.milliseconds() < 1000 && opMode.opModeIsActive()) {
+//            liftL.setPower(0.5);
+//            liftR.setPower(0.5);
+//        }
+//        drivetrain.moveEncoder(0.4, 300, 3);
+//
+//        time.reset();
+//
+//        while(time.milliseconds() < 3000 && opMode.opModeIsActive()){
+//            liftL.setPower(-0.5);
+//            liftR.setPower(-0.5);
+//        }
     }
 
     public void detachTime2(Drivetrain drivetrain) {
