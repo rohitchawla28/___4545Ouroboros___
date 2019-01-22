@@ -30,8 +30,10 @@ public abstract class OPMode extends OpMode {
     public CRServo collectL;
     public CRServo collectR;
 
-    // servo locks the lift in for auto
+    // servos lock the arm in for auto
     public Servo lockLift;
+    public Servo unhookL;
+    public Servo unhookR;
 
     // half speed variables for drivetrain and pivoting arm
     private double halfSpeedDrive = 1;
@@ -68,6 +70,8 @@ public abstract class OPMode extends OpMode {
         collectR = hardwareMap.crservo.get("collectR");
 
         lockLift = hardwareMap.servo.get("lockLift");
+        unhookL = hardwareMap.servo.get("unhookL");
+        unhookR = hardwareMap.servo.get("unhookR");
 
         // setting reverse directions of right motors because they are mounted opposite
         fl.setDirection(DcMotor.Direction.FORWARD);
@@ -191,21 +195,18 @@ public abstract class OPMode extends OpMode {
     }
 
     public void intakePivot() {
-        if (gamepad2.b) {
-            // empty body while loop makes sure that action only gets carried out once
-            // if there wasn't a while loop before the servo movements the methods may get called multiple times which isn't needed
-            while (gamepad2.b) { }
+        if (gamepad2.y) {
             //collection position
-            intakePivotL.setPosition(0.4);
-            intakePivotR.setPosition(0.6);
+            intakePivotL.setPosition(0.6);
+            intakePivotR.setPosition(0.3);
 
         }
 
-        if (gamepad2.y) {
-            while (gamepad2.y) { }
+        if (gamepad2.b) {
             //deposit position
             intakePivotL.setPosition(0.9);
-            intakePivotR.setPosition(0.05);
+            intakePivotR.setPosition(0);
+
         }
 
     }
@@ -230,8 +231,8 @@ public abstract class OPMode extends OpMode {
     public void collect() {
         if (gamepad2.left_bumper) {
             // spin in
-            collectL.setPower(0.6);
-            collectR.setPower(0.6);
+            collectL.setPower(0.7);
+            collectR.setPower(0.7);
 
         }
         else {
@@ -242,8 +243,8 @@ public abstract class OPMode extends OpMode {
 
         if (gamepad2.right_bumper) {
             // spin out
-            collectL.setPower(-0.6);
-            collectR.setPower(-0.6);
+            collectL.setPower(-0.7);
+            collectR.setPower(-0.7);
 
         }
         else {
@@ -252,6 +253,31 @@ public abstract class OPMode extends OpMode {
 
         }
 
+    }
+
+    public void lockLift() {
+        if (gamepad1.x) {
+            lockLift.setPosition(0);
+
+        }
+
+        if (gamepad1.y) {
+            lockLift.setPosition(0.5);
+        }
+    }
+
+    public void unhook() {
+        if (gamepad2.dpad_up) {
+            unhookL.setPosition(0);
+            // unhookR.setPosition(0);
+
+        }
+
+        if (gamepad2.dpad_down) {
+            unhookL.setPosition(0.5);
+            // unhookR.setPosition(0.5);
+
+        }
     }
 
     //================================== UTILITY METHODS ===========================================
