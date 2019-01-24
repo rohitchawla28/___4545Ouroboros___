@@ -11,7 +11,6 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Disabled
 @Autonomous
         (name = "ServoTest", group = "Auto")
 
@@ -43,6 +42,8 @@ public class ServoTest extends LinearOpMode {
         // this is close to marker deployment
         //intakePivotR.setPosition(0.15);
 
+        unhookL.setPosition(0);
+
         // set servo movement in intialization and another in the actual running section
 
         telemetry.addLine("Initialized");
@@ -56,9 +57,11 @@ public class ServoTest extends LinearOpMode {
         waitForStart();
 
         // set servo movement here
+        unhookL.setPosition(0.5);
 
         // sleep makes sure program doesn't end before servo moves to desired position
-        sleep(1500);
+        sleep(1800);
+
     }
 
 }

@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.ChickHicks.Vision.BitmapVision;
 import org.firstinspires.ftc.teamcode.ChickHicks.Vision.BitmapVisionWC;
 
 @Autonomous
-        (name = "BitmapTesting", group = "Auto")
+        (name = "BitmapTestingWC", group = "Auto")
 
 
 public class BitmapTesting extends LinearOpMode {

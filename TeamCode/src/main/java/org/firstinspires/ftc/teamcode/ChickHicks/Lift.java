@@ -83,7 +83,7 @@ public class Lift {
 
         opMode.sleep(1000);
 
-        unhookL.setPosition(0.5);
+        unhookL.setPosition(0);
         unhookR.setPosition(0.5);
 
         opMode.sleep(1000);
