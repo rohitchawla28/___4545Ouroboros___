@@ -86,11 +86,11 @@ public class Lift {
         unhookL.setPosition(0);
         unhookR.setPosition(0.5);
 
-        opMode.sleep(1000);
+        opMode.sleep(5000);
 
         while (time.seconds() < 1) {
-            armPivotR.setPower(-0.4);
-            armPivotL.setPower(-0.4);
+            armPivotR.setPower(-0.3);
+            armPivotL.setPower(-0.3);
 
         }
         armPivotR.setPower(0);
