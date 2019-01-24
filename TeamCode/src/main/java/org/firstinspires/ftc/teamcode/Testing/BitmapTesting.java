@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.ChickHicks.Vision.BitmapVision;
+import org.firstinspires.ftc.teamcode.ChickHicks.Vision.BitmapVisionWC;
 
 @Autonomous
         (name = "BitmapTesting", group = "Auto")
@@ -11,16 +12,14 @@ import org.firstinspires.ftc.teamcode.ChickHicks.Vision.BitmapVision;
 
 public class BitmapTesting extends LinearOpMode {
 
-    BitmapVision bitmapVision;
+    BitmapVisionWC vision;
 
     public void runOpMode() throws InterruptedException{
-        bitmapVision = new BitmapVision(this);
+        vision = new BitmapVisionWC(this);
 
-        while (!isStarted())
-        {
-            bitmapVision.sample();
+        while (!isStarted()) {
+            vision.sample();
         }
-        //bitmapVision.sample();
 
         waitForStart();
 

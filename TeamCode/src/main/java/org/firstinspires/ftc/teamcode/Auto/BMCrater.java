@@ -31,7 +31,9 @@ public class BMCrater extends LinearOpMode{
         telemetry.update();
 
         waitForStart();
+
         lift.detachTime1(drivetrain);
+
 //        drivetrain.turnPID(95, false, 0.8/95,.003, .05/95, 15);
 
 //        vision.sample();

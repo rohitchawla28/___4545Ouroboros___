@@ -23,12 +23,6 @@ import java.util.concurrent.BlockingQueue;
 
 public class BitmapVision {
 
-//    @Override
-//    public void runOpMode() throws InterruptedException{
-//        throw new UnsupportedOperationException();
-//
-//    }
-
     private LinearOpMode opMode;
     private VuforiaLocalizer vuforia;
     private Parameters parameters;

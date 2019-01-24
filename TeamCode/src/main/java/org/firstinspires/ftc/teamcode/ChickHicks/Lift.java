@@ -58,46 +58,44 @@ public class Lift {
 
     }
 
-
-
     //MAKE SURE THE METHOD KEEPS GOING LONG ENOUGH SO THAT IT RAISES ENOUGH TO TURN OUT
     public void detachTime1(Drivetrain drivetrain) {
         ElapsedTime time = new ElapsedTime();
-        //release pressure from the servo
-        liftL.setPower(0.5);
-        liftR.setPower(0.5);
 
-        //unlock lift
-        liftLock.setPosition(.63);
+        time.reset();
+
+        //release pressure from the servo
+        while (time.seconds() < 2) {
+            liftL.setPower(0.5);
+            liftR.setPower(0.5);
+
+            if (time.seconds() > 0.2) {
+                liftLock.setPosition(0.63);
+
+            }
+
+
+        }
 
         //allow lift to drop
         liftL.setPower(0);
         liftR.setPower(0);
 
-        opMode.sleep(2000);
+        opMode.sleep(1000);
 
         unhookL.setPosition(0.5);
         unhookR.setPosition(0.5);
 
-//        armPivotL.setPower(0.3);
-//        armPivotR.setPower(0.3);
+        opMode.sleep(1000);
 
-        opMode.sleep(2000);
-//
-//        time.reset();
-//
-//        while (time.milliseconds() < 1000 && opMode.opModeIsActive()) {
-//            liftL.setPower(0.5);
-//            liftR.setPower(0.5);
-//        }
-//        drivetrain.moveEncoder(0.4, 300, 3);
-//
-//        time.reset();
-//
-//        while(time.milliseconds() < 3000 && opMode.opModeIsActive()){
-//            liftL.setPower(-0.5);
-//            liftR.setPower(-0.5);
-//        }
+        while (time.seconds() < 1) {
+            armPivotR.setPower(-0.4);
+            armPivotL.setPower(-0.4);
+
+        }
+        armPivotR.setPower(0);
+        armPivotL.setPower(0);
+
     }
 
     public void detachTime2(Drivetrain drivetrain) {

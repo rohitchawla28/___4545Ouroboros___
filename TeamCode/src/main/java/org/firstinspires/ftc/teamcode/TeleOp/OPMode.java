@@ -35,10 +35,15 @@ public abstract class OPMode extends OpMode {
     public Servo unhookL;
     public Servo unhookR;
 
-    // half speed variables for drivetrain and pivoting arm
+    // variables for toggles
     private double halfSpeedDrive = 1;
     private int halfSpeedDriveCount = 0;
     private double halfSpeedPivot = 1;
+    private boolean locked = true;
+    private boolean b_pressed = false;
+    private boolean x_pressed = false;
+    private boolean a_pressed = false;
+    private boolean hooked = true;
 
     // variables for gamepad joysticks (tank drive)
     private double tankLeftPower;
@@ -211,23 +216,6 @@ public abstract class OPMode extends OpMode {
 
     }
 
-    public void door() {
-        if (gamepad1.left_bumper) {
-            while (gamepad1.left_bumper) { }
-            // collection position
-            door.setPosition(0.6);
-
-        }
-
-        if (gamepad1.right_bumper) {
-            while (gamepad1.right_bumper) { }
-            // deposit position
-            door.setPosition(0);
-
-        }
-
-    }
-
     public void collect() {
         if (gamepad2.left_bumper) {
             // spin in
@@ -255,29 +243,58 @@ public abstract class OPMode extends OpMode {
 
     }
 
+    public void door() {
+        if (gamepad1.left_bumper) {
+            while (gamepad1.left_bumper) { }
+            // collection position
+            door.setPosition(0.6);
+
+        }
+
+        if (gamepad1.right_bumper) {
+            while (gamepad1.right_bumper) { }
+            // deposit position
+            door.setPosition(0);
+
+        }
+
+    }
+
     public void lockLift() {
-        if (gamepad1.x) {
+
+        while (gamepad1.b) { b_pressed = true;}
+
+        if (b_pressed && locked) {
             lockLift.setPosition(0);
 
         }
-
-        if (gamepad1.y) {
+        else if (b_pressed) {
             lockLift.setPosition(0.5);
+
+
         }
+        b_pressed = false;
+        locked = !locked;
+
     }
 
     public void unhook() {
-        if (gamepad2.dpad_up) {
+        while (gamepad1.x) { x_pressed = true; }
+
+        if (hooked && x_pressed) {
             unhookL.setPosition(0);
-            // unhookR.setPosition(0);
+            unhookR.setPosition(0);
+
 
         }
-
-        if (gamepad2.dpad_down) {
+        else if (x_pressed) {
             unhookL.setPosition(0.5);
-            // unhookR.setPosition(0.5);
+            unhookR.setPosition(0.5);
 
         }
+        x_pressed = false;
+        hooked = !hooked;
+
     }
 
     //================================== UTILITY METHODS ===========================================
