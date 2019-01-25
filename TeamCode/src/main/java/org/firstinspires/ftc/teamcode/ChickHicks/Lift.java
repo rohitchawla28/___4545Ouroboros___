@@ -88,10 +88,11 @@ public class Lift {
 
         opMode.sleep(5000);
 
-        while (time.seconds() < 1) {
-            armPivotR.setPower(-0.3);
-            armPivotL.setPower(-0.3);
+        time.reset();
 
+        while (time.seconds() < 1) {
+            armPivotR.setPower(-0.4);
+            armPivotL.setPower(-0.4);
         }
         armPivotR.setPower(0);
         armPivotL.setPower(0);
