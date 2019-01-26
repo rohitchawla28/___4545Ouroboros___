@@ -20,7 +20,7 @@ public class TeleOP extends OPMode {
         intakePivot();
         door();
         collect();
-        unhook();
+        // unhook();
         lockLift();
 
 

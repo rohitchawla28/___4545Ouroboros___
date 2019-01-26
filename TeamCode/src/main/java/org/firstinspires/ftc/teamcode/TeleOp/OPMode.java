@@ -71,12 +71,12 @@ public abstract class OPMode extends OpMode {
         intakePivotL = hardwareMap.servo.get("intakePivotL");
         intakePivotR = hardwareMap.servo.get("intakePivotR");
 
-        collectL = hardwareMap.crservo.get("collectL");
-        collectR = hardwareMap.crservo.get("collectR");
+        // collectL = hardwareMap.crservo.get("collectL");
+        // collectR = hardwareMap.crservo.get("collectR");
 
         lockLift = hardwareMap.servo.get("liftLock");
-        unhookL = hardwareMap.servo.get("unhookL");
-        unhookR = hardwareMap.servo.get("unhookR");
+        // unhookL = hardwareMap.servo.get("unhookL");
+        // unhookR = hardwareMap.servo.get("unhookR");
 
         // setting reverse directions of right motors because they are mounted opposite
         fl.setDirection(DcMotor.Direction.FORWARD);
@@ -90,8 +90,8 @@ public abstract class OPMode extends OpMode {
         liftL.setDirection(DcMotor.Direction.FORWARD);
         liftR.setDirection(DcMotor.Direction.REVERSE);
 
-        collectL.setDirection(DcMotor.Direction.FORWARD);
-        collectR.setDirection(DcMotor.Direction.REVERSE);
+        // collectL.setDirection(DcMotor.Direction.FORWARD);
+        // collectR.setDirection(DcMotor.Direction.REVERSE);
 
         // setting arm pivot motors to BRAKE mode instead of FLOAT
         // makes it easier for driver to control, won't just fall down because
@@ -278,24 +278,24 @@ public abstract class OPMode extends OpMode {
 
     }
 
-    public void unhook() {
-        while (gamepad1.x) { x_pressed = true; }
-
-        if (hooked && x_pressed) {
-            unhookL.setPosition(0);
-            unhookR.setPosition(0);
-
-
-        }
-        else if (x_pressed) {
-            unhookL.setPosition(0.5);
-            unhookR.setPosition(0.5);
-
-        }
-        x_pressed = false;
-        hooked = !hooked;
-
-    }
+//    public void unhook() {
+//        while (gamepad1.x) { x_pressed = true; }
+//
+//        if (hooked && x_pressed) {
+//            unhookL.setPosition(0);
+//            unhookR.setPosition(0);
+//
+//
+//        }
+//        else if (x_pressed) {
+//            unhookL.setPosition(0.5);
+//            unhookR.setPosition(0.5);
+//
+//        }
+//        x_pressed = false;
+//        hooked = !hooked;
+//
+//    }
 
     //================================== UTILITY METHODS ===========================================
 

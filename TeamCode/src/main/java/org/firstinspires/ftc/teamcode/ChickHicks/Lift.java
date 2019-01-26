@@ -16,8 +16,8 @@ public class Lift {
     private DcMotor armPivotL;
     private DcMotor armPivotR;
 
-    private Servo unhookL;
-    private Servo unhookR;
+//    private Servo unhookL;
+//    private Servo unhookR;
     private Servo liftLock;
 
     private Sensors sensors;
@@ -32,8 +32,8 @@ public class Lift {
         armPivotL = this.opMode.hardwareMap.dcMotor.get("armPivotL");
         armPivotR = this.opMode.hardwareMap.dcMotor.get("armPivotR");
 
-        unhookL = this.opMode.hardwareMap.servo.get("unhookL");
-        unhookR = this.opMode.hardwareMap.servo.get("unhookR");
+//        unhookL = this.opMode.hardwareMap.servo.get("unhookL");
+//        unhookR = this.opMode.hardwareMap.servo.get("unhookR");
         liftLock = this.opMode.hardwareMap.servo.get("liftLock");
 
         liftL.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -81,29 +81,47 @@ public class Lift {
         liftL.setPower(0);
         liftR.setPower(0);
 
-        opMode.sleep(1000);
+        opMode.sleep(1500);
 
-        unhookL.setPosition(0);
-        unhookR.setPosition(0.5);
+//        unhookL.setPosition(0);
+//        unhookR.setPosition(0.5);
+//
+//        opMode.sleep(2000);
 
-        opMode.sleep(5000);
+//        time.reset();
+//
+//        while (time.seconds() < 1.4) {
+//            armPivotR.setPower(-0.4);
+//            armPivotL.setPower(-0.4);
+//        }
 
         time.reset();
 
-        while (time.seconds() < 1) {
-            armPivotR.setPower(-0.4);
-            armPivotL.setPower(-0.4);
+        while (time.seconds() < 0.4) {
+            liftL.setPower(-0.6);
+            liftR.setPower(-0.6);
+
         }
-        armPivotR.setPower(0);
-        armPivotL.setPower(0);
+        opMode.sleep(750);
+
+//        drivetrain.moveEncoder(0.3, 200, 3);
+//        opMode.sleep(500);
+//
+//        time.reset();
+//
+//        while (time.seconds() < 1) {
+//            liftL.setPower(0.5);
+//            liftR.setPower(0.5);
+//
+//        }
 
     }
 
     public void detachTime2(Drivetrain drivetrain) {
         ElapsedTime time = new ElapsedTime();
 
-        unhookL.setPosition(0.5);
-        unhookR.setPosition(0.5);
+//        unhookL.setPosition(0.5);
+//        unhookR.setPosition(0.5);
         time.reset();
 
         while (time.milliseconds() < 2000 && opMode.opModeIsActive()) {
