@@ -7,6 +7,7 @@ To see our code -
 	3. java/org/firstinspires/ftc/teamcode
 	
 Description of our Packages (Folders) - 
+	
 	Hercules (Our robot's name): Contains actual paths/programs we run for the 30 second autonomous period in each match
 	
 	HerculesLibraries: Holds methods for each part of robot
