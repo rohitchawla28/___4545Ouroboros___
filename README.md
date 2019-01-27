@@ -2,9 +2,9 @@
 This GitHub repository contains the source code for FTC Team 4545 ViperBots Ouroboros.
 
 To see our code - 
-	1. Select TeamCode
-	2. --> src/main
-	3. java/org/firstinspires/ftc/teamcode
+	1. Select TeamCode. 
+	2. --> src/main. 
+	3. java/org/firstinspires/ftc/teamcode. 
 	
 Description of our Packages (Folders) - 
 	
