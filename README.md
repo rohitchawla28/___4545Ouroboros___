@@ -1,5 +1,6 @@
 ## Welcome!
 This GitHub repository contains the source code for FTC Team 4545 ViperBots Ouroboros.
+If you have any questions feel free to email us at 4545ouroboros@gmail.com or find us on twitter at @Ouroboros4545
 
 To see our code - 
 
