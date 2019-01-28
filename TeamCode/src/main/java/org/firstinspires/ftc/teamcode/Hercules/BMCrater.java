@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.HerculesLibraries.Drivetrain;
 import org.firstinspires.ftc.teamcode.HerculesLibraries.Intake;
 import org.firstinspires.ftc.teamcode.HerculesLibraries.Lift;
 import org.firstinspires.ftc.teamcode.HerculesLibraries.Vision.BitmapVision;
+import org.firstinspires.ftc.teamcode.HerculesLibraries.Vision.BitmapVisionWC;
 
 // @Disabled
 @Autonomous
@@ -16,7 +17,7 @@ public class BMCrater extends LinearOpMode{
     Drivetrain drivetrain;
     Intake intake;
     Lift lift;
-    BitmapVision vision;
+    BitmapVisionWC vision;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -24,7 +25,7 @@ public class BMCrater extends LinearOpMode{
         drivetrain = new Drivetrain(this);
 //        intake = new Intake(this);
         lift = new Lift(this);
-//        vision = new BitmapVision(this);
+//        vision = new BitmapVisionWC(this);
 
         telemetry.addLine("Initialized");
         telemetry.update();

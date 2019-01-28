@@ -104,16 +104,16 @@ public class Lift {
         }
         opMode.sleep(750);
 
-//        drivetrain.moveEncoder(0.3, 200, 3);
-//        opMode.sleep(500);
-//
-//        time.reset();
-//
-//        while (time.seconds() < 1) {
-//            liftL.setPower(0.5);
-//            liftR.setPower(0.5);
-//
-//        }
+        drivetrain.moveEncoder(0.3, 150, 3);
+        opMode.sleep(500);
+
+        time.reset();
+
+        while (time.seconds() < 1.5) {
+            liftL.setPower(0.5);
+            liftR.setPower(0.5);
+
+        }
 
     }
 

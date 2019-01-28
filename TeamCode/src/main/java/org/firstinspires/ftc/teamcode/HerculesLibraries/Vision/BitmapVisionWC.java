@@ -93,9 +93,10 @@ public class BitmapVisionWC {
 
     public String sample() throws InterruptedException{
         Bitmap bitmap = getBitmap();
+
         for (int colNum = 0; colNum < bitmap.getWidth(); colNum+= 2) {
 
-            for (int rowNum = (int)(bitmap.getHeight() * (1.0/6)); rowNum < bitmap.getHeight(); rowNum+= 3) {
+            for (int rowNum = ((bitmap.getHeight() * 2) / 3); rowNum >= 0; rowNum-= 3) {
                 int pixel = bitmap.getPixel(colNum, rowNum);
 
                 int redPixel = red(pixel);
@@ -108,9 +109,13 @@ public class BitmapVisionWC {
                 opMode.telemetry.update();
 
                 if ((redPixel <= RED_THRESHOLD + 10) && (redPixel >= RED_THRESHOLD - 10) && (greenPixel <= GREEN_THRESHOLD + 10) && (greenPixel >= GREEN_THRESHOLD - 10) && (bluePixel >= BLUE_THRESHOLD - 10)) {
-                    bitmapCubePosition = (colNum >= 1450 && colNum <= 1600) ? "center"
-                            : (colNum >= 225 && colNum <= 450)  ? "left"
+                    bitmapCubePosition = (colNum <= (bitmap.getWidth() / 3)) ? "left"
+                            : (colNum > ((bitmap.getWidth() / 3) + 150) && colNum < ((bitmap.getWidth() * 2) / 3))  ? "center"
                             : "right";
+
+                    opMode.telemetry.addData("Cube Pos", bitmapCubePosition);
+                    opMode.telemetry.update();
+
                     break;
 
                 }
