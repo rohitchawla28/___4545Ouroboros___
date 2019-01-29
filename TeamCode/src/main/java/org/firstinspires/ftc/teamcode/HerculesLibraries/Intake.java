@@ -3,9 +3,6 @@ package org.firstinspires.ftc.teamcode.HerculesLibraries;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-//import org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection;
-
-//import static org.firstinspires.ftc.teamcode.ChickHicks.Vision.TensorFlowDetection.cubePosition;
 
 public class Intake {
 

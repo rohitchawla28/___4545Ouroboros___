@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public abstract class OPMode extends OpMode {
+public abstract class TeleLib extends OpMode {
 
     // drive motors, example: fl = front left
     public DcMotor fl;
@@ -35,13 +35,14 @@ public abstract class OPMode extends OpMode {
 
     // variables for toggles
     private double halfSpeedDrive = 1;
-    private int halfSpeedDriveCount = 0;
+    private boolean driveSpeedToggle = false;
+
     private double halfSpeedPivot = 1;
+    private boolean pivotSpeedToggle = false;
+
     private boolean locked = true;
+
     private boolean b_pressed = false;
-    private boolean x_pressed = false;
-    private boolean a_pressed = false;
-    private boolean hooked = true;
 
     // variables for gamepad joysticks (tank drive)
     private double tankLeftPower;
@@ -89,9 +90,7 @@ public abstract class OPMode extends OpMode {
         // collectL.setDirection(DcMotor.Direction.FORWARD);
         // collectR.setDirection(DcMotor.Direction.REVERSE);
 
-        // setting arm pivot motors to BRAKE mode instead of FLOAT
-        // makes it easier for driver to control, won't just fall down because
-        // of added resistance to motors
+        // setting arm pivot motors to BRAKE mode instead of FLOAT makes it easier to control because it won't fall from gravity
         armPivotL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armPivotR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -160,7 +159,29 @@ public abstract class OPMode extends OpMode {
 
     }
 
-    //=================================  MANIPULATOR METHODS  ======================================
+    public void halfSpeed() {
+            if (gamepad1.a) {
+                while (gamepad1.a) { }
+
+                // boolean variable allows you to use one button to toggle half speed mode
+                if (!driveSpeedToggle) {
+                    halfSpeedDrive = 0.5;
+                    telemetry.addLine("Half speed on");
+                    telemetry.update();
+
+                } else {
+                    halfSpeedDrive = 1.0;
+                    telemetry.addLine("Half speed off");
+                    telemetry.update();
+
+                }
+                driveSpeedToggle = !driveSpeedToggle;
+
+            }
+
+    }
+
+    //==============================  LARGE MANIPULATOR METHODS  ===================================
 
     public void lift() {
         double liftPower = gamepad2.right_stick_y;
@@ -194,6 +215,8 @@ public abstract class OPMode extends OpMode {
         }
 
     }
+
+    //=====================================  INTAKE METHODS  =======================================
 
     public void intakePivot() {
         if (gamepad2.y) {
@@ -241,14 +264,12 @@ public abstract class OPMode extends OpMode {
 
     public void door() {
         if (gamepad1.left_bumper) {
-            while (gamepad1.left_bumper) { }
             // collection position
             door.setPosition(0.6);
 
         }
 
         if (gamepad1.right_bumper) {
-            while (gamepad1.right_bumper) { }
             // deposit position
             door.setPosition(0);
 
@@ -257,41 +278,28 @@ public abstract class OPMode extends OpMode {
     }
 
     public void lockLift() {
+        if (gamepad1.b) {
+            while (gamepad1.b) { }
 
-        while (gamepad1.b) { b_pressed = true;}
+            if (locked) {
+                lockLift.setPosition(0);
 
-        if (b_pressed && locked) {
-            lockLift.setPosition(0);
+                telemetry.addLine("Unlocked");
+                telemetry.update();
+
+            }
+            else {
+                lockLift.setPosition(0.5);
+
+                telemetry.addLine("Locked");
+                telemetry.update();
+
+            }
+            locked = !locked;
 
         }
-        else if (b_pressed) {
-            lockLift.setPosition(0.5);
-
-
-        }
-        b_pressed = false;
-        locked = !locked;
 
     }
-
-//    public void unhook() {
-//        while (gamepad1.x) { x_pressed = true; }
-//
-//        if (hooked && x_pressed) {
-//            unhookL.setPosition(0);
-//            unhookR.setPosition(0);
-//
-//
-//        }
-//        else if (x_pressed) {
-//            unhookL.setPosition(0.5);
-//            unhookR.setPosition(0.5);
-//
-//        }
-//        x_pressed = false;
-//        hooked = !hooked;
-//
-//    }
 
     //================================== UTILITY METHODS ===========================================
 
@@ -302,40 +310,6 @@ public abstract class OPMode extends OpMode {
 
         liftL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         liftR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-    }
-
-    public void halfSpeed () {
-        if (gamepad1.a) {
-            while (gamepad1.a) { }
-            // counter variable allows us to use same button to change between half speed and normal
-            if (halfSpeedDriveCount % 2 == 0) {
-                halfSpeedDrive = 0.5;
-                telemetry.addLine("Half speed on");
-                telemetry.update();
-
-            }
-            else {
-                halfSpeedDrive = 1.0;
-                telemetry.addLine("Half speed off");
-                telemetry.update();
-
-            }
-            halfSpeedDriveCount++;
-
-        }
-
-        // TODO: CHANGE TO SAME BUTTON WITH MODULUS AND TEST
-        if (gamepad2.a) {
-            while(gamepad2.a){ }
-            halfSpeedPivot = 0.5;
-
-        }
-        if (gamepad2.x) {
-            while (gamepad2.x) { }
-            halfSpeedPivot = 1;
-
-        }
 
     }
 

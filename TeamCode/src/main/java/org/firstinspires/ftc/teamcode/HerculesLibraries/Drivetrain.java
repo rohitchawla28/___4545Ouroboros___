@@ -381,69 +381,6 @@ public class Drivetrain {
         stopMotors();
     }
 
-    public void turnPD(double angleChange, boolean turnRight, double kP, double kD, double timeout) {
-        ElapsedTime time = new ElapsedTime();
-        ElapsedTime timeoutTimer = new ElapsedTime();
-
-        double error;
-        double power;
-        boolean isNegative;
-        double floor = 0.08;
-
-        double proportional;
-        double derivative;
-
-        double prevRunTime;
-
-        double initAngle = sensors.getGyroYaw();
-        double lastError = angleChange - (Math.abs(sensors.getGyroYaw() - initAngle));
-
-        time.reset();
-        timeoutTimer.reset();
-
-        while (Math.abs(sensors.getGyroYaw() - (angleChange + initAngle)) > 0 && opMode.opModeIsActive() && timeoutTimer.seconds() < timeout) {
-            // ((getGyroYaw() - initAngle) - angleChange) != 0
-            prevRunTime = time.seconds();
-
-            error = angleChange - (sensors.getGyroYaw() - initAngle);
-
-            proportional = error * kP;
-            derivative = ((error - lastError) / (time.seconds() - prevRunTime)) * kD ;
-
-            power = proportional + derivative;
-            // isNegative = false;
-
-//            if (power < 0) {
-//                isNegative = true;
-//            }
-
-//            if (Math.abs(power) < bias) {
-//                power = 0;
-//            }
-
-//            if (isNegative) {
-//                turn(power - bias, turnRight);
-//            }
-//            else turn(power + bias, turnRight);
-
-            turn(power, turnRight);
-
-            opMode.telemetry.addData("error ", error);
-            // opMode.telemetry.addData("bias", bias);
-            opMode.telemetry.addData("P", proportional);
-            opMode.telemetry.addData("D", derivative);
-            opMode.telemetry.addData("Power", power);
-            opMode.telemetry.update();
-
-            lastError = error;
-
-//            opMode.idle();
-
-        }
-        stopMotors();
-
-    }
-
     public void turnPID(double angleChange, boolean turnRight, double kP, double kI, double kD, double timeout) {
         ElapsedTime time = new ElapsedTime();
         ElapsedTime timeoutTimer = new ElapsedTime();
@@ -463,7 +400,7 @@ public class Drivetrain {
         time.reset();
         timeoutTimer.reset();
 
-        while (Math.abs(sensors.getGyroYaw() - (angleChange + initAngle)) > 1 && timeoutTimer.seconds() < timeout && opMode.opModeIsActive()) {
+        while (Math.abs(sensors.getGyroYaw() - (angleChange + initAngle)) > 0 && timeoutTimer.seconds() < timeout && opMode.opModeIsActive()) {
             // ((getGyroYaw() - initAngle) - angleChange) != 0
             prevRunTime = time.seconds();
 
