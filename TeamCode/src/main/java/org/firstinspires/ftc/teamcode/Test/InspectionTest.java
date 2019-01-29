@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.HerculesLibraries.Drivetrain;
 
 @Autonomous
-        (name = "InspectionTest", group = "Auto")
+        (name = "Inspection", group = "Auto")
 
 public class InspectionTest extends LinearOpMode{
     private Drivetrain drivetrain;

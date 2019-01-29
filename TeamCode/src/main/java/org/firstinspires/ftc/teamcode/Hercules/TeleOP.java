@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.Hercules.OPMode;
 
 @TeleOp
-        (name = "TeleOP", group = "Controlled")
+        (name = "TeleOp", group = "Controlled")
 
 public class TeleOP extends OPMode {
 
@@ -21,7 +21,7 @@ public class TeleOP extends OPMode {
         armPivot();
         intakePivot();
         door();
-        collect();
+        // collect();
         // unhook();
         lockLift();
 

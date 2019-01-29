@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @Disabled
 @TeleOp
-        (name = "ToggleTest", group = "Controlled")
+        (name = "TogglingTest", group = "Controlled")
 
 public class ToggleTest extends OpMode {
 

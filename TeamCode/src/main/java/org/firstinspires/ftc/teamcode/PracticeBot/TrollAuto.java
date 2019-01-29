@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 @Disabled
-@Autonomous (name = "TrollAuto", group = "Auto")
+@Autonomous (name = "TrollAutonomous", group = "Auto")
 
 public class TrollAuto extends TrollAutoLibrary {
 

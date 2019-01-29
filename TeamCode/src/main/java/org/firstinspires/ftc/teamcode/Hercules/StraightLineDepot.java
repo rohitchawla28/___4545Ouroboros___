@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.HerculesLibraries.Intake;
 
 @Disabled
 @Autonomous
-        (name = "StrateLineDepot2", group = "Auto")
+        (name = "StraightLineDepot", group = "Auto")
 
 public class StraightLineDepot extends LinearOpMode {
     Drivetrain drivetrain;

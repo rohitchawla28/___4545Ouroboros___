@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.HerculesLibraries.Vision.NewTF;
 
 //@Disabled
 @Autonomous
-        (name = "TensorFlowTest", group = "Auto")
+        (name = "TFTest", group = "Auto")
 
 public class TensorFlowTest extends LinearOpMode {
 

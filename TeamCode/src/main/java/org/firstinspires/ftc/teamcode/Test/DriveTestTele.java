@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.Hercules.OPMode;
 
 @Disabled
 @TeleOp
-        (name = "DriveTest", group = "Controlled")
+        (name = "DrivingTest", group = "Controlled")
 
 public class DriveTestTele extends OPMode {
 

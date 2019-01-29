@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.HerculesLibraries.Lift;
 
 @Disabled
 @Autonomous
-        (name = "StrateLineCrater2", group = "Auto")
+        (name = "StraightLineCrater", group = "Auto")
 
 public class StraightLineCrater extends LinearOpMode{
 

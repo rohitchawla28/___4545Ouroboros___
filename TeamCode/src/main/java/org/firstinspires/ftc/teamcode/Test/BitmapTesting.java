@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.HerculesLibraries.Vision.BitmapVisionWC;
 
 @Autonomous
-        (name = "BitmapTestingWC", group = "Auto")
+        (name = "BitmapTestWC", group = "Auto")
 
 
 public class BitmapTesting extends LinearOpMode {

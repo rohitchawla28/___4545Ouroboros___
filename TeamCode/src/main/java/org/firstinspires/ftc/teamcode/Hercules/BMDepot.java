@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.HerculesLibraries.Vision.BitmapVision;
 import static org.firstinspires.ftc.teamcode.HerculesLibraries.Vision.BitmapVision.bitmapCubePosition;
 
 @Autonomous
-        (name = "BMDepot", group = "Auto")
+        (name = "DepotBM", group = "Auto")
 
 public class BMDepot extends LinearOpMode{
     Drivetrain drivetrain;

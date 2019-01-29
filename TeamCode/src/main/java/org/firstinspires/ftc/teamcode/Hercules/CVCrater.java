@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.HerculesLibraries.Vision.HSL_OpenCVDetecti
 import org.firstinspires.ftc.teamcode.HerculesLibraries.Vision.Vuforia;
 
 @Autonomous
-        (name = "CVCrater", group = "Auto")
+        (name = "CraterCV", group = "Auto")
 
 public class CVCrater extends LinearOpMode{
 

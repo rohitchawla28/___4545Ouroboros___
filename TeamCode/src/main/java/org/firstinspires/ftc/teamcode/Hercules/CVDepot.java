@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.HerculesLibraries.Vision.Vuforia;
 
 
 @Autonomous
-        (name = "CVDepot", group = "Auto")
+        (name = "DepotCV", group = "Auto")
 
 public class CVDepot extends LinearOpMode{
 

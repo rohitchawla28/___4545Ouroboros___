@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.HerculesLibraries.Vision.NewTF;
 
 // @Disabled
 @Autonomous
-        (name = "TFCrater", group = "Auto")
+        (name = "CraterTF", group = "Auto")
 
 public class TFCrater extends LinearOpMode{
 //    Drivetrain drivetrain;

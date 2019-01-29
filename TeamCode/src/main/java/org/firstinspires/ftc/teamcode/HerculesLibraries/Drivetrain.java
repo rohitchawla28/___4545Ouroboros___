@@ -449,13 +449,11 @@ public class Drivetrain {
         ElapsedTime timeoutTimer = new ElapsedTime();
 
         double error;
-        double power = 0;
-        boolean isNegative;
+        double power;
 
         double proportional;
         double integral = 0;
         double derivative;
-        double bias;
 
         double prevRunTime;
 
@@ -476,33 +474,10 @@ public class Drivetrain {
             derivative = ((error - lastError) / (time.seconds() - prevRunTime)) * kD;
 
             power = proportional + integral + derivative;
-            isNegative = false;
-
-//            if (power < 0) {
-//                isNegative = true;
-//            }
-//
-//            if (Math.abs(power) < bias) {
-//                power = 0;
-//            }
-//
-//            if (isNegative) {
-//                turn(power - bias, turnRight);
-//            }
-//            else turn(power + bias, turnRight);
 
             turn(power, turnRight);
 
-            if ((Math.abs(sensors.getGyroYaw() - (angleChange + initAngle)) > 1) && power < 0.1) {
-                opMode.telemetry.addLine("Met break");
-                opMode.telemetry.update();
-
-                break;
-
-            }
-
             opMode.telemetry.addData("error ", error);
-            // opMode.telemetry.addData("bias ", bias);
             opMode.telemetry.addData("P", proportional);
             opMode.telemetry.addData("I", integral);
             opMode.telemetry.addData("D", derivative);

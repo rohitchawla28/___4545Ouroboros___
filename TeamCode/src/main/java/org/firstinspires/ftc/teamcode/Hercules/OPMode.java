@@ -32,8 +32,6 @@ public abstract class OPMode extends OpMode {
 
     // servos lock the arm in for auto
     public Servo lockLift;
-    public Servo unhookL;
-    public Servo unhookR;
 
     // variables for toggles
     private double halfSpeedDrive = 1;
@@ -75,8 +73,6 @@ public abstract class OPMode extends OpMode {
         // collectR = hardwareMap.crservo.get("collectR");
 
         lockLift = hardwareMap.servo.get("liftLock");
-        // unhookL = hardwareMap.servo.get("unhookL");
-        // unhookR = hardwareMap.servo.get("unhookR");
 
         // setting reverse directions of right motors because they are mounted opposite
         fl.setDirection(DcMotor.Direction.FORWARD);

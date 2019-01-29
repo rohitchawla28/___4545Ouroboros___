@@ -115,6 +115,10 @@ public class Lift {
 
         }
 
+        // set intake pivot position
+
+        // drop arm
+
     }
 
     public void detachTime2(Drivetrain drivetrain) {

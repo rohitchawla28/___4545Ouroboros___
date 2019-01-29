@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Autonomous
-        (name = "ServoTest", group = "Auto")
+        (name = "ServoPositionTest", group = "Auto")
 
 public class ServoTest extends LinearOpMode {
 

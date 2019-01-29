@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.Hercules.OPMode;
 
 @Disabled
 @TeleOp
-        (name = "PivotTest", group = "Controlled")
+        (name = "ArmPivotTest", group = "Controlled")
 
 public class Pivot extends OPMode {
 

@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.HerculesLibraries.Vision.NewTF;
 
 
 @Autonomous
-        (name = "TFDepot", group = "Auto")
+        (name = "DepotTF", group = "Auto")
 
 public class TFDepot extends LinearOpMode{
     Drivetrain drivetrain;

@@ -11,7 +11,7 @@ import static org.firstinspires.ftc.teamcode.HerculesLibraries.Vision.HSL_OpenCV
 
 @Disabled
 @Autonomous
-        (name = "HSLOpenCVTest", group = "Auto")
+        (name = "HSL_CVTest", group = "Auto")
 
 public class HSLOpenCVTest extends LinearOpMode {
 

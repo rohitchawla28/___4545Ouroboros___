@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.HerculesLibraries.Drivetrain;
 
 @Disabled
-@Autonomous (name = "ArcTurnTest", group = "Auto")
+@Autonomous (name = "ArcTurn_Test", group = "Auto")
 public class ArcTurn extends LinearOpMode {
 
     Drivetrain drivetrain;

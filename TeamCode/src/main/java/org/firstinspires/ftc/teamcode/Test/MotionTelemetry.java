@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.HerculesLibraries.Drivetrain;
 
 @Disabled
 @Autonomous
-        (name = "MotionTelemetry", group = "Auto")
+        (name = "MoveTelemetry", group = "Auto")
 
 public class MotionTelemetry extends LinearOpMode {
 

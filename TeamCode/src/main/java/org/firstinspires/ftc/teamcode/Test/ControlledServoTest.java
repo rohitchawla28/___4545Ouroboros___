@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 //@Disabled
 @TeleOp
-        (name = "ControlledServoTest", group = "Controlled")
+        (name = "ControllerServoTest", group = "Controlled")
 
 public class ControlledServoTest extends OpMode {
 

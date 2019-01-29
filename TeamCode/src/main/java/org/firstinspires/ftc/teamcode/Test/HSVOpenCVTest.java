@@ -11,7 +11,7 @@ import static org.firstinspires.ftc.teamcode.HerculesLibraries.Vision.HSV_OpenCV
 
 @Disabled
 @Autonomous
-        (name = "HSVOpenCVTest", group = "Auto")
+        (name = "HSV_CVTest", group = "Auto")
 
 public class HSVOpenCVTest extends LinearOpMode {
 

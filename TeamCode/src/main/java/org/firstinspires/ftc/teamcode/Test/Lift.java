@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.Hercules.OPMode;
 
 @Disabled
 @TeleOp
-        (name = "LiftTest", group = "Controlled")
+        (name = "ElevatorTest", group = "Controlled")
 
 public class Lift extends OPMode {
 
