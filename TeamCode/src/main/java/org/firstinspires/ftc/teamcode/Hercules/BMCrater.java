@@ -17,7 +17,7 @@ public class BMCrater extends LinearOpMode{
     Lift lift;
     BitmapVisionWC vision;
 
-    String cubePosition = "center";
+    String cubePosition = "left";
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -48,20 +48,19 @@ public class BMCrater extends LinearOpMode{
                 drivetrain.moveEncoder(0.6, 350, 4);
                 sleep(500);
 
-                drivetrain.moveEncoder(-0.6, 150, 4);
+                drivetrain.moveEncoder(-0.6, 100, 4);
                 sleep(500);
 
-                // TODO: Remember to change timeout time to less and change PID method error to stop when < 1
-                drivetrain.turnPID(35, false, .7 / 35, 0, 0, 10);
+                drivetrain.turnPID(30, false, .5 / 30, 0.011, 0.004 / 30, 4);
                 sleep(500);
 
                 drivetrain.moveEncoder(0.6, 600, 3);
                 sleep(500);
 
-                drivetrain.turnPID(30, false, 0.6 / 30, 0, 0, 10);
+                drivetrain.turnPID(30, false, 0.5 / 28, 0, 0.005 / 28, 4);
                 sleep(500);
 
-                drivetrain.moveEncoder(0.6, 1500, 5);
+                drivetrain.moveEncoder(0.6, 1350, 5);
                 sleep(500);
 
                 lift.moveArmUp();
@@ -73,7 +72,7 @@ public class BMCrater extends LinearOpMode{
                 drivetrain.moveEncoder(-0.3, 200, 5);
                 sleep(500);
 
-                // TODO: Once done with all pathing, try to make faster (make speeds faster, decrease timeouts on turns, lift faster, etc)
+                break;
 
             case "center" :
                 drivetrain.moveEncoder(0.6, 300, 4);

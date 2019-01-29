@@ -400,7 +400,7 @@ public class Drivetrain {
         time.reset();
         timeoutTimer.reset();
 
-        while (Math.abs(sensors.getGyroYaw() - (angleChange + initAngle)) > 0 && timeoutTimer.seconds() < timeout && opMode.opModeIsActive()) {
+        while (Math.abs(sensors.getGyroYaw() - (angleChange + initAngle)) > 1 && timeoutTimer.seconds() < timeout && opMode.opModeIsActive()) {
             // ((getGyroYaw() - initAngle) - angleChange) != 0
             prevRunTime = time.seconds();
 
