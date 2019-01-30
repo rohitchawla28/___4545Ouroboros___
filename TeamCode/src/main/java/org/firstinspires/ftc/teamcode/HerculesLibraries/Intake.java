@@ -2,11 +2,15 @@ package org.firstinspires.ftc.teamcode.HerculesLibraries;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class Intake {
 
     private LinearOpMode opMode;
+
+    public Servo intakePivotL;
+    public Servo intakePivotR;
 
     private CRServo collectL;
     private CRServo collectR;
@@ -15,8 +19,11 @@ public class Intake {
     public Intake(LinearOpMode opMode) {
         this.opMode = opMode;
 
-        //collectL = this.opMode.hardwareMap.crservo.get("collectL");
-        //collectR = this.opMode.hardwareMap.crservo.get("collectR");
+        // collectL = this.opMode.hardwareMap.crservo.get("collectL");
+        // collectR = this.opMode.hardwareMap.crservo.get("collectR");
+
+        intakePivotL = this.opMode.hardwareMap.servo.get("intakePivotL");
+        intakePivotR = this.opMode.hardwareMap.servo.get("intakePivotR");
 
     }
 
@@ -35,16 +42,9 @@ public class Intake {
 
     }
 
-    public void markerOut() {
-        ElapsedTime time =  new ElapsedTime();
-
-        time.reset();
-
-        while (time.seconds() < 2) {
-            collectL.setPower(-0.6);
-            collectR.setPower(-0.6);
-
-        }
+    public void setIntakePosition() {
+       intakePivotL.setPosition(0.7);
+       intakePivotR.setPosition(0.2);
 
     }
 

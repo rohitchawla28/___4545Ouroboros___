@@ -32,8 +32,6 @@ public class Lift {
         armPivotL = this.opMode.hardwareMap.dcMotor.get("armPivotL");
         armPivotR = this.opMode.hardwareMap.dcMotor.get("armPivotR");
 
-//        unhookL = this.opMode.hardwareMap.servo.get("unhookL");
-//        unhookR = this.opMode.hardwareMap.servo.get("unhookR");
         liftLock = this.opMode.hardwareMap.servo.get("liftLock");
 
         liftL.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -59,7 +57,7 @@ public class Lift {
     }
 
     //MAKE SURE THE METHOD KEEPS GOING LONG ENOUGH SO THAT IT RAISES ENOUGH TO TURN OUT
-    public void detachTime1(Drivetrain drivetrain) {
+    public void detachTime1(Drivetrain drivetrain, Intake intake) {
         ElapsedTime time = new ElapsedTime();
 
         time.reset();
@@ -83,18 +81,6 @@ public class Lift {
 
         opMode.sleep(1500);
 
-//        unhookL.setPosition(0);
-//        unhookR.setPosition(0.5);
-//
-//        opMode.sleep(2000);
-
-//        time.reset();
-//
-//        while (time.seconds() < 1.4) {
-//            armPivotR.setPower(-0.4);
-//            armPivotL.setPower(-0.4);
-//        }
-
         time.reset();
 
         while (time.seconds() < 0.4) {
@@ -115,9 +101,20 @@ public class Lift {
 
         }
 
-        // set intake pivot position
+        intake.setIntakePosition();
 
-        // drop arm
+        opMode.sleep(750);
+
+        time.reset();
+
+        while (time.seconds() < 1.2) {
+            armPivotL.setPower(0.6);
+            armPivotR.setPower(0.6);
+
+        }
+
+        armPivotL.setPower(0);
+        armPivotR.setPower(0);
 
     }
 

@@ -70,7 +70,7 @@ public class BMDepot extends LinearOpMode{
                 sleep(400);
 
                 //drop marker
-                intake.markerOut();
+                // intake.markerOut();
 
                 sleep(150);
 
@@ -116,7 +116,7 @@ public class BMDepot extends LinearOpMode{
                 sleep(400);
 
                 //drop marker
-                intake.markerOut();
+                // intake.markerOut();
 
                 sleep(150);
 
@@ -166,7 +166,7 @@ public class BMDepot extends LinearOpMode{
                 sleep(400);
 
                 //drop marker
-                intake.markerOut();
+                // intake.markerOut();
 
                 sleep(150);
 
@@ -213,7 +213,7 @@ public class BMDepot extends LinearOpMode{
                 sleep(400);
 
                 //drop marker
-                intake.markerOut();
+                // intake.markerOut();
 
                 sleep(150);
 

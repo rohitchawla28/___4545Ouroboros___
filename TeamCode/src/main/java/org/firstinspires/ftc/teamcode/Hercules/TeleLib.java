@@ -70,8 +70,8 @@ public abstract class TeleLib extends OpMode {
         intakePivotL = hardwareMap.servo.get("intakePivotL");
         intakePivotR = hardwareMap.servo.get("intakePivotR");
 
-        // collectL = hardwareMap.crservo.get("collectL");
-        // collectR = hardwareMap.crservo.get("collectR");
+        collectL = hardwareMap.crservo.get("collectL");
+        collectR = hardwareMap.crservo.get("collectR");
 
         lockLift = hardwareMap.servo.get("liftLock");
 
@@ -87,8 +87,8 @@ public abstract class TeleLib extends OpMode {
         liftL.setDirection(DcMotor.Direction.FORWARD);
         liftR.setDirection(DcMotor.Direction.REVERSE);
 
-        // collectL.setDirection(DcMotor.Direction.FORWARD);
-        // collectR.setDirection(DcMotor.Direction.REVERSE);
+        collectL.setDirection(DcMotor.Direction.FORWARD);
+        collectR.setDirection(DcMotor.Direction.REVERSE);
 
         // setting arm pivot motors to BRAKE mode instead of FLOAT makes it easier to control because it won't fall from gravity
         armPivotL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

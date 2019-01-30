@@ -17,7 +17,7 @@ public class BMCrater extends LinearOpMode{
     Lift lift;
     BitmapVisionWC vision;
 
-    String cubePosition = "left";
+    String cubePosition = "right";
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -30,14 +30,14 @@ public class BMCrater extends LinearOpMode{
         telemetry.addLine("Initialized");
         telemetry.update();
 
-//        while (!isStarted()) {
-//            cubePosition = vision.sample();
-//
-//        }
+        while (!isStarted()) {
+            cubePosition = vision.sample();
+
+        }
 
         waitForStart();
 
-        // lift.detachTime1(drivetrain);
+//        lift.detachTime1(drivetrain, intake);
 
         switch (cubePosition) {
 
@@ -131,6 +131,40 @@ public class BMCrater extends LinearOpMode{
                 sleep(500);
 
                 drivetrain.moveEncoder(-0.3, 200, 3);
+
+                break;
+
+            default:
+                drivetrain.turnPI(30, true, 0.65 / 60, 0.006, 2);
+                sleep(500);
+
+                drivetrain.moveEncoder(0.6, 350, 4);
+                sleep(500);
+
+                drivetrain.moveEncoder(-0.6, 150, 4);
+                sleep(500);
+
+                drivetrain.turnPI(95, false, .35 / 95, 0.003, 3);
+                sleep(500);
+
+                drivetrain.moveEncoder(0.6, 1000, 4);
+                sleep(500);
+
+                drivetrain.turnPI(50, false, .3 / 90, 0.013, 4);
+                sleep(500);
+
+                drivetrain.moveEncoder(0.6, 1150, 4);
+                sleep(500);
+
+                lift.moveArmUp();
+                sleep(500);
+
+                drivetrain.moveEncoder(-0.6, 2200, 4);
+                sleep(500);
+
+                drivetrain.moveEncoder(-0.3, 200, 3);
+
+                break;
 
         }
 

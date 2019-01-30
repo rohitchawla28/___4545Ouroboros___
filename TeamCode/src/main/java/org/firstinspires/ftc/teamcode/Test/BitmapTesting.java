@@ -18,6 +18,7 @@ public class BitmapTesting extends LinearOpMode {
 
         while (!isStarted()) {
             vision.sample();
+
         }
 
         waitForStart();
