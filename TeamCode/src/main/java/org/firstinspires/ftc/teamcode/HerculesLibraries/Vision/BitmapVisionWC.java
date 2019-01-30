@@ -23,37 +23,24 @@ import static android.graphics.Color.red;
 public class BitmapVisionWC {
 
     private LinearOpMode opMode;
+
     private VuforiaLocalizer vuforia;
-    private Parameters parameters;
 
-    private final int RED_THRESHOLD = 244;
-    private final int GREEN_THRESHOLD = 218;
-    private final int BLUE_THRESHOLD = 59;
+    private final int RED_THRESHOLD = 220;
+    private final int GREEN_THRESHOLD = 185;
+    private final int BLUE_THRESHOLD = 60;
 
-    private static final String VUFORIA_KEY = "AcD8BwX/////AAABmQfyyiD3b0tXiwsm/UX+fHkiPPZJQu55dY7HGrCBT84yc2dP8K+9mWY/3l3gcOKEmSvG+xB9UTPZRTzLqONEuj4hrYpRZtfz6wDkC4IWUvxdgh3+On8UHBaue+CJveRpqla8XZtgMJUqzE3Mxt4QBk3SFkh815rM08JJ11a4XsZrxD4ZDVI6XcsrBmWFub8E/+weoU5gweajvJcE5tzVyLn7IaaYyshx9CHJdS0ObM29e3tHbVJjpwsU/zuoEEoXNRUL++LR0j8z6KY7WQvnsf0PyZXIpu6/tvFR1/WMn74Rc7IkWdO3sdiRQL3i96/rhOeAvQfjlg1VJhEyWKXqqLfQSJrOQSCKegayB4KFCXZf";
-
-    private BlockingQueue<VuforiaLocalizer.CloseableFrame> frame;
-
-    private WebcamName webcam;
-
-    public static String bitmapCubePosition;
+    public static String bitmapCubePosition = "unknown";
 
     public BitmapVisionWC(LinearOpMode opMode) {
         this.opMode = opMode;
 
-        webcam = this.opMode.hardwareMap.get(WebcamName.class, "Webcam 1");
-
-        int cameraMonitorViewId = this.opMode.hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", this.opMode.hardwareMap.appContext.getPackageName());
-
-        bitmapCubePosition = "";
-
-        parameters = new Parameters(cameraMonitorViewId);
-        parameters.vuforiaLicenseKey = VUFORIA_KEY;
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+        parameters.vuforiaLicenseKey = "AcD8BwX/////AAABmQfyyiD3b0tXiwsm/UX+fHkiPPZJQu55dY7HGrCBT84yc2dP8K+9mWY/3l3gcOKEmSvG+xB9UTPZRTzLqONEuj4hrYpRZtfz6wDkC4IWUvxdgh3+On8UHBaue+CJveRpqla8XZtgMJUqzE3Mxt4QBk3SFkh815rM08JJ11a4XsZrxD4ZDVI6XcsrBmWFub8E/+weoU5gweajvJcE5tzVyLn7IaaYyshx9CHJdS0ObM29e3tHbVJjpwsU/zuoEEoXNRUL++LR0j8z6KY7WQvnsf0PyZXIpu6/tvFR1/WMn74Rc7IkWdO3sdiRQL3i96/rhOeAvQfjlg1VJhEyWKXqqLfQSJrOQSCKegayB4KFCXZf";
+        parameters.cameraName = opMode.hardwareMap.get(WebcamName.class, "Webcam 1");
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
-
-        Vuforia.setFrameFormat(PIXEL_FORMAT.RGB565, true); //enables RGB565 format for the image
-        vuforia.setFrameQueueCapacity(4); //tells VuforiaLocalizer to only store one frame at a time
-        vuforia.enableConvertFrameToBitmap();
+        Vuforia.setFrameFormat(PIXEL_FORMAT.RGB565, true);
+        vuforia.setFrameQueueCapacity(4);
 
     }
 
@@ -108,9 +95,12 @@ public class BitmapVisionWC {
                 opMode.telemetry.addData("green val", greenPixel);
                 opMode.telemetry.update();
 
-                if ((redPixel <= RED_THRESHOLD + 10) && (redPixel >= RED_THRESHOLD - 10) && (greenPixel <= GREEN_THRESHOLD + 10) && (greenPixel >= GREEN_THRESHOLD - 10) && (bluePixel >= BLUE_THRESHOLD - 10)) {
-                    bitmapCubePosition = (colNum <= (bitmap.getWidth() / 3)) ? "left"
-                            : (colNum > ((bitmap.getWidth() / 3) + 150) && colNum < ((bitmap.getWidth() * 2) / 3))  ? "center"
+                if ((redPixel <= RED_THRESHOLD + 30) && (redPixel >= RED_THRESHOLD - 30) && (greenPixel <= GREEN_THRESHOLD + 30) && (greenPixel >= GREEN_THRESHOLD - 30) && (bluePixel >= BLUE_THRESHOLD - 30) && (bluePixel <= BLUE_THRESHOLD - 30)) {
+                    opMode.telemetry.addLine("Found correct color pixel");
+                    opMode.telemetry.update();
+
+                    bitmapCubePosition = (colNum >= (int)(bitmap.getWidth ()* (1.0/3)) + 21 && colNum <= (int)(bitmap.getWidth() * (2.0/3)) + 20) ? "center"
+                            : (colNum >= 0 && colNum <= (int)(bitmap.getWidth() * (1.0/3) + 30))  ? "left"
                             : "right";
 
                     opMode.telemetry.addData("Cube Pos", bitmapCubePosition);
