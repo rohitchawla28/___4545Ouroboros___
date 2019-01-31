@@ -13,6 +13,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.Parameters;
 
+import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 
 import static android.graphics.Color.blue;
@@ -26,8 +27,8 @@ public class BitmapVisionWC {
 
     private VuforiaLocalizer vuforia;
 
-    private final int RED_THRESHOLD = 220;
-    private final int GREEN_THRESHOLD = 185;
+    private final int RED_THRESHOLD = 140;
+    private final int GREEN_THRESHOLD = 100;
     private final int BLUE_THRESHOLD = 60;
 
     public static String bitmapCubePosition = "unknown";
@@ -66,7 +67,6 @@ public class BitmapVisionWC {
 
         }
 
-        // create a new bitmap and copy the byte buffer returned by rgb.getPixels() to it
         Bitmap bm = Bitmap.createBitmap(rgb.getWidth(), rgb.getHeight(), Bitmap.Config.RGB_565);
         bm.copyPixelsFromBuffer(rgb.getPixels());
 
@@ -80,42 +80,57 @@ public class BitmapVisionWC {
 
     public String sample() throws InterruptedException{
         Bitmap bitmap = getBitmap();
+        ArrayList<Integer> xValues = new ArrayList<>();
 
-        for (int colNum = 0; colNum < bitmap.getWidth(); colNum+= 2) {
+        int avgX = 0;
+        int cubePixels = 0;
 
-            for (int rowNum = ((bitmap.getHeight() * 2) / 3); rowNum >= 0; rowNum-= 3) {
+        //top left = (0,0)
+        for (int colNum = 0; colNum < bitmap.getWidth(); colNum +=2) {
+
+            for (int rowNum = bitmap.getHeight(); rowNum > 0; rowNum -= 2) {
                 int pixel = bitmap.getPixel(colNum, rowNum);
 
                 int redPixel = red(pixel);
                 int greenPixel = green(pixel);
                 int bluePixel = blue(pixel);
 
-                opMode.telemetry.addData("red val", redPixel);
-                opMode.telemetry.addData("blue val", bluePixel);
-                opMode.telemetry.addData("green val", greenPixel);
-                opMode.telemetry.update();
-
-                if ((redPixel <= RED_THRESHOLD + 30) && (redPixel >= RED_THRESHOLD - 30) && (greenPixel <= GREEN_THRESHOLD + 30) && (greenPixel >= GREEN_THRESHOLD - 30) && (bluePixel >= BLUE_THRESHOLD - 30) && (bluePixel <= BLUE_THRESHOLD - 30)) {
-                    opMode.telemetry.addLine("Found correct color pixel");
-                    opMode.telemetry.update();
-
-                    bitmapCubePosition = (colNum >= (int)(bitmap.getWidth ()* (1.0/3)) + 21 && colNum <= (int)(bitmap.getWidth() * (2.0/3)) + 20) ? "center"
-                            : (colNum >= 0 && colNum <= (int)(bitmap.getWidth() * (1.0/3) + 30))  ? "left"
-                            : "right";
-
-                    opMode.telemetry.addData("Cube Pos", bitmapCubePosition);
-                    opMode.telemetry.update();
-
-                    break;
+                if (redPixel >= RED_THRESHOLD && greenPixel >= GREEN_THRESHOLD && bluePixel <= BLUE_THRESHOLD) {
+                    xValues.add(colNum);
+                    cubePixels++;
 
                 }
 
             }
 
         }
+
+        for (int x : xValues) {
+            avgX+= x;
+        }
+
+        try {
+            avgX /= xValues.size();
+        } catch (ArithmeticException E){
+            bitmapCubePosition = "right";
+
+        }
+
+        if (avgX < (bitmap.getWidth() / 2.0)) {
+            bitmapCubePosition = "left";
+
+        }
+        else if (avgX > (bitmap.getWidth() / 2.0)) {
+            bitmapCubePosition = "center";
+
+        }
+        else if (cubePixels < 50){
+            bitmapCubePosition = "right";
+
+        }
+
         opMode.telemetry.addData("Cube Position", bitmapCubePosition);
         opMode.telemetry.update();
-
         return bitmapCubePosition;
 
     }
