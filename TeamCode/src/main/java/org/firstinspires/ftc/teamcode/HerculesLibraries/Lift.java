@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.HerculesLibraries;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -16,16 +17,11 @@ public class Lift {
     private DcMotor armPivotL;
     private DcMotor armPivotR;
 
-//    private Servo unhookL;
-//    private Servo unhookR;
     private Servo liftLock;
 
-    private Sensors sensors;
-
-    public Lift(LinearOpMode opMode) throws InterruptedException {
+    public Lift(LinearOpMode opMode) {
         this.opMode = opMode;
 
-        //sensors = new Sensors(this.opMode, true);
         liftL = this.opMode.hardwareMap.dcMotor.get("liftL");
         liftR = this.opMode.hardwareMap.dcMotor.get("liftR");
 
@@ -47,17 +43,7 @@ public class Lift {
 
     //===================================  DETATCH METHODS  ====================================
 
-    public void detachRange() {
-//            while (sensors.getDistance() > 0.1 && opMode.opModeIsActive()) {
-//                liftL.setPower(-0.4);
-//                liftR.setPower(-0.4);
-//
-//            }
-
-    }
-
-    //MAKE SURE THE METHOD KEEPS GOING LONG ENOUGH SO THAT IT RAISES ENOUGH TO TURN OUT
-    public void detachTime1(Drivetrain drivetrain, Intake intake) {
+    public void detachTime(Drivetrain drivetrain, Intake intake) {
         ElapsedTime time = new ElapsedTime();
 
         time.reset();
@@ -67,6 +53,7 @@ public class Lift {
             liftL.setPower(0.5);
             liftR.setPower(0.5);
 
+            // unlock servo
             if (time.seconds() > 0.2) {
                 liftLock.setPosition(0.63);
 
@@ -83,104 +70,79 @@ public class Lift {
 
         time.reset();
 
-        while (time.seconds() < 0.4) {
+        // raise lift to get out of hook
+        while (time.seconds() < 0.7) {
             liftL.setPower(-0.6);
             liftR.setPower(-0.6);
 
         }
+        liftL.setPower(0);
+        liftR.setPower(0);
+
         opMode.sleep(750);
 
+        // slow move away from lander
         drivetrain.moveEncoder(0.3, 150, 3);
         opMode.sleep(500);
 
         time.reset();
 
-        while (time.seconds() < 1.5) {
+        //bring lift down
+        while (time.seconds() < 2) {
             liftL.setPower(0.5);
             liftR.setPower(0.5);
 
         }
 
-        intake.setIntakePosition();
+        // make sure intake doesn't get crushed
+        intake.setIntakePivotDepositPosition();
 
         opMode.sleep(750);
 
         time.reset();
 
+        // bring arm down
         while (time.seconds() < 1.2) {
             armPivotL.setPower(0.6);
             armPivotR.setPower(0.6);
 
         }
-
         armPivotL.setPower(0);
         armPivotR.setPower(0);
 
     }
 
-    public void detachTime2(Drivetrain drivetrain) {
-        ElapsedTime time = new ElapsedTime();
-
-//        unhookL.setPosition(0.5);
-//        unhookR.setPosition(0.5);
-        time.reset();
-
-        while (time.milliseconds() < 2000 && opMode.opModeIsActive()) {
-            armPivotL.setPower(0.5);
-            armPivotR.setPower(0.5);
-        }
-
-        liftLock.setPosition(0.5);//need to test for unlock position
-
-        opMode.sleep(2000);
-
-        time.reset();
-
-        while (time.milliseconds() < 1000 && opMode.opModeIsActive()) {
-            liftL.setPower(0.5);
-            liftR.setPower(0.5);
-        }
-        drivetrain.moveEncoder(0.4, 300, 3);
-
-        time.reset();
-
-        while(time.milliseconds() < 3000 && opMode.opModeIsActive()){
-            liftL.setPower(-0.5);
-            liftR.setPower(-0.5);
-        }
-    }
-
     public void detachEncoder(Drivetrain drivetrain) {
-        ElapsedTime time = new ElapsedTime();
-
-        double initEncoder = (liftL.getCurrentPosition() + liftR.getCurrentPosition()) / 2;
-        double distance = 750;
-        double timeout = 4000;
-
-        resetEncoders();
-
-        time.reset();
-
-        while (((Math.abs((liftL.getCurrentPosition()) + Math.abs(liftR.getCurrentPosition())) / 2) - initEncoder) < distance
-                && time.milliseconds() < timeout && opMode.opModeIsActive()) {
-            liftL.setPower(-0.4);
-            liftR.setPower(-0.4);
-
-            opMode.telemetry.addData("Encoder distance left - ", (distance - ((liftL.getCurrentPosition() + liftR.getCurrentPosition()) / 2)));
-            opMode.telemetry.update();
-        }
-
-        while ((int)Math.abs(sensors.getGyroYawR()) > 0) {
-            if (sensors.getGyroYawR() > 0) {
-                //test PI values
-                drivetrain.turnPI(Math.abs(sensors.getGyroYaw()), false, 0.15 / 90, 0.013, 3);
-
-            } else if (sensors.getGyroYawR() < 0) {
-                drivetrain.turnPI(Math.abs(sensors.getGyroYaw()), true, 0.15 / 90, 0.013, 3);
-
-            }
-
-        }
+//        ElapsedTime time = new ElapsedTime();
+//
+//        double initEncoder = (liftL.getCurrentPosition() + liftR.getCurrentPosition()) / 2;
+//        double distance = 750;
+//        double timeout = 4000;
+//
+//        resetEncoders();
+//
+//        time.reset();
+//
+//        while (((Math.abs((liftL.getCurrentPosition()) + Math.abs(liftR.getCurrentPosition())) / 2) - initEncoder) < distance
+//                && time.milliseconds() < timeout && opMode.opModeIsActive()) {
+//            liftL.setPower(-0.4);
+//            liftR.setPower(-0.4);
+//
+//            opMode.telemetry.addData("Encoder distance left - ", (distance - ((liftL.getCurrentPosition() + liftR.getCurrentPosition()) / 2)));
+//            opMode.telemetry.update();
+//        }
+//
+//        while ((int)Math.abs(sensors.getGyroYawR()) > 0) {
+//            if (sensors.getGyroYawR() > 0) {
+//                //test PI values
+//                drivetrain.turnPI(Math.abs(sensors.getGyroYaw()), false, 0.15 / 90, 0.013, 3);
+//
+//            } else if (sensors.getGyroYawR() < 0) {
+//                drivetrain.turnPI(Math.abs(sensors.getGyroYaw()), true, 0.15 / 90, 0.013, 3);
+//
+//            }
+//
+//        }
 
     }
 
@@ -206,83 +168,32 @@ public class Lift {
 
     }
 
-    public void moveArmUp() {
+    public void markerOut(Intake intake) {
         ElapsedTime time = new ElapsedTime();
 
         time.reset();
 
-        while (time.seconds() < 1.4) {
+        // raise arm
+        while (time.seconds() < 1.1) {
             armPivotL.setPower(-0.4);
             armPivotR.setPower(-0.4);
 
         }
-        armPivotL.setPower(0.0);
-        armPivotR.setPower(0.0);
-        opMode.sleep(1500);
+        armPivotL.setPower(0);
+        armPivotR.setPower(0);
+
+        // deploy marker
+        intake.setIntakePivotMarkerDeploymentPosition();
+
+//        intake.collect(false);
+
+        opMode.sleep(750);
+
+        intake.setIntakePivotDepositPosition();
 
     }
 
-    public void moveArmDown() {
-        ElapsedTime time = new ElapsedTime();
-
-        time.reset();
-
-        while (time.seconds() < 1) {
-            armPivotL.setPower(-0.3);
-            armPivotR.setPower(-0.3);
-
-        }
-
-    }
-
-
-//        public void extendSampling(Drivetrain drivetrain, Vuforia vuforia) throws InterruptedException {
-////            HSL_OpenCVDetection vision = new HSL_OpenCVDetection(opMode, vuforia);
-////            vision.process(vuforia.convertToMat());
-////
-////            opMode.telemetry.addData("Cube Position", TensorFlowDetection.cubePosition);
-////            opMode.telemetry.update();
-////
-////            switch (vision.cubePositionAlt) {
-////                case "left" :
-////                    drivetrain.turnPI(20, false, 0.33/90, 0.013, 2);
-////                    opMode.sleep(500);
-////                    moveLift(true, 3000);
-////                    opMode.sleep(500);
-////                    moveLift(false, 3000);
-////                    opMode.sleep(500);
-////                    drivetrain.turnPI(20, true, 0.33/90, 0.013, 2);
-////                    opMode.sleep(500);
-////                    break;
-////
-////                case "center" :
-////                    moveLift(true, 3000);
-////                    opMode.sleep(500);
-////                    moveLift(false, 3000);
-////                    opMode.sleep(500);
-////                    break;
-////
-////                case "right" :
-////                    drivetrain.turnPI(20, true, 0.33/90, 0.013, 2);
-////                    opMode.sleep(500);
-////                    moveLift(true, 3000);
-////                    opMode.sleep(500);
-////                    moveLift(false, 3000);
-////                    opMode.sleep(500);
-////                    drivetrain.turnPI(20, false, 0.33/90, 0.013, 2);
-////                    opMode.sleep(500);
-////                    break;
-////
-////                case "unknown" :
-////                    moveLift(true, 3000);
-////                    opMode.sleep(500);
-////                    moveLift(false, 3000);
-////                    opMode.sleep(500);
-////                    break;
-////
-////            }
-////
-////        }
+    //===================================== UTILITY METHODS ========================================
 
     public void resetEncoders() {
         liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

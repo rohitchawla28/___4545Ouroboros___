@@ -26,9 +26,9 @@ public abstract class TeleLib extends OpMode {
     public Servo intakePivotL;
     public Servo intakePivotR;
 
-    // continuous rotation collection Vex 393 motors
-    public CRServo collectL;
-    public CRServo collectR;
+//    // continuous rotation collection Vex 393 motors
+//    public CRServo collectL;
+//    public CRServo collectR;
 
     // servos lock the arm in for auto
     public Servo lockLift;
@@ -38,11 +38,8 @@ public abstract class TeleLib extends OpMode {
     private boolean driveSpeedToggle = false;
 
     private double halfSpeedPivot = 1;
-    private boolean pivotSpeedToggle = false;
 
     private boolean locked = true;
-
-    private boolean b_pressed = false;
 
     // variables for gamepad joysticks (tank drive)
     private double tankLeftPower;
@@ -51,6 +48,10 @@ public abstract class TeleLib extends OpMode {
     // variables for gamepad joysticks (arcade drive)
     private double arcLeftStick;
     private double arcRightStick;
+
+    private boolean intake = false;
+    private boolean buttonStateL = false;
+    private boolean buttonStateR = false;
 
     @Override
     // actions that occur when drive team presses init before match
@@ -70,8 +71,8 @@ public abstract class TeleLib extends OpMode {
         intakePivotL = hardwareMap.servo.get("intakePivotL");
         intakePivotR = hardwareMap.servo.get("intakePivotR");
 
-        collectL = hardwareMap.crservo.get("collectL");
-        collectR = hardwareMap.crservo.get("collectR");
+//        collect L = hardwareMap.crservo.get("collectL");
+//        collectR = hardwareMap.crservo.get("collectR");
 
         lockLift = hardwareMap.servo.get("liftLock");
 
@@ -87,8 +88,8 @@ public abstract class TeleLib extends OpMode {
         liftL.setDirection(DcMotor.Direction.FORWARD);
         liftR.setDirection(DcMotor.Direction.REVERSE);
 
-        collectL.setDirection(DcMotor.Direction.FORWARD);
-        collectR.setDirection(DcMotor.Direction.REVERSE);
+//        collectL.setDirection(DcMotor.Direction.FORWARD);
+//        collectR.setDirection(DcMotor.Direction.REVERSE);
 
         // setting arm pivot motors to BRAKE mode instead of FLOAT makes it easier to control because it won't fall from gravity
         armPivotL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -233,34 +234,46 @@ public abstract class TeleLib extends OpMode {
 
         }
 
-    }
-
-    public void collect() {
-        if (gamepad2.left_bumper) {
-            // spin in
-            collectL.setPower(0.7);
-            collectR.setPower(0.7);
-
-        }
-        else {
-            collectL.setPower(0);
-            collectR.setPower(0);
-
-        }
-
-        if (gamepad2.right_bumper) {
-            // spin out
-            collectL.setPower(-0.7);
-            collectR.setPower(-0.7);
-
-        }
-        else {
-            collectL.setPower(0);
-            collectR.setPower(0);
+        if(gamepad2.x) {
+            //scoop position
+            intakePivotL.setPosition(0.2);
+            intakePivotR.setPosition(0.4);
 
         }
 
     }
+
+//    public void collect() {
+//        if (gamepad2.left_bumper ^ buttonStateL) {
+//            // spin in
+//            intake = !intake;
+//            buttonStateL = gamepad2.left_bumper;
+//        }
+//
+//        collectL.setPower(intake ? .6 : 0);
+//        collectR.setPower(intake ? .6 : 0);
+//
+//        if (gamepad2.right_bumper ^ buttonStateR) {
+//            // spin in
+//            intake = !intake;
+//            buttonStateR = gamepad2.right_bumper;
+//        }
+//
+//        collectL.setPower(intake ? -.6 : 0);
+//        collectR.setPower(intake ? -.6 : 0);
+//
+//    }
+//
+//    public void testCollect() {
+//        if (gamepad2.left_trigger > 0.1) {
+//            collectL.setPower(0.6);
+//        }
+//        else collectL.setPower(0);
+//
+//        if (gamepad2.right_trigger > .1) collectR.setPower(0.6);
+//        else collectR.setPower(0);
+//
+//    }
 
     public void door() {
         if (gamepad1.left_bumper) {

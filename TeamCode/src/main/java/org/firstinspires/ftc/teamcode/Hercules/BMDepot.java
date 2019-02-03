@@ -7,6 +7,8 @@ import org.firstinspires.ftc.teamcode.HerculesLibraries.Drivetrain;
 import org.firstinspires.ftc.teamcode.HerculesLibraries.Intake;
 import org.firstinspires.ftc.teamcode.HerculesLibraries.Lift;
 import org.firstinspires.ftc.teamcode.HerculesLibraries.Vision.BitmapVision;
+import org.firstinspires.ftc.teamcode.HerculesLibraries.Vision.BitmapVisionWC;
+
 import static org.firstinspires.ftc.teamcode.HerculesLibraries.Vision.BitmapVision.bitmapCubePosition;
 
 @Autonomous
@@ -16,215 +18,158 @@ public class BMDepot extends LinearOpMode{
     Drivetrain drivetrain;
     Lift lift;
     Intake intake;
-    BitmapVision vision;
+    BitmapVisionWC vision;
+
+    private String cubePosition = "unknown";
 
     @Override
     public void runOpMode() throws InterruptedException {
         drivetrain = new Drivetrain(this);
         lift = new Lift(this);
         intake = new Intake(this);
-        vision = new BitmapVision(this);
+        vision = new BitmapVisionWC(this);
 
         telemetry.addLine("Initialized");
         telemetry.update();
 
+        while (!isStarted()) {
+            cubePosition = vision.sample();
+
+            telemetry.addData("Cube position", cubePosition);
+            telemetry.update();
+
+        }
+
         waitForStart();
 
-        vision.sample();
+        lift.detachTime(drivetrain, intake);
 
-        switch(bitmapCubePosition) {
-            case "left":
-                drivetrain.moveEncoder(0.3, 200, 4);
-                sleep(400);
-                drivetrain.turnGyro(0.4, 16, false, 4);
-                sleep(400);
-                drivetrain.moveEncoder(0.4, 1200, 4);
-                sleep(400);
-                drivetrain.moveEncoder(-0.4, 1150, 4);
-                sleep(400);
-                drivetrain.turnGyro(0.4, 16, true, 4);
-                sleep(400);
-                //move to not hit lander
-                drivetrain.moveEncoder(0.5, 500, 4);
+        switch(cubePosition) {
+            case "left" :
+                drivetrain.turnPI(32.5, false, 0.65 / 60, 0.006, 2);
+                sleep(500);
 
-                sleep(400);
+                drivetrain.moveEncoder(0.6, 350, 4);
+                sleep(500);
 
-                // Will turn to go around sampling
-                drivetrain.turnGyro(0.4, 60, false, 4);
+                drivetrain.moveEncoder(-0.6, 100, 4);
+                sleep(500);
 
-                sleep(400);
+                drivetrain.turnPID(30, false, .5 / 30, 0.011, 0.004 / 30, 3);
+                sleep(500);
 
-                //move to wall
-                drivetrain.moveEncoder(0.5, 2050, 4);
+                drivetrain.moveEncoder(0.6, 1000, 3);
+                sleep(500);
 
-                sleep(400);
+                drivetrain.turnGyro(0.3, 30, true, 4);
+                sleep(500);
 
-                // Will turn towards the depot
-                drivetrain.turnGyro(0.4, 85, true, 4);
+                drivetrain.moveEncoder(0.6, 1300, 5);
+                sleep(500);
 
-                sleep(400);
+                lift.markerOut(intake);
+                sleep(500);
 
-                //move to depot
-                drivetrain.moveEncoder(0.5, 2050, 4);
+                drivetrain.moveEncoder(-0.6, 2000, 5);
+                sleep(500);
 
-                sleep(400);
+                drivetrain.moveEncoder(-0.3, 200, 5);
+                sleep(500);
 
-                //drop marker
-                // intake.markerOut();
-
-                sleep(150);
-
-                //move to almost the crater
-                drivetrain.moveEncoder(-0.5, 2100, 4);
-
-                sleep(400);
-
-                //move to touch the crater
-                drivetrain.moveEncoder(-0.3, 320, 4);
                 break;
 
-            case "center":
-                drivetrain.moveEncoder(0.3, 200, 4);
-                sleep(400);
-                drivetrain.moveEncoder(0.4, 1000, 4);
-                sleep(400);
-                drivetrain.moveEncoder(-0.4, 1000, 4);
-                sleep(400);
-                //move to not hit lander
-                drivetrain.moveEncoder(0.5, 500, 4);
+            case "center" :
+                drivetrain.moveEncoder(0.6, 300, 4);
+                sleep(500);
 
-                sleep(400);
+                drivetrain.moveEncoder(-0.6, 110, 4);
+                sleep(500);
 
-                // Will turn to go around sampling
-                drivetrain.turnGyro(0.4, 60, false, 4);
+                drivetrain.turnPID(65, false, .6 / 65, 0.008, 0.004 / 65, 2);
+                sleep(500);
 
-                sleep(400);
+                drivetrain.moveEncoder(0.6, 900, 4);
+                sleep(500);
 
-                //move to wall
-                drivetrain.moveEncoder(0.5, 2050, 4);
+                drivetrain.turnPI(33, false, .4 / 33, 0.009, 5);
+                sleep(500);
 
-                sleep(400);
+                drivetrain.moveEncoder(0.6, 1150, 4);
+                sleep(500);
 
-                // Will turn towards the depot
-                drivetrain.turnGyro(0.4, 85, true, 4);
+                lift.markerOut(intake);
+                sleep(500);
 
-                sleep(400);
+                drivetrain.moveEncoder(-0.6, 2200,4);
+                sleep(500);
 
-                //move to depot
-                drivetrain.moveEncoder(0.5, 2050, 4);
-
-                sleep(400);
-
-                //drop marker
-                // intake.markerOut();
-
-                sleep(150);
-
-                //move to almost the crater
-                drivetrain.moveEncoder(-0.5, 2050, 4);
-
-                sleep(400);
-
-                //move to touch the crater
-                drivetrain.moveEncoder(-0.3, 350, 4);
+                drivetrain.moveEncoder(-0.3, 200, 3);
                 break;
 
-            case "right":
-                drivetrain.moveEncoder(0.3, 200, 4);
-                sleep(400);
-                drivetrain.turnGyro(0.4, 16, true, 4);
-                sleep(400);
-                drivetrain.moveEncoder(0.4, 1150, 4);
-                sleep(400);
-                drivetrain.moveEncoder(-0.4, 1000, 4);
-                sleep(400);
-                drivetrain.turnGyro(0.4, 16, false, 4);
-                sleep(400);
-                //move to not hit lander
-                drivetrain.moveEncoder(0.5, 500, 4);
+            case "right" :
+                drivetrain.turnPI(30, true, 0.65 / 60, 0.006, 2);
+                sleep(500);
 
-                sleep(400);
+                drivetrain.moveEncoder(0.6, 350, 4);
+                sleep(500);
 
-                // Will turn to go around sampling
-                drivetrain.turnGyro(0.4, 60, false, 4);
+                drivetrain.moveEncoder(-0.6, 150, 4);
+                sleep(500);
 
-                sleep(400);
+                drivetrain.turnPI(95, false, .35 / 95, 0.003, 3);
+                sleep(500);
 
-                //move to wall
-                drivetrain.moveEncoder(0.5, 1950, 4);
+                drivetrain.moveEncoder(0.6, 1000, 4);
+                sleep(500);
 
-                sleep(400);
+                drivetrain.turnPI(50, false, .3 / 90, 0.013, 4);
+                sleep(500);
 
-                // Will turn towards the depot
-                drivetrain.turnGyro(0.4, 85, true, 4);
+                drivetrain.moveEncoder(0.6, 1150, 4);
+                sleep(500);
 
-                sleep(400);
+                lift.markerOut(intake);
+                sleep(500);
 
-                //move to depot
-                drivetrain.moveEncoder(0.5, 2050, 4);
+                drivetrain.moveEncoder(-0.6, 2200, 4);
+                sleep(500);
 
-                sleep(400);
+                drivetrain.moveEncoder(-0.3, 200, 3);
 
-                //drop marker
-                // intake.markerOut();
-
-                sleep(150);
-
-                //move to almost the crater
-                drivetrain.moveEncoder(-0.5, 2250, 4);
-
-                sleep(400);
-
-                //move to touch the crater
-                drivetrain.moveEncoder(-0.3, 400, 4);
                 break;
 
             default:
-                drivetrain.moveEncoder(0.3, 200, 4);
-                sleep(400);
-                drivetrain.moveEncoder(0.4, 1000, 4);
-                sleep(400);
-                drivetrain.moveEncoder(-0.4, 1000, 4);
-                sleep(400);
+                drivetrain.turnPI(30, true, 0.65 / 60, 0.006, 2);
+                sleep(500);
 
-                //move to not hit lander
-                drivetrain.moveEncoder(0.5, 500, 4);
+                drivetrain.moveEncoder(0.6, 350, 4);
+                sleep(500);
 
-                sleep(400);
+                drivetrain.moveEncoder(-0.6, 150, 4);
+                sleep(500);
 
-                // Will turn to go around sampling
-                drivetrain.turnGyro(0.4, 60, false, 4);
+                drivetrain.turnPI(95, false, .35 / 95, 0.003, 3);
+                sleep(500);
 
-                sleep(400);
+                drivetrain.moveEncoder(0.6, 1000, 4);
+                sleep(500);
 
-                //move to wall
-                drivetrain.moveEncoder(0.5, 2050, 4);
+                drivetrain.turnPI(50, false, .3 / 90, 0.013, 4);
+                sleep(500);
 
-                sleep(400);
+                drivetrain.moveEncoder(0.6, 1150, 4);
+                sleep(500);
 
-                // Will turn towards the depot
-                drivetrain.turnGyro(0.4, 85, true, 4);
+                lift.markerOut(intake);
+                sleep(500);
 
-                sleep(400);
+                drivetrain.moveEncoder(-0.6, 2200, 4);
+                sleep(500);
 
-                //move to depot
-                drivetrain.moveEncoder(0.5, 2050, 4);
+                drivetrain.moveEncoder(-0.3, 200, 3);
 
-                sleep(400);
-
-                //drop marker
-                // intake.markerOut();
-
-                sleep(150);
-
-                //move to almost the crater
-                drivetrain.moveEncoder(-0.5, 2100, 4);
-
-                sleep(400);
-
-                //move to touch the crater
-                drivetrain.moveEncoder(-0.3, 320, 4);
                 break;
+
         }
     }
 }

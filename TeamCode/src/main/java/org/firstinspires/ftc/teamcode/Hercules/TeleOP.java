@@ -19,8 +19,9 @@ public class TeleOP extends TeleLib {
         armPivot();
         intakePivot();
         door();
-        collect();
+//        collect();
         lockLift();
+//        testCollect();
 
 
     }

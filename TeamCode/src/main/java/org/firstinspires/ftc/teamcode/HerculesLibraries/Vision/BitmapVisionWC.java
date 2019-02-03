@@ -31,18 +31,17 @@ public class BitmapVisionWC {
     private final int GREEN_THRESHOLD = 100;
     private final int BLUE_THRESHOLD = 60;
 
-    public static String bitmapCubePosition = "unknown";
-
     public BitmapVisionWC(LinearOpMode opMode) {
         this.opMode = opMode;
 
-        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+        int cameraMonitorViewId = opMode.hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", opMode.hardwareMap.appContext.getPackageName());
+
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
         parameters.vuforiaLicenseKey = "AcD8BwX/////AAABmQfyyiD3b0tXiwsm/UX+fHkiPPZJQu55dY7HGrCBT84yc2dP8K+9mWY/3l3gcOKEmSvG+xB9UTPZRTzLqONEuj4hrYpRZtfz6wDkC4IWUvxdgh3+On8UHBaue+CJveRpqla8XZtgMJUqzE3Mxt4QBk3SFkh815rM08JJ11a4XsZrxD4ZDVI6XcsrBmWFub8E/+weoU5gweajvJcE5tzVyLn7IaaYyshx9CHJdS0ObM29e3tHbVJjpwsU/zuoEEoXNRUL++LR0j8z6KY7WQvnsf0PyZXIpu6/tvFR1/WMn74Rc7IkWdO3sdiRQL3i96/rhOeAvQfjlg1VJhEyWKXqqLfQSJrOQSCKegayB4KFCXZf";
         parameters.cameraName = opMode.hardwareMap.get(WebcamName.class, "Webcam 1");
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
         Vuforia.setFrameFormat(PIXEL_FORMAT.RGB565, true);
         vuforia.setFrameQueueCapacity(4);
-
     }
 
     public Bitmap getBitmap() throws InterruptedException{
@@ -75,6 +74,8 @@ public class BitmapVisionWC {
         opMode.telemetry.addLine("Got Bitmap");
         opMode.telemetry.update();
 
+        opMode.sleep(500);
+
         return bm;
     }
 
@@ -83,12 +84,11 @@ public class BitmapVisionWC {
         ArrayList<Integer> xValues = new ArrayList<>();
 
         int avgX = 0;
-        int cubePixels = 0;
 
         //top left = (0,0)
-        for (int colNum = 0; colNum < bitmap.getWidth(); colNum +=2) {
+        for (int colNum = 0; colNum < bitmap.getWidth(); colNum ++) {
 
-            for (int rowNum = bitmap.getHeight(); rowNum > 0; rowNum -= 2) {
+            for (int rowNum = 140 ; rowNum < 256; rowNum ++) {
                 int pixel = bitmap.getPixel(colNum, rowNum);
 
                 int redPixel = red(pixel);
@@ -97,7 +97,6 @@ public class BitmapVisionWC {
 
                 if (redPixel >= RED_THRESHOLD && greenPixel >= GREEN_THRESHOLD && bluePixel <= BLUE_THRESHOLD) {
                     xValues.add(colNum);
-                    cubePixels++;
 
                 }
 
@@ -107,36 +106,37 @@ public class BitmapVisionWC {
 
         for (int x : xValues) {
             avgX+= x;
+
         }
+
+        opMode.telemetry.addData("Num Pixels found", xValues.size());
+        opMode.telemetry.update();
 
         try {
             avgX /= xValues.size();
         } catch (ArithmeticException E){
-            bitmapCubePosition = "right";
+            return  "right";
 
         }
 
-        if (avgX < (bitmap.getWidth() / 2.0)) {
-            bitmapCubePosition = "left";
-
-        }
-        else if (avgX > (bitmap.getWidth() / 2.0)) {
-            bitmapCubePosition = "center";
-
-        }
-        else if (cubePixels < 50){
-            bitmapCubePosition = "right";
-
-        }
-
-        opMode.telemetry.addData("Cube Position", bitmapCubePosition);
+        opMode.telemetry.addData("avgX = ", avgX);
         opMode.telemetry.update();
-        return bitmapCubePosition;
+
+        if (avgX < 300) {
+            return "left";
+
+        }
+        else if (avgX < 550) {
+            return "center";
+
+        }
+        else {
+            return "right";
+
+        }
 
     }
 
 
     public Bitmap vufConvertToBitmap(Frame frame) { return vuforia.convertFrameToBitmap(frame); }
-
-
 }

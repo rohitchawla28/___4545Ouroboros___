@@ -12,8 +12,8 @@ public class Intake {
     public Servo intakePivotL;
     public Servo intakePivotR;
 
-    private CRServo collectL;
-    private CRServo collectR;
+//    private CRServo collectL;
+//    private CRServo collectR;
 
 
     public Intake(LinearOpMode opMode) {
@@ -26,25 +26,31 @@ public class Intake {
         intakePivotR = this.opMode.hardwareMap.servo.get("intakePivotR");
 
     }
+//
+//    public void collect(boolean in) {
+//        // 0.6 power because of VEX 393 Motors
+//        if (in) {
+//            collectL.setPower(0.6);
+//            collectR.setPower(0.6);
+//
+//        }
+//        else {
+//            collectL.setPower(-0.6);
+//            collectR.setPower(-0.6);
+//
+//        }
+//
+//    }
 
-    public void collect(boolean in) {
-        // 0.6 power because of VEX 393 Motors
-        if (in) {
-            collectL.setPower(0.6);
-            collectR.setPower(0.6);
-
-        }
-        else {
-            collectL.setPower(-0.6);
-            collectR.setPower(-0.6);
-
-        }
+    public void setIntakePivotMarkerDeploymentPosition() {
+       intakePivotL.setPosition(0.7);
+       intakePivotR.setPosition(0.2);
 
     }
 
-    public void setIntakePosition() {
-       intakePivotL.setPosition(0.7);
-       intakePivotR.setPosition(0.2);
+    public void setIntakePivotDepositPosition() {
+        intakePivotL.setPosition(0.9);
+        intakePivotR.setPosition(0);
 
     }
 
