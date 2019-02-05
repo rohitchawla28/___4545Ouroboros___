@@ -135,7 +135,7 @@ public class Drivetrain {
 
 
     public double getEncoderAvg() {
-        int countZeros = 0;
+        double countZeros = 0.0;
 
         if (fl.getCurrentPosition() == 0) {
             countZeros++;
@@ -157,12 +157,12 @@ public class Drivetrain {
         return (Math.abs(fl.getCurrentPosition()) +
                 Math.abs(fr.getCurrentPosition()) +
                 Math.abs(bl.getCurrentPosition()) +
-                Math.abs(br.getCurrentPosition())) / (4 - countZeros);
+                Math.abs(br.getCurrentPosition())) / (4.0 - countZeros);
 
     }
 
     public double getRightEncoderAvg() {
-        int countZeros = 0;
+        double countZeros = 0.0;
 
         if (fr.getCurrentPosition() == 0) {
             countZeros++;
@@ -175,12 +175,12 @@ public class Drivetrain {
         }
 
         return Math.abs(fr.getCurrentPosition()) +
-                Math.abs(br.getCurrentPosition()) / (2 - countZeros);
+                Math.abs(br.getCurrentPosition()) / (2.0 - countZeros);
 
     }
 
     public double getLeftEncoderAvg() {
-        int countZeros = 0;
+        double countZeros = 0.0;
 
         if (fl.getCurrentPosition() == 0) {
             countZeros++;
@@ -193,7 +193,7 @@ public class Drivetrain {
         }
 
         return Math.abs(fl.getCurrentPosition()) +
-                Math.abs(bl.getCurrentPosition()) / (2 - countZeros);
+                Math.abs(bl.getCurrentPosition()) / (2.0 - countZeros);
 
     }
 

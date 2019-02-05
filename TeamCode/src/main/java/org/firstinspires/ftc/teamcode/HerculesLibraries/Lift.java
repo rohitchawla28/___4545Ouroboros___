@@ -148,20 +148,45 @@ public class Lift {
 
     //======================================  LIFT/ARM MOVEMENTS  ==================================
 
-    public void moveLift(boolean extending, int timeout) {
+    public void depositLiftMacro(boolean extending) {
         ElapsedTime time = new ElapsedTime();
+
+        double timeout = 2.2;
 
         time.reset();
 
         while (time.seconds() < timeout && opMode.opModeIsActive()) {
             if (extending) {
-                liftL.setPower(0.6);
-                liftR.setPower(0.6);
+                liftL.setPower(0.8);
+                liftR.setPower(0.8);
 
             }
             else {
-                liftL.setPower(-0.6);
-                liftR.setPower(-0.6);
+                liftL.setPower(-0.8);
+                liftR.setPower(-0.8);
+            }
+
+        }
+
+    }
+
+    public void pivotMacro(boolean up) {
+        ElapsedTime time = new ElapsedTime();
+
+        double timeout = 1.0;
+
+        time.reset();
+
+        while (time.seconds() < timeout && opMode.opModeIsActive()) {
+            if (up) {
+                armPivotL.setPower(-0.65);
+                armPivotR.setPower(-0.65);
+
+            }
+            else {
+                armPivotL.setPower(0.65);
+                armPivotR.setPower(0.65);
+
             }
 
         }
