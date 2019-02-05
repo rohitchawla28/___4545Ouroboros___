@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 public abstract class TeleLib extends OpMode {
 
@@ -212,6 +213,42 @@ public abstract class TeleLib extends OpMode {
         else {
             armPivotL.setPower(0);
             armPivotR.setPower(0);
+
+        }
+
+    }
+
+    public void depositLiftMacro() {
+        double liftTimeout = 2.2;
+
+        if (gamepad1.dpad_up) {
+            ElapsedTime time = new ElapsedTime();
+
+            time.reset();
+
+            while (time.seconds() < liftTimeout) {
+                liftL.setPower(0.8);
+                liftR.setPower(0.8);
+
+            }
+
+        }
+
+    }
+
+    public void pivotMacro() {
+        double timeout = 1.0;
+
+        if (gamepad1.dpad_down) {
+            ElapsedTime time = new ElapsedTime();
+
+            time.reset();
+
+            while (time.seconds() < timeout) {
+                armPivotL.setPower(-0.65);
+                armPivotR.setPower(-0.65);
+
+            }
 
         }
 
