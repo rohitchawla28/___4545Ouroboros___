@@ -10,7 +10,6 @@ public class TeleOP extends TeleLib {
     public void loop() {
         // Driving methods based on driver preference
         arcadeDrive();
-        // tankDrive();
 
         halfSpeed();
 
@@ -22,6 +21,8 @@ public class TeleOP extends TeleLib {
 //        collect();
         lockLift();
 //        testCollect();
+        pivotMacro();
+        depositLiftMacro();
 
 
     }

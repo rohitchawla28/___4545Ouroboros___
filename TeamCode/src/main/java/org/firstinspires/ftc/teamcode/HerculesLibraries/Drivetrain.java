@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.HerculesLibraries;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class Drivetrain {
@@ -14,6 +15,8 @@ public class Drivetrain {
     private DcMotor fr;
     private DcMotor bl;
     private DcMotor br;
+
+    private VoltageSensor voltageSensor;
 
     public Drivetrain(LinearOpMode opMode) throws InterruptedException {
         this.opMode = opMode;

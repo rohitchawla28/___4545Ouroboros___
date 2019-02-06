@@ -138,6 +138,7 @@ public abstract class TeleLib extends OpMode {
     // in arcade drive, the left stick controls all motors either moving forwards or backwards
     // the right stick controls turning left or right
     public void arcadeDrive() {
+        /** Y Axis Reversed */
         arcLeftStick = gamepad1.left_stick_y * halfSpeedDrive;
         arcRightStick = gamepad1.right_stick_x * halfSpeedDrive;
 
@@ -219,7 +220,7 @@ public abstract class TeleLib extends OpMode {
     }
 
     public void depositLiftMacro() {
-        double liftTimeout = 2.2;
+        double liftTimeout = 2;
 
         if (gamepad1.dpad_up) {
             ElapsedTime time = new ElapsedTime();
@@ -227,17 +228,14 @@ public abstract class TeleLib extends OpMode {
             time.reset();
 
             while (time.seconds() < liftTimeout) {
-                liftL.setPower(0.8);
-                liftR.setPower(0.8);
-
+                liftL.setPower(-0.8);
+                liftR.setPower(-0.8);
             }
-
         }
-
     }
 
     public void pivotMacro() {
-        double timeout = 1.0;
+        double timeout = 1.5;
 
         if (gamepad1.dpad_down) {
             ElapsedTime time = new ElapsedTime();
