@@ -16,8 +16,6 @@ public class Drivetrain {
     private DcMotor bl;
     private DcMotor br;
 
-    private VoltageSensor voltageSensor;
-
     public Drivetrain(LinearOpMode opMode) throws InterruptedException {
         this.opMode = opMode;
 
@@ -100,40 +98,6 @@ public class Drivetrain {
 
     }
 
-    //====================================== TIME METHODS ==========================================
-
-    public void moveTime(double power, double seconds) {
-        ElapsedTime time = new ElapsedTime();
-
-        time.reset();
-
-        while (time.seconds() < seconds && opMode.opModeIsActive()) {
-            opMode.telemetry.addData("Current Time Left - ", (seconds - time.seconds()));
-            opMode.telemetry.update();
-
-            startMotors(power);
-
-        }
-        stopMotors();
-
-    }
-
-    public void turnTime(double power, double seconds, boolean turnRight) {
-        ElapsedTime time = new ElapsedTime();
-
-        time.reset();
-
-        while (time.seconds() < seconds && opMode.opModeIsActive()) {
-            opMode.telemetry.addData("Current Time Left - ", (seconds - time.seconds()));
-            opMode.telemetry.update();
-
-            turn(power, turnRight);
-
-        }
-        stopMotors();
-
-    }
-
     //====================================== ENCODER METHODS =======================================
 
 
@@ -164,42 +128,6 @@ public class Drivetrain {
 
     }
 
-    public double getRightEncoderAvg() {
-        double countZeros = 0.0;
-
-        if (fr.getCurrentPosition() == 0) {
-            countZeros++;
-        }
-        if (br.getCurrentPosition() == 0) {
-            countZeros++;
-        }
-        if (countZeros == 2) {
-            return 0;
-        }
-
-        return Math.abs(fr.getCurrentPosition()) +
-                Math.abs(br.getCurrentPosition()) / (2.0 - countZeros);
-
-    }
-
-    public double getLeftEncoderAvg() {
-        double countZeros = 0.0;
-
-        if (fl.getCurrentPosition() == 0) {
-            countZeros++;
-        }
-        if (bl.getCurrentPosition() == 0) {
-            countZeros++;
-        }
-        if (countZeros == 2) {
-            return 0;
-        }
-
-        return Math.abs(fl.getCurrentPosition()) +
-                Math.abs(bl.getCurrentPosition()) / (2.0 - countZeros);
-
-    }
-
     public void moveEncoder(double power, double distance, double timeout) {
         resetEncoders();
 
@@ -210,6 +138,46 @@ public class Drivetrain {
         time.reset();
 
         while (Math.abs(getEncoderAvg() - initEncoder) < distance && time.seconds() < timeout && opMode.opModeIsActive()) {
+            startMotors(power);
+
+            opMode.telemetry.addData("Encoder distance left", (distance - getEncoderAvg()));
+            opMode.telemetry.update();
+
+        }
+        stopMotors();
+
+    }
+
+    public void moveGyroStab(double power, double distance, double timeout) {
+        resetEncoders();
+
+        ElapsedTime time = new ElapsedTime();
+
+        double initEncoder = getEncoderAvg();
+        double heading = sensors.getGyroYaw();
+
+        time.reset();
+
+        while (Math.abs(getEncoderAvg() - initEncoder) < distance && time.seconds() < timeout && opMode.opModeIsActive()) {
+            if (sensors.getGyroYaw() - heading > 1) {
+                fl.setPower(power);
+                fr.setPower(power * 1.25);
+                bl.setPower(power);
+                br.setPower(power * 1.25);
+
+            }
+            else if (sensors.getGyroYaw() - heading < 1) {
+                fl.setPower(power * 1.25);
+                fr.setPower(power);
+                bl.setPower(power * 1.25);
+                br.setPower(power);
+
+            }
+            else {
+                startMotors(power);
+
+            }
+
             startMotors(power);
 
             opMode.telemetry.addData("Encoder distance left", (distance - getEncoderAvg()));
@@ -240,69 +208,6 @@ public class Drivetrain {
 
         }
 
-        stopMotors();
-
-    }
-
-    public void moveEncBadHardwareBackward(double power, double distance, double timeout) {
-        resetEncoders();
-
-        ElapsedTime time = new ElapsedTime();
-
-        double initEncoder = getEncoderAvg();
-
-        time.reset();
-
-        while (Math.abs(getEncoderAvg() - initEncoder) < distance && time.seconds() < timeout && opMode.opModeIsActive()) {
-            fl.setPower(power);
-            fr.setPower(power);
-            bl.setPower(power);
-            br.setPower(power);
-
-            opMode.telemetry.addData("Encoder distance left", (distance - getEncoderAvg()));
-            opMode.telemetry.update();
-
-        }
-        stopMotors();
-
-    }
-
-    public void leftTurnEncoder(double power, double distance, double timeout) {
-        resetEncoders();
-
-        ElapsedTime time = new ElapsedTime();
-
-        double initEncoder = getRightEncoderAvg();
-
-        time.reset();
-
-        while (((getRightEncoderAvg() - initEncoder) < distance) && opMode.opModeIsActive() && (time.seconds() < timeout)) {
-            turn(power, false);
-
-            opMode.telemetry.addData("Encoder distance left - ", (distance - getRightEncoderAvg()));
-            opMode.telemetry.update();
-
-        }
-        stopMotors();
-
-    }
-
-    public void rightTurnEncoder(double power, double distance, double timeout) {
-        resetEncoders();
-
-        ElapsedTime time = new ElapsedTime();
-
-        double initEncoder = getLeftEncoderAvg();
-
-        time.reset();
-
-        while ((getLeftEncoderAvg() - initEncoder) < distance && time.seconds() < timeout && opMode.opModeIsActive()) {
-            turn(power, true);
-
-            opMode.telemetry.addData("Encoder distance left - ", (distance - getLeftEncoderAvg()));
-            opMode.telemetry.update();
-
-        }
         stopMotors();
 
     }
@@ -382,6 +287,7 @@ public class Drivetrain {
             opMode.idle();
         }
         stopMotors();
+
     }
 
     public void turnPID(double angleChange, boolean turnRight, double kP, double kI, double kD, double timeout) {

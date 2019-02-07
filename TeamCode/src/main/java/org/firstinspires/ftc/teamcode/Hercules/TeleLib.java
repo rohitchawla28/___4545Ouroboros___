@@ -220,7 +220,7 @@ public abstract class TeleLib extends OpMode {
     }
 
     public void depositLiftMacro() {
-        double liftTimeout = 2;
+        double liftTimeout = 1.7;
 
         if (gamepad1.dpad_up) {
             ElapsedTime time = new ElapsedTime();
@@ -228,14 +228,14 @@ public abstract class TeleLib extends OpMode {
             time.reset();
 
             while (time.seconds() < liftTimeout) {
-                liftL.setPower(-0.8);
-                liftR.setPower(-0.8);
+                liftL.setPower(-1);
+                liftR.setPower(-1);
             }
         }
     }
 
     public void pivotMacro() {
-        double timeout = 1.5;
+        double timeout = 1.2;
 
         if (gamepad1.dpad_down) {
             ElapsedTime time = new ElapsedTime();
@@ -243,8 +243,8 @@ public abstract class TeleLib extends OpMode {
             time.reset();
 
             while (time.seconds() < timeout) {
-                armPivotL.setPower(-0.65);
-                armPivotR.setPower(-0.65);
+                armPivotL.setPower(-0.8);
+                armPivotR.setPower(-0.8);
 
             }
 
