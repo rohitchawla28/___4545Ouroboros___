@@ -158,30 +158,68 @@ public class Drivetrain {
 
         time.reset();
 
+        opMode.telemetry.addData("Heading", heading);
+
         while (Math.abs(getEncoderAvg() - initEncoder) < distance && time.seconds() < timeout && opMode.opModeIsActive()) {
-            if (sensors.getGyroYaw() - heading > 1) {
-                fl.setPower(power);
-                fr.setPower(power * 1.25);
-                bl.setPower(power);
-                br.setPower(power * 1.25);
+            opMode.telemetry.addData("Current Gyro", sensors.getGyroYaw());
+
+            double error = heading - sensors.getGyroYaw();
+
+            opMode.telemetry.addData("error", error);
+
+            // calculate error in -179 to +180 range
+            if (error > 180)  {
+                error -= 360;
 
             }
-            else if (sensors.getGyroYaw() - heading < 1) {
-                fl.setPower(power * 1.25);
-                fr.setPower(power);
-                bl.setPower(power * 1.25);
-                br.setPower(power);
-
-            }
-            else {
-                startMotors(power);
+            if (error <= -180) {
+                error += 360;
 
             }
 
-            startMotors(power);
+            // if we are way off course, instead of continuing to move, we stop and turn back to the correct angle
+//            if (Math.abs(error) > 10) {
+//                stopMotors();
+//
+//                if (error >= 0) {
+//                    turnPID(Math.abs(error), false, 0.3 / (Math.abs(error)), 0.003, 0.008 / (Math.abs(error)), 3);
+//
+//                }
+//                else if (error <= 0) {
+//                    turnPID(Math.abs(error), true, 0.3 / (Math.abs(error)), 0.003, 0.008 / (Math.abs(error)), 3);
+//
+//                }
+//
+//            }
+//            else {
+                if (error >= 1) {
+                    opMode.telemetry.addLine("Too far right");
+                    opMode.telemetry.update();
 
-            opMode.telemetry.addData("Encoder distance left", (distance - getEncoderAvg()));
-            opMode.telemetry.update();
+                    fl.setPower(power * 0.8);
+                    fr.setPower(power * 1.25);
+                    bl.setPower(power * 0.8);
+                    br.setPower(power * 1.25);
+
+                } else if (error <= -1) {
+                    opMode.telemetry.addLine("Too far left");
+                    opMode.telemetry.update();
+
+                    fl.setPower(power * 1.25);
+                    fr.setPower(power * 0.8);
+                    bl.setPower(power * 1.25);
+                    br.setPower(power * 0.8);
+
+                }
+                else {
+                    opMode.telemetry.addLine("On track");
+                    opMode.telemetry.update();
+
+                    startMotors(power);
+
+                // }
+
+            }
 
         }
         stopMotors();
@@ -277,11 +315,11 @@ public class Drivetrain {
             }
             else turn(power + bias, turnRight);
 
-            opMode.telemetry.addData("error ", error);
+            opMode.telemetry.addData("error", error);
             opMode.telemetry.addData("bias ", bias);
             opMode.telemetry.addData("P", proportional);
             opMode.telemetry.addData("I", integral);
-            opMode.telemetry.addData("Power", power);
+            opMode.telemetry.addData("power", power);
             opMode.telemetry.update();
 
             opMode.idle();
