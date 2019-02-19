@@ -193,6 +193,21 @@ public class Lift {
 
     }
 
+    public void moveLift(double timeout, boolean extending) {
+        ElapsedTime time = new ElapsedTime();
+
+        time.reset();
+
+        while (time.seconds() < timeout) {
+            if (extending) {
+                liftL.setPower(1);
+                liftR.setPower(1);
+
+            }
+
+        }
+    }
+
     public void markerOut(Intake intake) {
         ElapsedTime time = new ElapsedTime();
 

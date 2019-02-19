@@ -5,36 +5,18 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 
-//@Disabled
 @TeleOp
         (name = "ControllerServoTest", group = "Controlled")
 
 public class ControlledServoTest extends OpMode {
 
     private Servo door;
-    private Servo intakePivotL;
-    private Servo intakePivotR;
-    private Servo unhookL;
-    private Servo unhookR;
-    private CRServo collectL;
-    private CRServo collectR;
-
-    private boolean doorOn;
-
-    private int position = 0;
+    private Servo lock;
 
     @Override
     public void init() {
         door = hardwareMap.servo.get("door");
-
-        intakePivotL = hardwareMap.servo.get("intakePivotL");
-        intakePivotR = hardwareMap.servo.get("intakePivotR");
-
-        collectL = hardwareMap.crservo.get("collectL");
-        collectR = hardwareMap.crservo.get("collectR");
-
-        unhookL = hardwareMap.servo.get("unhookL");
-        unhookR = hardwareMap.servo.get("unhookR");
+        lock = hardwareMap.servo.get("lock");
 
         telemetry.addLine("Initialized");
         telemetry.update();
@@ -43,20 +25,38 @@ public class ControlledServoTest extends OpMode {
 
     public void loop() {
         if (gamepad1.dpad_up) {
-            position += .1;
-            intakePivotL.setPosition(position);
+            while (gamepad1.dpad_up) { }
+            lock.setPosition(lock.getPosition() + 0.05);
 
-            telemetry.addData("Servo Position", position);
+            telemetry.addData("Lock Position", lock.getPosition());
             telemetry.update();
 
         }
 
         if (gamepad1.dpad_down) {
-            position -= 0.1;
-            intakePivotL.setPosition(position);
+            while (gamepad1.dpad_down) { }
+            lock.setPosition(lock.getPosition() - 0.05);
 
-            telemetry.addData("Servo Position", position);
+            telemetry.addData("Lock Position", lock.getPosition());
             telemetry.update();
+
+        }
+
+        if (gamepad1.dpad_left) {
+            while (gamepad1.dpad_left) { }
+            door.setPosition(door.getPosition() + 0.05);
+
+            telemetry.addData("Door position", door.getPosition());
+            telemetry.update();
+
+        }
+
+        if (gamepad1.dpad_right) {
+            while (gamepad1.dpad_right) { }
+                door.setPosition(door.getPosition() - 0.05);
+
+                telemetry.addData("Door position", door.getPosition());
+                telemetry.update();
 
         }
 
