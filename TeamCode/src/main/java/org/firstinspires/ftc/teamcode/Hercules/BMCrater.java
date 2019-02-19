@@ -45,37 +45,37 @@ public class BMCrater extends LinearOpMode{
         switch (cubePosition) {
 
             case "left" :
-                drivetrain.turnPID(31.5, false, 0.7 / 31.5, 0, 0, 4);
+                drivetrain.turnPID(30, false, 0.7 / 30, 0, 0.005 / 30, 4);
                 sleep(500);
 
-                drivetrain.moveGyroStab(0.6, 400, 4);
+
+
+                drivetrain.moveGyroStab(0.6, 400, 3);
                 sleep(500);
-//
-//                drivetrain.moveEncoder(0.3, 200, 4);
-//
-//                drivetrain.moveEncoder(-0.6, 100, 4);
-//                sleep(500);
-//
-//                drivetrain.turnPID(30, false, .5 / 30, 0.011, 0.004 / 30, 3);
-//                sleep(500);
-//
-//                drivetrain.moveEncoder(0.6, 600, 3);
-//                sleep(500);
-//
-//                drivetrain.turnPID(30, false, 0.5 / 28, 0, 0.005 / 28, 3);
-//                sleep(500);
-//
-//                drivetrain.moveEncoder(0.6, 1350, 5);
-//                sleep(500);
-//
-//                lift.markerOut(intake);
-//                sleep(500);
-//
-//                drivetrain.moveEncoder(-0.6, 2200, 5);
-//                sleep(500);
-//
-//                drivetrain.moveEncoder(-0.3, 200, 5);
-//                sleep(500);
+
+                drivetrain.moveEncoder(-0.6, 200, 4);
+                sleep(500);
+
+                drivetrain.turnPID(30, false, .5 / 30, 0.011, 0.004 / 30, 3);
+                sleep(500);
+
+                drivetrain.moveGyroStab(0.6, 600, 3);
+                sleep(500);
+
+                drivetrain.turnPID(30, false, 0.5 / 28, 0, 0.005 / 28, 3);
+                sleep(500);
+
+                drivetrain.moveEncoder(0.6, 1350, 5);
+                sleep(500);
+
+                lift.markerOut(intake);
+                sleep(500);
+
+                drivetrain.moveEncoder(-0.6, 2200, 5);
+                sleep(500);
+
+                drivetrain.moveEncoder(-0.3, 200, 5);
+                sleep(500);
 
                 break;
 
