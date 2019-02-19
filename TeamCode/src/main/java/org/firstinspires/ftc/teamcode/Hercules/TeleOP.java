@@ -16,11 +16,10 @@ public class TeleOP extends TeleLib {
         // Manipulator methods
         lift();
         armPivot();
-        intakePivot();
         door();
-//        collect();
-        lockLift();
-//        testCollect();
+        collect();
+        unlock();
+        lock();
         pivotMacro();
         depositLiftMacro();
 

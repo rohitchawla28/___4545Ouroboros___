@@ -8,6 +8,15 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 public abstract class TeleLib extends OpMode {
 
+    /**  ==========================  GAME PAD CONTROLS  ======================================
+     *
+     * Gamepad 1 - a_button (half speed drive), left/right bumper (door), left/right trigger (lift)
+     *
+     * Gampepad 2 - a_button (half speed pivot), x_button (unlock intake), y_button (lock intake),
+     *              left/right bumper (collection), left trigger (lift macro), right trigger (pivot macro)
+     *
+     */
+
     // drive motors, example: fl = front left
     public DcMotor fl;
     public DcMotor fr;
@@ -22,37 +31,23 @@ public abstract class TeleLib extends OpMode {
     public DcMotor liftL;
     public DcMotor liftR;
 
-    // intake module servos
+    // intake servos
     public Servo door;
-    public Servo intakePivotL;
-    public Servo intakePivotR;
+    public Servo lock;
 
-//    // continuous rotation collection Vex 393 motors
-//    public CRServo collectL;
-//    public CRServo collectR;
-
-    // servos lock the arm in for auto
-    public Servo lockLift;
+    // continuous rotation collection Vex 393 motors
+    public CRServo collectL;
+    public CRServo collectR;
 
     // variables for toggles
     private double halfSpeedDrive = 1;
     private boolean driveSpeedToggle = false;
-
     private double halfSpeedPivot = 1;
-
-    private boolean locked = true;
-
-    // variables for gamepad joysticks (tank drive)
-    private double tankLeftPower;
-    private double tankRightPower;
+    private boolean pivotSpeedToggle = false;
 
     // variables for gamepad joysticks (arcade drive)
     private double arcLeftStick;
     private double arcRightStick;
-
-    private boolean intake = false;
-    private boolean buttonStateL = false;
-    private boolean buttonStateR = false;
 
     @Override
     // actions that occur when drive team presses init before match
@@ -68,14 +63,11 @@ public abstract class TeleLib extends OpMode {
         liftL = hardwareMap.dcMotor.get("liftL");
         liftR = hardwareMap.dcMotor.get("liftR");
 
+        collectL = hardwareMap.crservo.get("collectL");
+        collectR = hardwareMap.crservo.get("collectR");
+
         door = hardwareMap.servo.get("door");
-        intakePivotL = hardwareMap.servo.get("intakePivotL");
-        intakePivotR = hardwareMap.servo.get("intakePivotR");
-
-//        collect L = hardwareMap.crservo.get("collectL");
-//        collectR = hardwareMap.crservo.get("collectR");
-
-        lockLift = hardwareMap.servo.get("liftLock");
+        lock = hardwareMap.servo.get("lock");
 
         // setting reverse directions of right motors because they are mounted opposite
         fl.setDirection(DcMotor.Direction.FORWARD);
@@ -89,8 +81,8 @@ public abstract class TeleLib extends OpMode {
         liftL.setDirection(DcMotor.Direction.FORWARD);
         liftR.setDirection(DcMotor.Direction.REVERSE);
 
-//        collectL.setDirection(DcMotor.Direction.FORWARD);
-//        collectR.setDirection(DcMotor.Direction.REVERSE);
+        collectL.setDirection(DcMotor.Direction.FORWARD);
+        collectR.setDirection(DcMotor.Direction.REVERSE);
 
         // setting arm pivot motors to BRAKE mode instead of FLOAT makes it easier to control because it won't fall from gravity
         armPivotL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -103,37 +95,6 @@ public abstract class TeleLib extends OpMode {
     }
 
     //====================================  DRIVETRAIN  ============================================
-
-    // in tank drive, the left side (left drive motors) of the chassis is controlled by the left joystick
-    // and the right side is controlled by the right stick
-    public void tankDrive() {
-        tankLeftPower = gamepad1.left_stick_y /* * halfSpeedDrive */;
-        tankRightPower = gamepad1.right_stick_y /* * halfSpeedDrive */;
-
-        // 0.08 serves as a buffer zone so motors won't run if joystick resets to 0.00001 or small number other than 0
-        if (Math.abs(tankLeftPower) > 0.08) {
-            fl.setPower(tankLeftPower);
-            bl.setPower(tankLeftPower);
-
-        }
-        else {
-            fl.setPower(0);
-            bl.setPower(0);
-
-        }
-
-        if (Math.abs(tankRightPower) > 0.08) {
-            fr.setPower(tankRightPower);
-            br.setPower(tankRightPower);
-
-        }
-        else {
-            fr.setPower(0);
-            br.setPower(0);
-
-        }
-
-    }
 
     // in arcade drive, the left stick controls all motors either moving forwards or backwards
     // the right stick controls turning left or right
@@ -169,16 +130,36 @@ public abstract class TeleLib extends OpMode {
                 // boolean variable allows you to use one button to toggle half speed mode
                 if (!driveSpeedToggle) {
                     halfSpeedDrive = 0.5;
-                    telemetry.addLine("Half speed on");
+                    telemetry.addLine("Half speed drive on");
                     telemetry.update();
 
-                } else {
+                }
+                else {
                     halfSpeedDrive = 1.0;
-                    telemetry.addLine("Half speed off");
+                    telemetry.addLine("Half speed drive off");
                     telemetry.update();
 
                 }
                 driveSpeedToggle = !driveSpeedToggle;
+
+            }
+
+            if (gamepad2.a) {
+                while (gamepad2.a) { }
+
+                if (!pivotSpeedToggle) {
+                    halfSpeedPivot = 0.5;
+                    telemetry.addLine("Half speed pivot on");
+                    telemetry.update();
+
+                }
+                else {
+                    halfSpeedPivot = 1.0;
+                    telemetry.addLine("Half speed pivot off");
+                    telemetry.update();
+
+                }
+                pivotSpeedToggle = !pivotSpeedToggle;
 
             }
 
@@ -192,6 +173,28 @@ public abstract class TeleLib extends OpMode {
         if (Math.abs(liftPower) > .08) {
             liftL.setPower(liftPower);
             liftR.setPower(liftPower);
+
+        }
+        else {
+            liftL.setPower(0);
+            liftR.setPower(0);
+
+        }
+
+        if (Math.abs(gamepad1.left_trigger) > .1) {
+            liftL.setPower(gamepad1.left_trigger);
+            liftR.setPower(gamepad1.left_trigger);
+
+        }
+        else {
+            liftL.setPower(0);
+            liftR.setPower(0);
+
+        }
+
+        if (Math.abs(gamepad1.right_trigger) > .1) {
+            liftL.setPower(gamepad1.right_trigger);
+            liftR.setPower(gamepad1.right_trigger);
 
         }
         else {
@@ -222,7 +225,7 @@ public abstract class TeleLib extends OpMode {
     public void depositLiftMacro() {
         double liftTimeout = 1.7;
 
-        if (gamepad1.dpad_up) {
+        if (Math.abs(gamepad2.right_trigger) > .1) {
             ElapsedTime time = new ElapsedTime();
 
             time.reset();
@@ -237,7 +240,7 @@ public abstract class TeleLib extends OpMode {
     public void pivotMacro() {
         double timeout = 1.2;
 
-        if (gamepad1.dpad_down) {
+        if (Math.abs(gamepad2.left_trigger) > .1) {
             ElapsedTime time = new ElapsedTime();
 
             time.reset();
@@ -254,61 +257,30 @@ public abstract class TeleLib extends OpMode {
 
     //=====================================  INTAKE METHODS  =======================================
 
-    public void intakePivot() {
-        if (gamepad2.y) {
-            //collection position
-            intakePivotL.setPosition(0.6);
-            intakePivotR.setPosition(0.3);
+    public void collect() {
+        if (gamepad2.left_bumper) {
+            collectL.setPower(0.6);
+            collectR.setPower(0.6);
+
+        }
+        else {
+            collectL.setPower(0);
+            collectR.setPower(0);
 
         }
 
-        if (gamepad2.b) {
-            //deposit position
-            intakePivotL.setPosition(0.9);
-            intakePivotR.setPosition(0);
+        if (gamepad2.right_bumper) {
+            collectL.setPower(-0.6);
+            collectR.setPower(-0.6);
 
         }
-
-        if(gamepad2.x) {
-            //scoop position
-            intakePivotL.setPosition(0.2);
-            intakePivotR.setPosition(0.4);
+        else {
+            collectL.setPower(0);
+            collectR.setPower(0);
 
         }
 
     }
-
-//    public void collect() {
-//        if (gamepad2.left_bumper ^ buttonStateL) {
-//            // spin in
-//            intake = !intake;
-//            buttonStateL = gamepad2.left_bumper;
-//        }
-//
-//        collectL.setPower(intake ? .6 : 0);
-//        collectR.setPower(intake ? .6 : 0);
-//
-//        if (gamepad2.right_bumper ^ buttonStateR) {
-//            // spin in
-//            intake = !intake;
-//            buttonStateR = gamepad2.right_bumper;
-//        }
-//
-//        collectL.setPower(intake ? -.6 : 0);
-//        collectR.setPower(intake ? -.6 : 0);
-//
-//    }
-//
-//    public void testCollect() {
-//        if (gamepad2.left_trigger > 0.1) {
-//            collectL.setPower(0.6);
-//        }
-//        else collectL.setPower(0);
-//
-//        if (gamepad2.right_trigger > .1) collectR.setPower(0.6);
-//        else collectR.setPower(0);
-//
-//    }
 
     public void door() {
         if (gamepad1.left_bumper) {
@@ -325,25 +297,17 @@ public abstract class TeleLib extends OpMode {
 
     }
 
-    public void lockLift() {
-        if (gamepad1.b) {
-            while (gamepad1.b) { }
+    public void unlock() {
+        if (gamepad2.x) {
+            lock.setPosition(0);
 
-            if (locked) {
-                lockLift.setPosition(0);
+        }
 
-                telemetry.addLine("Unlocked");
-                telemetry.update();
+    }
 
-            }
-            else {
-                lockLift.setPosition(0.5);
-
-                telemetry.addLine("Locked");
-                telemetry.update();
-
-            }
-            locked = !locked;
+    public void lock() {
+        if (gamepad2.y) {
+            lock.setPosition(0.5);
 
         }
 
