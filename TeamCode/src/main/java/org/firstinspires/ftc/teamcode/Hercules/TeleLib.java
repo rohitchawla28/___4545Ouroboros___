@@ -124,44 +124,44 @@ public abstract class TeleLib extends OpMode {
     }
 
     public void halfSpeed() {
-            if (gamepad1.a) {
-                while (gamepad1.a) { }
+        if (gamepad1.a) {
+            while (gamepad1.a) { }
 
-                // boolean variable allows you to use one button to toggle half speed mode
-                if (!driveSpeedToggle) {
-                    halfSpeedDrive = 0.5;
-                    telemetry.addLine("Half speed drive on");
-                    telemetry.update();
-
-                }
-                else {
-                    halfSpeedDrive = 1.0;
-                    telemetry.addLine("Half speed drive off");
-                    telemetry.update();
-
-                }
-                driveSpeedToggle = !driveSpeedToggle;
+            // boolean variable allows you to use one button to toggle half speed mode
+            if (!driveSpeedToggle) {
+                halfSpeedDrive = 0.5;
+                telemetry.addLine("Half speed drive on");
+                telemetry.update();
 
             }
-
-            if (gamepad2.a) {
-                while (gamepad2.a) { }
-
-                if (!pivotSpeedToggle) {
-                    halfSpeedPivot = 0.5;
-                    telemetry.addLine("Half speed pivot on");
-                    telemetry.update();
-
-                }
-                else {
-                    halfSpeedPivot = 1.0;
-                    telemetry.addLine("Half speed pivot off");
-                    telemetry.update();
-
-                }
-                pivotSpeedToggle = !pivotSpeedToggle;
+            else {
+                halfSpeedDrive = 1.0;
+                telemetry.addLine("Half speed drive off");
+                telemetry.update();
 
             }
+            driveSpeedToggle = !driveSpeedToggle;
+
+        }
+
+        if (gamepad2.a) {
+            while (gamepad2.a) { }
+
+            if (!pivotSpeedToggle) {
+                halfSpeedPivot = 0.5;
+                telemetry.addLine("Half speed pivot on");
+                telemetry.update();
+
+            }
+            else {
+                halfSpeedPivot = 1.0;
+                telemetry.addLine("Half speed pivot off");
+                telemetry.update();
+
+            }
+            pivotSpeedToggle = !pivotSpeedToggle;
+
+        }
 
     }
 
@@ -182,8 +182,8 @@ public abstract class TeleLib extends OpMode {
         }
 
         if (Math.abs(gamepad1.left_trigger) > .1) {
-            liftL.setPower(gamepad1.left_trigger);
-            liftR.setPower(gamepad1.left_trigger);
+            liftL.setPower(-gamepad1.left_trigger);
+            liftR.setPower(-gamepad1.left_trigger);
 
         }
         else {
@@ -233,8 +233,11 @@ public abstract class TeleLib extends OpMode {
             while (time.seconds() < liftTimeout) {
                 liftL.setPower(-1);
                 liftR.setPower(-1);
+
             }
+
         }
+
     }
 
     public void pivotMacro() {
