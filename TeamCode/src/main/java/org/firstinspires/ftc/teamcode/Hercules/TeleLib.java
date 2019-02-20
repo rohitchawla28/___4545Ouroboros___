@@ -129,7 +129,7 @@ public abstract class TeleLib extends OpMode {
 
             // boolean variable allows you to use one button to toggle half speed mode
             if (!driveSpeedToggle) {
-                halfSpeedDrive = 0.5;
+                halfSpeedDrive = 0.4;
                 telemetry.addLine("Half speed drive on");
                 telemetry.update();
 
@@ -168,33 +168,26 @@ public abstract class TeleLib extends OpMode {
     //==============================  LARGE MANIPULATOR METHODS  ===================================
 
     public void lift() {
-        double liftPower = gamepad2.right_stick_y;
+        double rightStick = gamepad2.right_stick_y;
+        double leftTrig = gamepad1.left_trigger;
+        double rightTrig = gamepad1.right_trigger;
 
-        if (Math.abs(liftPower) > .08) {
-            liftL.setPower(liftPower);
-            liftR.setPower(liftPower);
+        if (Math.abs(rightStick) > 0.08 || leftTrig > 0.08 || rightTrig > 0.08) {
+            if (Math.abs(rightStick) > 0.08) {
+                liftL.setPower(rightStick);
+                liftR.setPower(rightStick);
 
-        }
-        else {
-            liftL.setPower(0);
-            liftR.setPower(0);
+            }
+            else if (leftTrig > 0.08) {
+                liftL.setPower(gamepad1.left_trigger);
+                liftR.setPower(gamepad1.left_trigger);
 
-        }
+            }
+            else if (rightTrig > 0.08) {
+                liftL.setPower(gamepad1.right_trigger);
+                liftR.setPower(gamepad1.right_trigger);
 
-        if (Math.abs(gamepad1.left_trigger) > .1) {
-            liftL.setPower(-gamepad1.left_trigger);
-            liftR.setPower(-gamepad1.left_trigger);
-
-        }
-        else {
-            liftL.setPower(0);
-            liftR.setPower(0);
-
-        }
-
-        if (Math.abs(gamepad1.right_trigger) > .1) {
-            liftL.setPower(gamepad1.right_trigger);
-            liftR.setPower(gamepad1.right_trigger);
+            }
 
         }
         else {
@@ -209,7 +202,7 @@ public abstract class TeleLib extends OpMode {
         // added option for half speed on pivot arm so easier for driver to control when lining up to hang
         double pivotPower = gamepad2.left_stick_y * halfSpeedPivot;
 
-        if (Math.abs(pivotPower) > .08) {
+        if (Math.abs(pivotPower) > 0.08) {
             armPivotL.setPower(pivotPower);
             armPivotR.setPower(pivotPower);
 
@@ -225,7 +218,7 @@ public abstract class TeleLib extends OpMode {
     public void depositLiftMacro() {
         double liftTimeout = 1.7;
 
-        if (Math.abs(gamepad2.right_trigger) > .1) {
+        if (Math.abs(gamepad2.right_trigger) > 0.08) {
             ElapsedTime time = new ElapsedTime();
 
             time.reset();
@@ -243,7 +236,7 @@ public abstract class TeleLib extends OpMode {
     public void pivotMacro() {
         double timeout = 1.2;
 
-        if (Math.abs(gamepad2.left_trigger) > .1) {
+        if (Math.abs(gamepad2.left_trigger) > 0.08) {
             ElapsedTime time = new ElapsedTime();
 
             time.reset();
@@ -262,8 +255,8 @@ public abstract class TeleLib extends OpMode {
 
     public void collect() {
         if (gamepad2.left_bumper) {
-            collectL.setPower(0.6);
-            collectR.setPower(0.6);
+            collectL.setPower(0.7);
+            collectR.setPower(0.7);
 
         }
         else {
@@ -273,8 +266,8 @@ public abstract class TeleLib extends OpMode {
         }
 
         if (gamepad2.right_bumper) {
-            collectL.setPower(-0.6);
-            collectR.setPower(-0.6);
+            collectL.setPower(-0.7);
+            collectR.setPower(-0.7);
 
         }
         else {
