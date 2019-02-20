@@ -17,8 +17,6 @@ public class Lift {
     private DcMotor armPivotL;
     private DcMotor armPivotR;
 
-    private Servo liftLock;
-
     public Lift(LinearOpMode opMode) {
         this.opMode = opMode;
 
@@ -27,8 +25,6 @@ public class Lift {
 
         armPivotL = this.opMode.hardwareMap.dcMotor.get("armPivotL");
         armPivotR = this.opMode.hardwareMap.dcMotor.get("armPivotR");
-
-        liftLock = this.opMode.hardwareMap.servo.get("liftLock");
 
         liftL.setDirection(DcMotorSimple.Direction.FORWARD);
         liftR.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -48,17 +44,9 @@ public class Lift {
 
         time.reset();
 
-        //release pressure from the servo
-        while (time.seconds() < 2) {
-            liftL.setPower(0.5);
-            liftR.setPower(0.5);
-
-            // unlock servo
-            if (time.seconds() > 0.2) {
-                liftLock.setPosition(0.63);
-
-            }
-
+        while (time.seconds() < 0.5) {
+            liftL.setPower(1);
+            liftR.setPower(1);
 
         }
 
@@ -71,7 +59,7 @@ public class Lift {
         time.reset();
 
         // raise lift to get out of hook
-        while (time.seconds() < 0.7) {
+        while (time.seconds() < 1.1) {
             liftL.setPower(-0.6);
             liftR.setPower(-0.6);
 
@@ -88,14 +76,11 @@ public class Lift {
         time.reset();
 
         //bring lift down
-        while (time.seconds() < 2) {
+        while (time.seconds() < 1.2) {
             liftL.setPower(0.5);
             liftR.setPower(0.5);
 
         }
-
-        // make sure intake doesn't get crushed
-        intake.setIntakePivotDepositPosition();
 
         opMode.sleep(750);
 
@@ -148,51 +133,6 @@ public class Lift {
 
     //======================================  LIFT/ARM MOVEMENTS  ==================================
 
-    public void depositLiftMacro(boolean extending) {
-        ElapsedTime time = new ElapsedTime();
-
-        double timeout = 2.2;
-
-        time.reset();
-
-        while (time.seconds() < timeout && opMode.opModeIsActive()) {
-            if (extending) {
-                liftL.setPower(0.8);
-                liftR.setPower(0.8);
-
-            }
-            else {
-                liftL.setPower(-0.8);
-                liftR.setPower(-0.8);
-            }
-
-        }
-
-    }
-
-    public void pivotMacro(boolean up) {
-        ElapsedTime time = new ElapsedTime();
-
-        double timeout = 1.0;
-
-        time.reset();
-
-        while (time.seconds() < timeout && opMode.opModeIsActive()) {
-            if (up) {
-                armPivotL.setPower(-0.65);
-                armPivotR.setPower(-0.65);
-
-            }
-            else {
-                armPivotL.setPower(0.65);
-                armPivotR.setPower(0.65);
-
-            }
-
-        }
-
-    }
-
     public void moveLift(double timeout, boolean extending) {
         ElapsedTime time = new ElapsedTime();
 
@@ -200,38 +140,22 @@ public class Lift {
 
         while (time.seconds() < timeout) {
             if (extending) {
+                liftL.setPower(-1);
+                liftR.setPower(-1);
+
+            }
+            else {
                 liftL.setPower(1);
                 liftR.setPower(1);
 
             }
 
         }
-    }
-
-    public void markerOut(Intake intake) {
-        ElapsedTime time = new ElapsedTime();
-
-        time.reset();
-
-        // raise arm
-        while (time.seconds() < 1.1) {
-            armPivotL.setPower(-0.4);
-            armPivotR.setPower(-0.4);
-
-        }
-        armPivotL.setPower(0);
-        armPivotR.setPower(0);
-
-        // deploy marker
-        intake.setIntakePivotMarkerDeploymentPosition();
-
-//        intake.collect(false);
-
-        opMode.sleep(750);
-
-        intake.setIntakePivotDepositPosition();
+        liftL.setPower(0);
+        liftR.setPower(0);
 
     }
+
 
     //===================================== UTILITY METHODS ========================================
 

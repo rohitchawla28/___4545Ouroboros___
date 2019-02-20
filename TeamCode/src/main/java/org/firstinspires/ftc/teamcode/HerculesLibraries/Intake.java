@@ -9,48 +9,56 @@ public class Intake {
 
     private LinearOpMode opMode;
 
-    public Servo intakePivotL;
-    public Servo intakePivotR;
+    private Lift lift;
 
-//    private CRServo collectL;
-//    private CRServo collectR;
+    public Servo lock;
+
+    private CRServo collectL;
+    private CRServo collectR;
 
 
     public Intake(LinearOpMode opMode) {
         this.opMode = opMode;
 
-        // collectL = this.opMode.hardwareMap.crservo.get("collectL");
-        // collectR = this.opMode.hardwareMap.crservo.get("collectR");
+        lift = new Lift(opMode);
 
-        intakePivotL = this.opMode.hardwareMap.servo.get("intakePivotL");
-        intakePivotR = this.opMode.hardwareMap.servo.get("intakePivotR");
+        lock = this.opMode.hardwareMap.servo.get("lock");
 
-    }
-//
-//    public void collect(boolean in) {
-//        // 0.6 power because of VEX 393 Motors
-//        if (in) {
-//            collectL.setPower(0.6);
-//            collectR.setPower(0.6);
-//
-//        }
-//        else {
-//            collectL.setPower(-0.6);
-//            collectR.setPower(-0.6);
-//
-//        }
-//
-//    }
+        collectL = this.opMode.hardwareMap.crservo.get("collectL");
+        collectR = this.opMode.hardwareMap.crservo.get("collectR");
 
-    public void setIntakePivotMarkerDeploymentPosition() {
-       intakePivotL.setPosition(0.7);
-       intakePivotR.setPosition(0.2);
+        lock.setPosition(0.8);
 
     }
 
-    public void setIntakePivotDepositPosition() {
-        intakePivotL.setPosition(0.9);
-        intakePivotR.setPosition(0);
+    public void collect(boolean in, double timeout) {
+        ElapsedTime time = new ElapsedTime();
+
+        time.reset();
+
+        while (time.seconds() < timeout) {
+            // 0.6 power because of VEX 393 Motors
+            if (in) {
+                collectL.setPower(0.6);
+                collectR.setPower(0.6);
+
+            }
+            else {
+                collectL.setPower(-0.6);
+                collectR.setPower(-0.6);
+
+            }
+
+        }
+
+    }
+
+    public void deployMarker() {
+        lift.moveLift(1.5, true);
+
+        collect(false, 0.25);
+
+        lift.moveLift(1, false);
 
     }
 

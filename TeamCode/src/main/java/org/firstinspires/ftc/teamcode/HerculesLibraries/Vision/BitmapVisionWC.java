@@ -88,7 +88,7 @@ public class BitmapVisionWC {
         //top left = (0,0)
         for (int colNum = 0; colNum < bitmap.getWidth(); colNum ++) {
 
-            for (int rowNum = 140 ; rowNum < 256; rowNum ++) {
+            for (int rowNum = 120 ; rowNum < 240; rowNum ++) {
                 int pixel = bitmap.getPixel(colNum, rowNum);
 
                 int redPixel = red(pixel);
@@ -122,11 +122,11 @@ public class BitmapVisionWC {
         opMode.telemetry.addData("avgX = ", avgX);
         opMode.telemetry.update();
 
-        if (avgX < 300) {
+        if (avgX < 235) {
             return "left";
 
         }
-        else if (avgX < 550) {
+        else if (avgX < 455) {
             return "center";
 
         }

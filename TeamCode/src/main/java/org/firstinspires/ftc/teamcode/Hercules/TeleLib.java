@@ -12,7 +12,7 @@ public abstract class TeleLib extends OpMode {
      *
      * Gamepad 1 - a_button (half speed drive), left/right bumper (door), left/right trigger (lift)
      *
-     * Gampepad 2 - a_button (half speed pivot), x_button (unlock intake), y_button (lock intake),
+     * Gampepad 2 - a_button (half speed pivot), b_button (unlock intake), y_button (lock intake),
      *              left/right bumper (collection), left trigger (lift macro), right trigger (pivot macro)
      *
      */
@@ -172,22 +172,19 @@ public abstract class TeleLib extends OpMode {
         double leftTrig = gamepad1.left_trigger;
         double rightTrig = gamepad1.right_trigger;
 
-        if (Math.abs(rightStick) > 0.08 || leftTrig > 0.08 || rightTrig > 0.08) {
-            if (Math.abs(rightStick) > 0.08) {
-                liftL.setPower(rightStick);
-                liftR.setPower(rightStick);
+        if (Math.abs(rightStick) > 0.08) {
+            liftL.setPower(rightStick);
+            liftR.setPower(rightStick);
 
-            }
-            else if (leftTrig > 0.08) {
-                liftL.setPower(gamepad1.left_trigger);
-                liftR.setPower(gamepad1.left_trigger);
+        }
+        else if (leftTrig > 0.08) {
+            liftL.setPower(gamepad1.left_trigger);
+            liftR.setPower(gamepad1.left_trigger);
 
-            }
-            else if (rightTrig > 0.08) {
-                liftL.setPower(gamepad1.right_trigger);
-                liftR.setPower(gamepad1.right_trigger);
-
-            }
+        }
+        else if (rightTrig > 0.08) {
+            liftL.setPower(gamepad1.right_trigger);
+            liftR.setPower(gamepad1.right_trigger);
 
         }
         else {
@@ -294,8 +291,8 @@ public abstract class TeleLib extends OpMode {
     }
 
     public void unlock() {
-        if (gamepad2.x) {
-            lock.setPosition(0);
+        if (gamepad2.b) {
+            lock.setPosition(0.45);
 
         }
 
@@ -303,7 +300,7 @@ public abstract class TeleLib extends OpMode {
 
     public void lock() {
         if (gamepad2.y) {
-            lock.setPosition(0.5);
+            lock.setPosition(0.8);
 
         }
 

@@ -67,7 +67,7 @@ public class BMDepot extends LinearOpMode{
                 drivetrain.moveEncoder(0.6, 1300, 5);
                 sleep(500);
 
-                lift.markerOut(intake);
+                intake.deployMarker();
                 sleep(500);
 
                 drivetrain.moveEncoder(-0.6, 2000, 5);
@@ -97,7 +97,7 @@ public class BMDepot extends LinearOpMode{
                 drivetrain.moveEncoder(0.6, 1150, 4);
                 sleep(500);
 
-                lift.markerOut(intake);
+                intake.deployMarker();
                 sleep(500);
 
                 drivetrain.moveEncoder(-0.6, 2200,4);
@@ -128,7 +128,7 @@ public class BMDepot extends LinearOpMode{
                 drivetrain.moveEncoder(0.6, 1150, 4);
                 sleep(500);
 
-                lift.markerOut(intake);
+                intake.deployMarker();
                 sleep(500);
 
                 drivetrain.moveEncoder(-0.6, 2200, 4);
@@ -160,7 +160,7 @@ public class BMDepot extends LinearOpMode{
                 drivetrain.moveEncoder(0.6, 1150, 4);
                 sleep(500);
 
-                lift.markerOut(intake);
+                intake.deployMarker();
                 sleep(500);
 
                 drivetrain.moveEncoder(-0.6, 2200, 4);
