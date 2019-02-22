@@ -76,11 +76,13 @@ public class Lift {
         time.reset();
 
         //bring lift down
-        while (time.seconds() < 1.2) {
+        while (time.seconds() < 1.0) {
             liftL.setPower(0.5);
             liftR.setPower(0.5);
 
         }
+        liftL.setPower(0);
+        liftR.setPower(0);
 
         opMode.sleep(750);
 

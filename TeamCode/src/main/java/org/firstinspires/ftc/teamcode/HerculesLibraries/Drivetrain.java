@@ -342,7 +342,7 @@ public class Drivetrain {
         double prevRunTime;
 
         double initAngle = sensors.getGyroYaw();
-        double lastError = angleChange - (Math.abs(sensors.getGyroYaw() - initAngle));
+        double lastError = angleChange - Math.abs(sensors.getGyroYaw() - initAngle);
 
         time.reset();
         timeoutTimer.reset();
@@ -351,7 +351,7 @@ public class Drivetrain {
             // ((getGyroYaw() - initAngle) - angleChange) != 0
             prevRunTime = time.seconds();
 
-            error = angleChange - (sensors.getGyroYaw() - initAngle);
+            error = angleChange - Math.abs(sensors.getGyroYaw() - initAngle);
 
             proportional = error * kP;
             integral += (error * (time.seconds() - prevRunTime)) * kI;
@@ -365,7 +365,7 @@ public class Drivetrain {
             opMode.telemetry.addData("P", proportional);
             opMode.telemetry.addData("I", integral);
             opMode.telemetry.addData("D", derivative);
-            opMode.telemetry.addData("Power", power);
+            opMode.telemetry.addData("power", power);
             opMode.telemetry.update();
 
             lastError = error;

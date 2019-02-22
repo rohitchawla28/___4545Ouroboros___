@@ -40,12 +40,12 @@ public class BMCrater extends LinearOpMode{
 
         waitForStart();
 
-        lift.detachTime(drivetrain, intake);
+       lift.detachTime(drivetrain, intake);
 
         switch (cubePosition) {
 
             case "left" :
-                drivetrain.turnPID(30, false, 0.6 / 30, 0.005, 0.005 / 30, 4);
+                drivetrain.turnPID(30, false, 0.5 / 30, 0, 0, 4);
                 sleep(500);
 
                 drivetrain.moveGyroStab(0.6, 400, 3);
@@ -107,26 +107,26 @@ public class BMCrater extends LinearOpMode{
                 break;
 
             case "right" :
-                drivetrain.turnPID(32, true, 0.7 / 60, 0.009, 0.005 / 60,3);
-                sleep(750);
+                drivetrain.turnPID(30, true, 0.5 / 30, 0.009, 0.005 / 30,3);
+                sleep(500);
 
-                drivetrain.moveGyroStab(0.6, 450, 4);
-                sleep(750);
+                drivetrain.moveGyroStab(0.6, 400, 4);
+                sleep(500);
 
                 drivetrain.moveEncoder(-0.6, 150, 4);
-                sleep(750);
+                sleep(500);
 
-                drivetrain.turnPID(95, false, .5 / 95, 0.003, 0.005 / 95, 5);
-                sleep(750);
+                drivetrain.turnPID(95, false, 0.6 / 95, 0.007, 0.01 / 95, 5);
+                sleep(500);
 
                 drivetrain.moveGyroStab(0.6, 1000, 4);
-                sleep(750);
+                sleep(500);
 
                 drivetrain.turnPID(50, false, .5 / 50, 0.007, 0.005 / 50, 4);
-                sleep(750);
+                sleep(500);
 
                 drivetrain.moveEncoder(0.6, 600, 4);
-                sleep(750);
+                sleep(500);
 
                 intake.deployMarker();
                 sleep(500);

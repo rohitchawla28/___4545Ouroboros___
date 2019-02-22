@@ -83,6 +83,8 @@ public class BitmapVisionWC {
         Bitmap bitmap = getBitmap();
         ArrayList<Integer> xValues = new ArrayList<>();
 
+        String cubePos;
+
         int avgX = 0;
 
         //top left = (0,0)
@@ -110,30 +112,32 @@ public class BitmapVisionWC {
         }
 
         opMode.telemetry.addData("Num Pixels found", xValues.size());
-        opMode.telemetry.update();
 
         try {
             avgX /= xValues.size();
-        } catch (ArithmeticException E){
-            return  "right";
+        } catch (ArithmeticException E) {
+            cubePos = "right";
 
         }
 
-        opMode.telemetry.addData("avgX = ", avgX);
-        opMode.telemetry.update();
+        opMode.telemetry.addData("AVG X = ", avgX);
 
         if (avgX < 235) {
-            return "left";
+            cubePos = "left";
 
         }
         else if (avgX < 455) {
-            return "center";
+            cubePos = "center";
 
         }
         else {
-            return "right";
+            cubePos = "right";
 
         }
+        opMode.telemetry.addData("Cube Position", cubePos);
+        opMode.telemetry.update();
+
+        return cubePos;
 
     }
 
