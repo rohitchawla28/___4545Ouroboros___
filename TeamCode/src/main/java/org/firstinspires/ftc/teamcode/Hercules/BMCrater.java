@@ -46,61 +46,61 @@ public class BMCrater extends LinearOpMode{
 
             case "left" :
                 drivetrain.turnPID(30, false, 0.7 / 32, 0.012, 0.02 / 32, 2);
-                sleep(500);
+                sleep(750);
 
                 drivetrain.moveGyroStab(0.6, 250, 3);
-                sleep(500);
+                sleep(750);
 
                 drivetrain.moveEncoder(-0.6, 125, 4);
-                sleep(500);
+                sleep(750);
 
                 drivetrain.turnPID(30, false, 0.7 / 35, 0.012, 0.02 / 35, 2);
-                sleep(500);
+                sleep(750);
 
                 drivetrain.moveGyroStab(0.6, 800, 3);
-                sleep(500);
+                sleep(750);
 
                 drivetrain.turnPID(30, false, 0.7 / 40, 0.012, 0.02 / 40, 2);
-                sleep(500);
+                sleep(750);
 
                 drivetrain.moveEncoder(0.6, 700, 5);
-                sleep(500);
+                sleep(750);
 
                 intake.deployMarker();
-                sleep(500);
+                sleep(750);
 
                 drivetrain.moveEncoder(-0.6, 1100, 5);
-                sleep(500);
+                sleep(750);
 
                 drivetrain.moveEncoder(-0.3, 200, 5);
-                sleep(500);
+                sleep(750);
 
                 break;
 
             case "center" :
-                drivetrain.moveEncoder(0.6, 225, 4);
-                sleep(500);
+                drivetrain.moveGyroStab(0.6, 225, 4);
+                sleep(750);
 
                 drivetrain.moveEncoder(-0.6, 100, 4);
-                sleep(500);
+                sleep(750);
 
                 drivetrain.turnPID(65, false, .7 / 65, 0.011, 0.02 / 65, 2);
-                sleep(500);
+                sleep(750);
 
                 drivetrain.moveGyroStab(0.6, 850, 4);
-                sleep(500);
+                sleep(750);
 
                 drivetrain.turnPID(40, false, .7 / 40, 0.011, 0.02 / 40, 2);
-                sleep(500);
+                sleep(750);
 
                 drivetrain.moveEncoder(0.6, 550, 4);
-                sleep(500);
+                sleep(750);
 
                 intake.deployMarker();
-                sleep(500);
+                sleep(750);
 
                 drivetrain.moveEncoder(-0.6, 1300,4);
-                sleep(500);
+                sleep(750);
 
                 drivetrain.moveEncoder(-0.3, 200, 3);
 

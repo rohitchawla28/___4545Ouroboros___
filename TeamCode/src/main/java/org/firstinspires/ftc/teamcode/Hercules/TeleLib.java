@@ -251,47 +251,48 @@ public abstract class TeleLib extends OpMode {
     //=====================================  INTAKE METHODS  =======================================
 
     public void collect() {
-        if (gamepad2.left_bumper) {
-            collectL.setPower(0.7);
-            collectR.setPower(0.7);
-
-        }
-        else if (gamepad2.right_bumper) {
-            collectL.setPower(-0.7);
-            collectR.setPower(-0.7);
-
-        }
-        else {
-            collectL.setPower(0);
-            collectR.setPower(0);
-
-        }
-
 //        if (gamepad2.left_bumper) {
-//            collectL.setPower(0.6);
+//            collectL.setPower(0.7);
+//            collectR.setPower(0.7);
 //
 //        }
 //        else if (gamepad2.right_bumper) {
-//            collectR.setPower(0.6);
+//            collectL.setPower(-0.7);
+//            collectR.setPower(-0.7);
 //
 //        }
 //        else {
 //            collectL.setPower(0);
 //            collectR.setPower(0);
+//
 //        }
+
+        if (gamepad2.left_bumper) {
+            collectL.setPower(0.6);
+
+        }
+        else if (gamepad2.right_bumper) {
+            collectR.setPower(0.6);
+
+        }
+        else {
+            collectL.setPower(0);
+            collectR.setPower(0);
+        }
 
     }
 
-    public void door() {
-        if (gamepad1.left_bumper) {
-            // collection position
-            door.setPosition(0.6);
+    public void openDoor() {
+        if (gamepad1.right_bumper) {
+            door.setPosition(0);
 
         }
 
-        if (gamepad1.right_bumper) {
-            // deposit position
-            door.setPosition(0);
+    }
+
+    public void closeDoor() {
+        if (gamepad1.left_bumper) {
+            door.setPosition(0.6);
 
         }
 
