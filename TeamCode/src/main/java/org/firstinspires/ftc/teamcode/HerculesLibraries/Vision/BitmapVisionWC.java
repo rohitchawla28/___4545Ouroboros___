@@ -26,6 +26,7 @@ public class BitmapVisionWC {
     private LinearOpMode opMode;
 
     private VuforiaLocalizer vuforia;
+    private String cubePos;
 
     private final int RED_THRESHOLD = 140;
     private final int GREEN_THRESHOLD = 100;
@@ -33,6 +34,7 @@ public class BitmapVisionWC {
 
     public BitmapVisionWC(LinearOpMode opMode) {
         this.opMode = opMode;
+        cubePos = "";
 
         int cameraMonitorViewId = opMode.hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", opMode.hardwareMap.appContext.getPackageName());
 
@@ -42,6 +44,7 @@ public class BitmapVisionWC {
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
         Vuforia.setFrameFormat(PIXEL_FORMAT.RGB565, true);
         vuforia.setFrameQueueCapacity(4);
+
     }
 
     public Bitmap getBitmap() throws InterruptedException{
@@ -83,7 +86,7 @@ public class BitmapVisionWC {
         Bitmap bitmap = getBitmap();
         ArrayList<Integer> xValues = new ArrayList<>();
 
-        String cubePos;
+
 
         int avgX = 0;
 
@@ -126,7 +129,7 @@ public class BitmapVisionWC {
             cubePos = "left";
 
         }
-        else if (avgX < 455) {
+        else if (avgX < 500) {
             cubePos = "center";
 
         }

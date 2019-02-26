@@ -54,11 +54,13 @@ public class Intake {
     }
 
     public void deployMarker() {
+        lift.moveArm(0.5, true);
+
         lift.moveLift(1.5, true);
 
-        collect(false, 0.25);
+        // collect(false, 0.25);
 
-        lift.moveLift(1, false);
+        lift.moveLift(0.5, false);
 
     }
 

@@ -76,7 +76,7 @@ public class Lift {
         time.reset();
 
         //bring lift down
-        while (time.seconds() < 1.0) {
+        while (time.seconds() < 1.3) {
             liftL.setPower(0.5);
             liftR.setPower(0.5);
 
@@ -155,6 +155,28 @@ public class Lift {
         }
         liftL.setPower(0);
         liftR.setPower(0);
+
+    }
+
+    public void moveArm(double timeout, boolean raising) {
+        ElapsedTime time = new ElapsedTime();
+
+        time.reset();
+
+        while (time.seconds() < timeout) {
+            if (raising) {
+                armPivotL.setPower(-0.8);
+                armPivotR.setPower(-0.8);
+
+            }
+            else {
+                armPivotL.setPower(0.8);
+                armPivotR.setPower(0.8);
+            }
+
+        }
+        armPivotL.setPower(0);
+        armPivotR.setPower(0);
 
     }
 
