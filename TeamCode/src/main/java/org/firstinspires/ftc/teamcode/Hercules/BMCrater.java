@@ -40,7 +40,7 @@ public class BMCrater extends LinearOpMode{
 
         waitForStart();
 
-       lift.detachTime(drivetrain, intake);
+        lift.detachTime(drivetrain, intake);
 
         switch (cubePosition) {
 
@@ -139,35 +139,34 @@ public class BMCrater extends LinearOpMode{
                 break;
 
             default:
-                drivetrain.turnPID(30, false, 0.6 / 30, 0.005, 0.005 / 30, 4);
-                sleep(500);
+                drivetrain.turnPID(31, true, 0.6 / 31, 0.009, 0.025 / 31,2);
+                sleep(750);
 
-                drivetrain.moveGyroStab(0.6, 400, 3);
-                sleep(500);
+                drivetrain.moveGyroStab(0.6, 250, 4);
+                sleep(750);
 
-                drivetrain.moveEncoder(-0.6, 200, 4);
-                sleep(500);
+                drivetrain.moveEncoder(-0.6, 125, 4);
+                sleep(750);
 
-                drivetrain.turnPID(30, false, .5 / 30, 0.011, 0.004 / 30, 3);
-                sleep(500);
+                drivetrain.turnPID(95, false, 0.7 / 95, 0.01, 0.02 / 95, 2);
+                sleep(750);
 
-                drivetrain.moveGyroStab(0.6, 600, 3);
-                sleep(500);
+                drivetrain.moveGyroStab(0.6, 900, 4);
+                sleep(750);
 
-                drivetrain.turnPID(30, false, 0.5 / 28, 0.005, 0.005 / 28, 3);
-                sleep(500);
+                drivetrain.turnPID(40, false, .7 / 40, 0.009, 0.02 / 40, 2);
+                sleep(750);
 
-                drivetrain.moveEncoder(0.6, 600, 5);
-                sleep(500);
+                drivetrain.moveEncoder(0.6, 575, 4);
+                sleep(750);
 
                 intake.deployMarker();
-                sleep(500);
+                sleep(750);
 
-                drivetrain.moveEncoder(-0.6, 1300, 5);
-                sleep(500);
+                drivetrain.moveEncoder(-0.6, 1300, 4);
+                sleep(750);
 
-                drivetrain.moveEncoder(-0.3, 200, 5);
-                sleep(500);
+                drivetrain.moveEncoder(-0.3, 200, 3);
 
                 break;
 

@@ -183,8 +183,8 @@ public abstract class TeleLib extends OpMode {
 
         }
         else if (rightTrig > 0.08) {
-            liftL.setPower(gamepad1.right_trigger);
-            liftR.setPower(gamepad1.right_trigger);
+            liftL.setPower(-gamepad1.right_trigger);
+            liftR.setPower(-gamepad1.right_trigger);
 
         }
         else {
@@ -239,8 +239,8 @@ public abstract class TeleLib extends OpMode {
             time.reset();
 
             while (time.seconds() < timeout) {
-                armPivotL.setPower(-0.8);
-                armPivotR.setPower(-0.8);
+                armPivotL.setPower(-0.7);
+                armPivotR.setPower(-0.7);
 
             }
 
@@ -256,13 +256,7 @@ public abstract class TeleLib extends OpMode {
             collectR.setPower(0.7);
 
         }
-        else {
-            collectL.setPower(0);
-            collectR.setPower(0);
-
-        }
-
-        if (gamepad2.right_bumper) {
+        else if (gamepad2.right_bumper) {
             collectL.setPower(-0.7);
             collectR.setPower(-0.7);
 
@@ -272,6 +266,19 @@ public abstract class TeleLib extends OpMode {
             collectR.setPower(0);
 
         }
+
+//        if (gamepad2.left_bumper) {
+//            collectL.setPower(0.6);
+//
+//        }
+//        else if (gamepad2.right_bumper) {
+//            collectR.setPower(0.6);
+//
+//        }
+//        else {
+//            collectL.setPower(0);
+//            collectR.setPower(0);
+//        }
 
     }
 
