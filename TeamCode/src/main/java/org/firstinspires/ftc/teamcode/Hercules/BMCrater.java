@@ -45,31 +45,31 @@ public class BMCrater extends LinearOpMode{
         switch (cubePosition) {
 
             case "left" :
-                drivetrain.turnPID(30, false, 0.5 / 30, 0, 0, 4);
+                drivetrain.turnPID(30, false, 0.7 / 32, 0.012, 0.02 / 32, 2);
                 sleep(500);
 
-                drivetrain.moveGyroStab(0.6, 400, 3);
+                drivetrain.moveGyroStab(0.6, 250, 3);
                 sleep(500);
 
-                drivetrain.moveEncoder(-0.6, 200, 4);
+                drivetrain.moveEncoder(-0.6, 125, 4);
                 sleep(500);
 
-                drivetrain.turnPID(30, false, .5 / 30, 0.011, 0.004 / 30, 3);
+                drivetrain.turnPID(30, false, 0.7 / 35, 0.012, 0.02 / 35, 2);
                 sleep(500);
 
-                drivetrain.moveGyroStab(0.6, 600, 3);
+                drivetrain.moveGyroStab(0.6, 800, 3);
                 sleep(500);
 
-                drivetrain.turnPID(30, false, 0.5 / 28, 0.005, 0.005 / 28, 3);
+                drivetrain.turnPID(30, false, 0.7 / 40, 0.012, 0.02 / 40, 2);
                 sleep(500);
 
-                drivetrain.moveEncoder(0.6, 600, 5);
+                drivetrain.moveEncoder(0.6, 700, 5);
                 sleep(500);
 
                 intake.deployMarker();
                 sleep(500);
 
-                drivetrain.moveEncoder(-0.6, 1300, 5);
+                drivetrain.moveEncoder(-0.6, 1100, 5);
                 sleep(500);
 
                 drivetrain.moveEncoder(-0.3, 200, 5);
@@ -84,16 +84,16 @@ public class BMCrater extends LinearOpMode{
                 drivetrain.moveEncoder(-0.6, 100, 4);
                 sleep(500);
 
-                drivetrain.turnPID(65, false, .7 / 65, 0, 0.02 / 65, 5);
+                drivetrain.turnPID(65, false, .7 / 65, 0.011, 0.02 / 65, 2);
                 sleep(500);
 
                 drivetrain.moveGyroStab(0.6, 850, 4);
                 sleep(500);
 
-                drivetrain.turnPID(50, false, .7 / 50, 0, 0.02 / 50, 5);
+                drivetrain.turnPID(40, false, .7 / 40, 0.011, 0.02 / 40, 2);
                 sleep(500);
 
-                drivetrain.moveEncoder(0.6, 575, 4);
+                drivetrain.moveEncoder(0.6, 550, 4);
                 sleep(500);
 
                 intake.deployMarker();
