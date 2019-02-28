@@ -192,32 +192,29 @@ public class Drivetrain {
 //
 //            }
 //            else {
-                if (error >= 1) {
-                    opMode.telemetry.addLine("Too far right");
-                    opMode.telemetry.update();
+            if (error >= 1) {
+                opMode.telemetry.addLine("Too far right");
+                opMode.telemetry.update();
 
-                    fl.setPower(power * 0.8);
-                    fr.setPower(power * 1.25);
-                    bl.setPower(power * 0.8);
-                    br.setPower(power * 1.25);
+                fl.setPower(power * 0.8);
+                fr.setPower(power * 1.25);
+                bl.setPower(power * 0.8);
+                br.setPower(power * 1.25);
 
-                } else if (error <= -1) {
-                    opMode.telemetry.addLine("Too far left");
-                    opMode.telemetry.update();
+            } else if (error <= -1) {
+                opMode.telemetry.addLine("Too far left");
+                opMode.telemetry.update();
 
-                    fl.setPower(power * 1.25);
-                    fr.setPower(power * 0.8);
-                    bl.setPower(power * 1.25);
-                    br.setPower(power * 0.8);
+                fl.setPower(power * 1.25);
+                fr.setPower(power * 0.8);
+                bl.setPower(power * 1.25);
+                br.setPower(power * 0.8);
+            }
+            else {
+                opMode.telemetry.addLine("On track");
+                opMode.telemetry.update();
 
-                }
-                else {
-                    opMode.telemetry.addLine("On track");
-                    opMode.telemetry.update();
-
-                    startMotors(power);
-
-                // }
+                startMotors(power);
 
             }
 

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Hercules;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -252,13 +253,13 @@ public abstract class TeleLib extends OpMode {
 
     public void collect() {
 //        if (gamepad2.left_bumper) {
-//            collectL.setPower(0.7);
-//            collectR.setPower(0.7);
+//            collectL.setPower(0.6);
+//            collectR.setPower(0.6);
 //
 //        }
 //        else if (gamepad2.right_bumper) {
-//            collectL.setPower(-0.7);
-//            collectR.setPower(-0.7);
+//            collectL.setPower(-0.6);
+//            collectR.setPower(-0.6);
 //
 //        }
 //        else {
@@ -272,7 +273,7 @@ public abstract class TeleLib extends OpMode {
 
         }
         else if (gamepad2.right_bumper) {
-            collectR.setPower(0.6);
+            collectR.setPower(-0.6);
 
         }
         else {

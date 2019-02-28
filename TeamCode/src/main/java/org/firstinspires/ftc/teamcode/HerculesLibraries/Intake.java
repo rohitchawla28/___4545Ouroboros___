@@ -39,13 +39,13 @@ public class Intake {
         while (time.seconds() < timeout) {
             // 0.6 power because of VEX 393 Motors
             if (in) {
-                collectL.setPower(0.6);
-                collectR.setPower(0.6);
+                collectL.setPower(-0.6);
+                collectR.setPower(-0.6);
 
             }
             else {
-                collectL.setPower(-0.6);
-                collectR.setPower(-0.6);
+                collectL.setPower(0.6);
+                collectR.setPower(0.6);
 
             }
 
@@ -56,9 +56,11 @@ public class Intake {
     public void deployMarker() {
         lift.moveArm(0.5, true);
 
-        lift.moveLift(1.5, true);
+        lift.moveLift(1.2, true);
 
-        // collect(false, 0.25);
+        collect(false, 0.25);
+
+        opMode.sleep(750);
 
         lift.moveLift(0.5, false);
 

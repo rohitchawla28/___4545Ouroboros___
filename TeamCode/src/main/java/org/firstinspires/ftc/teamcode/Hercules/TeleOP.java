@@ -16,7 +16,8 @@ public class TeleOP extends TeleLib {
         // Manipulator methods
         lift();
         armPivot();
-        door();
+        openDoor();
+        closeDoor();
         collect();
         unlock();
         lock();
