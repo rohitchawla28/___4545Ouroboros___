@@ -46,127 +46,50 @@ public class BMDepot extends LinearOpMode{
 
         switch(cubePosition) {
             case "left" :
-                drivetrain.turnPI(32.5, false, 0.65 / 60, 0.006, 2);
+                drivetrain.turnPID(32, false, 0.65 / 32, 0.012, 0.02 / 32, 1.5);
                 sleep(500);
 
-                drivetrain.moveEncoder(0.6, 350, 4);
-                sleep(500);
-
-                drivetrain.moveEncoder(-0.6, 100, 4);
-                sleep(500);
-
-                drivetrain.turnPID(30, false, .5 / 30, 0.011, 0.004 / 30, 3);
-                sleep(500);
-
-                drivetrain.moveEncoder(0.6, 1000, 3);
-                sleep(500);
-
-                drivetrain.turnGyro(0.3, 30, true, 4);
-                sleep(500);
-
-                drivetrain.moveEncoder(0.6, 1300, 5);
-                sleep(500);
-
-                intake.deployMarker();
-                sleep(500);
-
-                drivetrain.moveEncoder(-0.6, 2000, 5);
-                sleep(500);
-
-                drivetrain.moveEncoder(-0.3, 200, 5);
+                drivetrain.moveGyroStab(0.6, 350, 3);
                 sleep(500);
 
                 break;
 
             case "center" :
-                drivetrain.moveEncoder(0.6, 300, 4);
+
+                drivetrain.moveGyroStab(0.6, 700, 4);
                 sleep(500);
 
-                drivetrain.moveEncoder(-0.6, 110, 4);
-                sleep(500);
+//                intake.deployMarker();
+//                sleep(500);
+//
+//                drivetrain.moveGyroStab(-0.7, 575, 4);
+//                sleep(500);
+//
+//                drivetrain.turnPID(67, false, .7 / 67, 0.016, 0.02 / 67, 2);
+//                sleep(500);
+//
+//                drivetrain.moveGyroStab(0.6, 850, 4);
+//                sleep(500);
+//
+//                drivetrain.turnPID(40, false, .7 / 40, 0.017, 0.02 / 40, 2);
+//                sleep(500);
+//
+//                drivetrain.moveEncoder(0.6, 850, 4);
+//                sleep(500);
 
-                drivetrain.turnPID(65, false, .6 / 65, 0.008, 0.004 / 65, 2);
-                sleep(500);
-
-                drivetrain.moveEncoder(0.6, 900, 4);
-                sleep(500);
-
-                drivetrain.turnPI(33, false, .4 / 33, 0.009, 5);
-                sleep(500);
-
-                drivetrain.moveEncoder(0.6, 1150, 4);
-                sleep(500);
-
-                intake.deployMarker();
-                sleep(500);
-
-                drivetrain.moveEncoder(-0.6, 2200,4);
-                sleep(500);
-
-                drivetrain.moveEncoder(-0.3, 200, 3);
                 break;
 
             case "right" :
-                drivetrain.turnPI(30, true, 0.65 / 60, 0.006, 2);
+                drivetrain.turnPID(31, true, 0.6 / 31, 0.011, 0.025 / 31,2);
                 sleep(500);
 
-                drivetrain.moveEncoder(0.6, 350, 4);
+                drivetrain.moveGyroStab(0.6, 250, 4);
                 sleep(500);
-
-                drivetrain.moveEncoder(-0.6, 150, 4);
-                sleep(500);
-
-                drivetrain.turnPI(95, false, .35 / 95, 0.003, 3);
-                sleep(500);
-
-                drivetrain.moveEncoder(0.6, 1000, 4);
-                sleep(500);
-
-                drivetrain.turnPI(50, false, .3 / 90, 0.013, 4);
-                sleep(500);
-
-                drivetrain.moveEncoder(0.6, 1150, 4);
-                sleep(500);
-
-                intake.deployMarker();
-                sleep(500);
-
-                drivetrain.moveEncoder(-0.6, 2200, 4);
-                sleep(500);
-
-                drivetrain.moveEncoder(-0.3, 200, 3);
 
                 break;
 
             default:
-                drivetrain.turnPI(30, true, 0.65 / 60, 0.006, 2);
-                sleep(500);
 
-                drivetrain.moveEncoder(0.6, 350, 4);
-                sleep(500);
-
-                drivetrain.moveEncoder(-0.6, 150, 4);
-                sleep(500);
-
-                drivetrain.turnPI(95, false, .35 / 95, 0.003, 3);
-                sleep(500);
-
-                drivetrain.moveEncoder(0.6, 1000, 4);
-                sleep(500);
-
-                drivetrain.turnPI(50, false, .3 / 90, 0.013, 4);
-                sleep(500);
-
-                drivetrain.moveEncoder(0.6, 1150, 4);
-                sleep(500);
-
-                intake.deployMarker();
-                sleep(500);
-
-                drivetrain.moveEncoder(-0.6, 2200, 4);
-                sleep(500);
-
-                drivetrain.moveEncoder(-0.3, 200, 3);
 
                 break;
 

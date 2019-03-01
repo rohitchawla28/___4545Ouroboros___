@@ -59,9 +59,10 @@ public class Lift {
         time.reset();
 
         // raise lift to get out of hook
-        while (time.seconds() < 1.1) {
-            liftL.setPower(-0.6);
-            liftR.setPower(-0.6);
+        while (time.seconds() < 0.5) {
+            // previously -0.6 for 1.1 seconds
+            liftL.setPower(-1);
+            liftR.setPower(-1);
 
         }
         liftL.setPower(0);
@@ -76,9 +77,10 @@ public class Lift {
         time.reset();
 
         //bring lift down
-        while (time.seconds() < 1.3) {
-            liftL.setPower(0.5);
-            liftR.setPower(0.5);
+        while (time.seconds() < 0.75) {
+            // previously 0.5 power for 1.3 seconds
+            liftL.setPower(0.8);
+            liftR.setPower(0.8);
 
         }
         liftL.setPower(0);
@@ -89,7 +91,7 @@ public class Lift {
         time.reset();
 
         // bring arm down
-        while (time.seconds() < 1.2) {
+        while (time.seconds() < 1) {
             armPivotL.setPower(0.6);
             armPivotR.setPower(0.6);
 
