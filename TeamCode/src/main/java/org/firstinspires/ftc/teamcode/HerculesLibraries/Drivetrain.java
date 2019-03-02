@@ -192,6 +192,7 @@ public class Drivetrain {
 //
 //            }
 //            else {
+
             if (error >= 1) {
                 opMode.telemetry.addLine("Too far right");
                 opMode.telemetry.update();

@@ -116,7 +116,7 @@ public class BMCrater extends LinearOpMode{
                 drivetrain.moveEncoder(-0.6, 125, 4);
                 sleep(500);
 
-                drivetrain.turnPID(95, false, 0.65 / 95, 0.019, 0.02 / 95, 2);
+                drivetrain.turnPID(95, false, 0.65 / 95, 0.017, 0.025 / 95, 2);
                 sleep(500);
 
                 drivetrain.moveGyroStab(0.6, 1150, 4);

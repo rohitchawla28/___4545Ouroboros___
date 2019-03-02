@@ -142,7 +142,7 @@ public class Lift {
 
         time.reset();
 
-        while (time.seconds() < timeout) {
+        while (time.seconds() < timeout && opMode.opModeIsActive()) {
             if (extending) {
                 liftL.setPower(-1);
                 liftR.setPower(-1);
@@ -165,7 +165,7 @@ public class Lift {
 
         time.reset();
 
-        while (time.seconds() < timeout) {
+        while (time.seconds() < timeout && opMode.opModeIsActive()) {
             if (raising) {
                 armPivotL.setPower(-0.8);
                 armPivotR.setPower(-0.8);

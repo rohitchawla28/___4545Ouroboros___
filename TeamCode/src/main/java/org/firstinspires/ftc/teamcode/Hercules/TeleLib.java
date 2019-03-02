@@ -279,8 +279,8 @@ public abstract class TeleLib extends OpMode {
 
         }
         else if (gamepad2.x) {
-            collectL.setPower(-0.2);
-            collectR.setPower(-0.2);
+            collectL.setPower(-0.3);
+            collectR.setPower(-0.3);
 
         }
         else {
