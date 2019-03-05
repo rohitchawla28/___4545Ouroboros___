@@ -8,10 +8,17 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class TeleOP extends TeleLib {
 
     public void loop() {
-        // Driving methods based on driver preference
-        arcadeDrive();
-
+        tankToggle();
         halfSpeed();
+
+        if (arcade) {
+            arcadeDrive();
+
+        }
+        else {
+            tankDrive();
+
+        }
 
         // Manipulator methods
         lift();

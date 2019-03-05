@@ -41,6 +41,7 @@ public abstract class TeleLib extends OpMode {
     public CRServo collectR;
 
     // variables for toggles
+    public boolean arcade = false;
     private double halfSpeedDrive = 1;
     private boolean driveSpeedToggle = false;
     private double halfSpeedPivot = 1;
@@ -124,6 +125,31 @@ public abstract class TeleLib extends OpMode {
 
     }
 
+    public void tankDrive() {
+        if (Math.abs(gamepad1.left_stick_y) > 0.1) {
+            fl.setPower(gamepad1.left_stick_y);
+            bl.setPower(gamepad1.left_stick_y);
+
+        }
+        else {
+            fl.setPower(0);
+            bl.setPower(0);
+
+        }
+
+        if (Math.abs(gamepad1.right_stick_y) > 0.1) {
+            fr.setPower(gamepad1.right_stick_y);
+            br.setPower(gamepad1.right_stick_y);
+
+        }
+        else {
+            fr.setPower(0);
+            br.setPower(0);
+
+        }
+
+    }
+
     public void halfSpeed() {
         if (gamepad1.a) {
             while (gamepad1.a) { }
@@ -165,6 +191,18 @@ public abstract class TeleLib extends OpMode {
         }
 
     }
+
+    public void tankToggle() {
+        if (gamepad1.x) {
+            while (gamepad1.x) { }
+
+            arcade = !arcade;
+
+        }
+
+    }
+
+
 
     //==============================  LARGE MANIPULATOR METHODS  ===================================
 
