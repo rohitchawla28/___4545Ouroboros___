@@ -58,6 +58,17 @@ public class Lift {
 
         time.reset();
 
+        // align 90 deg with lander
+        while (time.seconds() < 0.15) {
+            armPivotL.setPower(-0.5);
+            armPivotR.setPower(-0.5);
+
+        }
+        armPivotL.setPower(0);
+        armPivotR.setPower(0);
+
+        time.reset();
+
         // raise lift to get out of hook
         while (time.seconds() < 0.5) {
             // previously -0.6 for 1.1 seconds

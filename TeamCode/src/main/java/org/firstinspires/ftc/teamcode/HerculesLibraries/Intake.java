@@ -31,8 +31,6 @@ public class Intake {
         collectL.setDirection(DcMotorSimple.Direction.FORWARD);
         collectR.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        lock.setPosition(0.8);
-
     }
 
     public void collect(boolean in, double timeout) {
@@ -53,6 +51,8 @@ public class Intake {
             }
 
         }
+        collectL.setPower(0);
+        collectR.setPower(0);
 
     }
 
@@ -62,7 +62,7 @@ public class Intake {
         opMode.telemetry.addLine("Completed arm up movement");
         opMode.telemetry.update();
 
-        lift.moveLift(1.2, true);
+        lift.moveLift(1, true);
 
         opMode.telemetry.addLine("Completed extending out movement");
         opMode.telemetry.update();
@@ -72,12 +72,20 @@ public class Intake {
         opMode.telemetry.addLine("Completed collect out movement");
         opMode.telemetry.update();
 
-        opMode.sleep(750);
-
         lift.moveLift(0.5, false);
 
         opMode.telemetry.addLine("Completed retracting lift movement");
         opMode.telemetry.update();
+
+    }
+
+    public void lock() {
+        lock.setPosition(0.8);
+
+    }
+
+    public void unlock() {
+        lock.setPosition(0.45);
 
     }
 

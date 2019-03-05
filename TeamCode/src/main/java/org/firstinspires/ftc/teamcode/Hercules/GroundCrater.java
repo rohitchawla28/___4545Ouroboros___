@@ -9,15 +9,14 @@ import org.firstinspires.ftc.teamcode.HerculesLibraries.Lift;
 import org.firstinspires.ftc.teamcode.HerculesLibraries.Vision.BitmapVisionWC;
 
 @Autonomous
-        (name = "CraterBM", group = "Auto")
+        (name = "GroundCrater", group = "Auto")
 
-public class BMCrater extends LinearOpMode{
+public class GroundCrater extends LinearOpMode{
     Drivetrain drivetrain;
     Intake intake;
     Lift lift;
-    BitmapVisionWC vision;
 
-    private String cubePosition = "unknown";
+    private String cubePosition = "center";
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -25,24 +24,13 @@ public class BMCrater extends LinearOpMode{
         drivetrain = new Drivetrain(this);
         intake = new Intake(this);
         lift = new Lift(this);
-        vision = new BitmapVisionWC(this);
 
         telemetry.addLine("Initialized");
         telemetry.update();
 
-        while (!isStarted()) {
-            cubePosition = vision.sample();
-
-            telemetry.addData("Cube Position", cubePosition);
-            telemetry.update();
-
-        }
-
         waitForStart();
 
         intake.lock();
-
-        lift.detachTime(drivetrain, intake);
 
         switch (cubePosition) {
 
@@ -71,10 +59,10 @@ public class BMCrater extends LinearOpMode{
                 intake.deployMarker();
                 sleep(500);
 
-                drivetrain.moveEncoder(-0.75, 1450, 5);
+                drivetrain.moveEncoder(-0.6, 1450, 5);
                 sleep(500);
 
-                drivetrain.moveEncoder(-0.3, 300, 5);
+                drivetrain.moveEncoder(-0.3, 200, 5);
                 sleep(500);
 
                 intake.unlock();
@@ -104,10 +92,10 @@ public class BMCrater extends LinearOpMode{
                 intake.deployMarker();
                 sleep(500);
 
-                drivetrain.moveEncoder(-0.75, 1550,4);
+                drivetrain.moveEncoder(-0.6, 1550,4);
                 sleep(500);
 
-                drivetrain.moveEncoder(-0.3, 300, 3);
+                drivetrain.moveEncoder(-0.3, 200, 3);
                 sleep(500);
 
                 intake.unlock();
@@ -140,10 +128,10 @@ public class BMCrater extends LinearOpMode{
                 intake.deployMarker();
                 sleep(500);
 
-                drivetrain.moveEncoder(-0.75, 1300, 4);
+                drivetrain.moveEncoder(-0.6, 1300, 4);
                 sleep(500);
 
-                drivetrain.moveEncoder(-0.3, 300, 3);
+                drivetrain.moveEncoder(-0.3, 200, 3);
                 sleep(500);
 
                 intake.unlock();
@@ -152,7 +140,7 @@ public class BMCrater extends LinearOpMode{
                 break;
 
             default:
-                drivetrain.moveGyroStab(0.6, 200, 4);
+                drivetrain.moveGyroStab(0.6, 225, 4);
                 sleep(500);
 
                 drivetrain.moveEncoder(-0.6, 100, 4);
@@ -161,26 +149,27 @@ public class BMCrater extends LinearOpMode{
                 drivetrain.turnPID(67, false, .7 / 67, 0.016, 0.02 / 67, 2);
                 sleep(500);
 
-                drivetrain.moveGyroStab(0.6, 825, 4);
+                drivetrain.moveGyroStab(0.6, 880, 4);
                 sleep(500);
 
                 drivetrain.turnPID(40, false, .7 / 40, 0.017, 0.02 / 40, 2);
                 sleep(500);
 
-                drivetrain.moveEncoder(0.6, 975, 4);
+                drivetrain.moveEncoder(0.6, 850, 4);
                 sleep(500);
 
                 intake.deployMarker();
                 sleep(500);
 
-                drivetrain.moveEncoder(-0.75, 1550,4);
+                drivetrain.moveEncoder(-0.6, 1450,4);
                 sleep(500);
 
-                drivetrain.moveEncoder(-0.3, 300, 3);
+                drivetrain.moveEncoder(-0.3, 200, 3);
                 sleep(500);
 
                 intake.unlock();
                 sleep(750);
+
                 break;
 
         }

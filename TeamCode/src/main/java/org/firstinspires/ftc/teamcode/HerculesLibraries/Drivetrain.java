@@ -193,7 +193,7 @@ public class Drivetrain {
 //            }
 //            else {
 
-            if (error >= 1) {
+            if (error >= 3) {
                 opMode.telemetry.addLine("Too far right");
                 opMode.telemetry.update();
 
@@ -202,7 +202,7 @@ public class Drivetrain {
                 bl.setPower(power * 0.8);
                 br.setPower(power * 1.25);
 
-            } else if (error <= -1) {
+            } else if (error <= -3) {
                 opMode.telemetry.addLine("Too far left");
                 opMode.telemetry.update();
 

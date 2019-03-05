@@ -232,7 +232,7 @@ public abstract class TeleLib extends OpMode {
     }
 
     public void pivotMacro() {
-        double timeout = 1.2;
+        double timeout = 1.1;
 
         if (Math.abs(gamepad2.left_trigger) > 0.08) {
             ElapsedTime time = new ElapsedTime();
