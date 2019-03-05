@@ -16,6 +16,7 @@ public class Drivetrain {
     private DcMotor bl;
     private DcMotor br;
 
+    // constructor to intialize drive motors and gyro
     public Drivetrain(LinearOpMode opMode) throws InterruptedException {
         this.opMode = opMode;
 
@@ -40,6 +41,7 @@ public class Drivetrain {
 
     //================================= UTILITY METHODS ============================================
 
+    // set all drive motors to 0
     public void resetEncoders() {
         fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         opMode.idle();
@@ -100,10 +102,12 @@ public class Drivetrain {
 
     //====================================== ENCODER METHODS =======================================
 
-
+    // method receives average of all encoder readings from 4 drive motors
     public double getEncoderAvg() {
         double countZeros = 0.0;
 
+        // if encoder wires gets unplugged and returns 0 it would throw off average
+        // throw out zeros so we are unaffected
         if (fl.getCurrentPosition() == 0) {
             countZeros++;
         }
@@ -133,6 +137,7 @@ public class Drivetrain {
 
         ElapsedTime time = new ElapsedTime();
 
+        // get intial encoder so we can take difference -> doesn't allow last movement to affect next movement
         double initEncoder = getEncoderAvg();
 
         time.reset();
@@ -154,6 +159,8 @@ public class Drivetrain {
         ElapsedTime time = new ElapsedTime();
 
         double initEncoder = getEncoderAvg();
+
+        // get initial heading so we can take difference based on that
         double heading = sensors.getGyroYaw();
 
         time.reset();
@@ -167,7 +174,7 @@ public class Drivetrain {
 
             opMode.telemetry.addData("error", error);
 
-            // calculate error in -179 to +180 range
+            // if robot is turned a lot, instead of taking time to correct back all the way, robot keeps turning to reach intial heading
             if (error > 180)  {
                 error -= 360;
 
@@ -197,6 +204,7 @@ public class Drivetrain {
                 opMode.telemetry.addLine("Too far right");
                 opMode.telemetry.update();
 
+                // scale power if going right
                 fl.setPower(power * 0.8);
                 fr.setPower(power * 1.25);
                 bl.setPower(power * 0.8);
@@ -206,6 +214,7 @@ public class Drivetrain {
                 opMode.telemetry.addLine("Too far left");
                 opMode.telemetry.update();
 
+                // scale power if going left
                 fl.setPower(power * 1.25);
                 fr.setPower(power * 0.8);
                 bl.setPower(power * 1.25);
@@ -224,6 +233,7 @@ public class Drivetrain {
 
     }
 
+    // method used to scale one side of chassis because uneven amounts of friction
     public void moveEncBadHardwareForward(double power, double distance, double timeout) {
         resetEncoders();
 
@@ -250,6 +260,7 @@ public class Drivetrain {
 
     //===================================== GYRO METHODS ===========================================
 
+    // method to turn simply using threshold with no control
     public void turnGyro(double power, double angleChange, boolean turnRight, double timeout) {
         ElapsedTime time = new ElapsedTime();
 
@@ -351,9 +362,18 @@ public class Drivetrain {
 
             error = angleChange - Math.abs(sensors.getGyroYaw() - initAngle);
 
+            // calculate proportional, integral, derivative variables for sum of motor power
+
+            // as error decreases proportional decreases
             proportional = error * kP;
+
+            // use Riemann sums to calculate accumulating area under turning curve
+            // length (error) * width (new time) of each rectangle
             integral += (error * (time.seconds() - prevRunTime)) * kI;
+
+            // slope of line at a point, calculated with secant lines
             derivative = ((error - lastError) / (time.seconds() - prevRunTime)) * kD;
+
 
             power = proportional + integral + derivative;
 

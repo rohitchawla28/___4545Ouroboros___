@@ -17,7 +17,7 @@ public class Intake {
     private CRServo collectL;
     private CRServo collectR;
 
-
+    // constructor to intialize servo and collection
     public Intake(LinearOpMode opMode) {
         this.opMode = opMode;
 
@@ -57,33 +57,27 @@ public class Intake {
     }
 
     public void deployMarker() {
-        lift.moveArm(0.5, true);
+        // raise arm to clear lift from hitting chassis
+        lift.moveArm(0.8, 0.5, true);
 
-        opMode.telemetry.addLine("Completed arm up movement");
-        opMode.telemetry.update();
+        // extend lift into the depot
+        lift.moveLift(1, 1, true);
 
-        lift.moveLift(1, true);
-
-        opMode.telemetry.addLine("Completed extending out movement");
-        opMode.telemetry.update();
-
+        // spin out to deploy marker
         collect(false, 1);
 
-        opMode.telemetry.addLine("Completed collect out movement");
-        opMode.telemetry.update();
-
-        lift.moveLift(0.5, false);
-
-        opMode.telemetry.addLine("Completed retracting lift movement");
-        opMode.telemetry.update();
+        // retract lift back in
+        lift.moveLift(1, 0.5, false);
 
     }
 
+    // lock position for intake in autonomous
     public void lock() {
         lock.setPosition(0.8);
 
     }
 
+    // allow intake to be latched for tele-op
     public void unlock() {
         lock.setPosition(0.45);
 

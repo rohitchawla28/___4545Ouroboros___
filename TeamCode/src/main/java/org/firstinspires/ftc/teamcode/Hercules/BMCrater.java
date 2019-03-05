@@ -42,7 +42,7 @@ public class BMCrater extends LinearOpMode{
 
         intake.lock();
 
-        lift.detachTime(drivetrain, intake);
+        lift.detachTime(drivetrain);
 
         switch (cubePosition) {
 
@@ -181,6 +181,7 @@ public class BMCrater extends LinearOpMode{
 
                 intake.unlock();
                 sleep(750);
+
                 break;
 
         }

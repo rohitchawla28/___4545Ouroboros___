@@ -17,6 +17,7 @@ public class Lift {
     private DcMotor armPivotL;
     private DcMotor armPivotR;
 
+    // constructor to initialize lift and arm motors
     public Lift(LinearOpMode opMode) {
         this.opMode = opMode;
 
@@ -39,76 +40,29 @@ public class Lift {
 
     //===================================  DETATCH METHODS  ====================================
 
-    public void detachTime(Drivetrain drivetrain, Intake intake) {
-        ElapsedTime time = new ElapsedTime();
+    public void detachTime(Drivetrain drivetrain) {
+        // retract lift to get out of clip
+        moveLift(1, 0.5, false);
 
-        time.reset();
-
-        while (time.seconds() < 0.5) {
-            liftL.setPower(1);
-            liftR.setPower(1);
-
-        }
-
-        //allow lift to drop
-        liftL.setPower(0);
-        liftR.setPower(0);
-
+        //allow lift and arm to drop to ground
         opMode.sleep(1500);
 
-        time.reset();
-
-        // align 90 deg with lander
-        while (time.seconds() < 0.15) {
-            armPivotL.setPower(-0.5);
-            armPivotR.setPower(-0.5);
-
-        }
-        armPivotL.setPower(0);
-        armPivotR.setPower(0);
-
-        time.reset();
+        // small arm movement to align 90 deg with lander
+        moveArm(0.5, 0.15, true);
 
         // raise lift to get out of hook
-        while (time.seconds() < 0.5) {
-            // previously -0.6 for 1.1 seconds
-            liftL.setPower(-1);
-            liftR.setPower(-1);
-
-        }
-        liftL.setPower(0);
-        liftR.setPower(0);
-
-        opMode.sleep(750);
+        moveLift(1, 0.5, true);
 
         // slow move away from lander
         drivetrain.moveEncoder(0.3, 150, 3);
+
         opMode.sleep(500);
 
-        time.reset();
+        // bring lift down to retracted position
+        moveLift(0.8, 0.75, false);
 
-        //bring lift down
-        while (time.seconds() < 0.75) {
-            // previously 0.5 power for 1.3 seconds
-            liftL.setPower(0.8);
-            liftR.setPower(0.8);
-
-        }
-        liftL.setPower(0);
-        liftR.setPower(0);
-
-        opMode.sleep(750);
-
-        time.reset();
-
-        // bring arm down
-        while (time.seconds() < 1) {
-            armPivotL.setPower(0.6);
-            armPivotR.setPower(0.6);
-
-        }
-        armPivotL.setPower(0);
-        armPivotR.setPower(0);
+        // bring arm down to folded position
+        moveArm(0.6, 1, false);
 
     }
 
@@ -148,20 +102,20 @@ public class Lift {
 
     //======================================  LIFT/ARM MOVEMENTS  ==================================
 
-    public void moveLift(double timeout, boolean extending) {
+    public void moveLift(double power, double timeout, boolean extending) {
         ElapsedTime time = new ElapsedTime();
 
         time.reset();
 
         while (time.seconds() < timeout && opMode.opModeIsActive()) {
             if (extending) {
-                liftL.setPower(-1);
-                liftR.setPower(-1);
+                liftL.setPower(-power);
+                liftR.setPower(-power);
 
             }
             else {
-                liftL.setPower(1);
-                liftR.setPower(1);
+                liftL.setPower(power);
+                liftR.setPower(power);
 
             }
 
@@ -171,20 +125,20 @@ public class Lift {
 
     }
 
-    public void moveArm(double timeout, boolean raising) {
+    public void moveArm(double power, double timeout, boolean raising) {
         ElapsedTime time = new ElapsedTime();
 
         time.reset();
 
         while (time.seconds() < timeout && opMode.opModeIsActive()) {
             if (raising) {
-                armPivotL.setPower(-0.8);
-                armPivotR.setPower(-0.8);
+                armPivotL.setPower(-power);
+                armPivotR.setPower(-power);
 
             }
             else {
-                armPivotL.setPower(0.8);
-                armPivotR.setPower(0.8);
+                armPivotL.setPower(power);
+                armPivotR.setPower(power);
             }
 
         }

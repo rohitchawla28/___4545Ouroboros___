@@ -53,6 +53,7 @@ public class Sensors {
 
     }
 
+    // method to return yaw of robot for all turns
     public double getGyroYaw() {
         updateGyroValues();
         return angles.firstAngle;
