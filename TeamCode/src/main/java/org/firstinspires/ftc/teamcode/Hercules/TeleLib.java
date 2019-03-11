@@ -51,6 +51,14 @@ public abstract class TeleLib extends OpMode {
     private double arcLeftStick;
     private double arcRightStick;
 
+    // final positions
+    private final double LIFT_MACRO_TIME = 1.7;
+    private final double PIVOT_MACRO_TIME = 1.1;
+    private final double OPEN_DOOR = 0;
+    private final double CLOSE_DOOR = 0.6;
+    private final double OPEN_INTAKE = 0.45;
+    private final double CLOSE_INTAKE = 0.8;
+
     @Override
     // actions that occur when drive team presses init before match
     public void init() {
@@ -96,6 +104,54 @@ public abstract class TeleLib extends OpMode {
 
     }
 
+    //====================================  RUNNABLES  =============================================
+
+    public Runnable pivotMacro = new Runnable() {
+        @Override
+        public void run() {
+            if (Math.abs(gamepad2.left_trigger) > 0.08) {
+                ElapsedTime time = new ElapsedTime();
+
+                time.reset();
+
+                while (time.seconds() < PIVOT_MACRO_TIME) {
+                    armPivotL.setPower(-0.7);
+                    armPivotR.setPower(-0.7);
+
+                }
+                armPivotL.setPower(0);
+                armPivotR.setPower(0);
+
+            }
+            Thread.currentThread().interrupt();
+
+        }
+    };
+
+    public Runnable liftMacro = new Runnable() {
+        @Override
+        public void run() {
+            if (gamepad2.right_trigger > 0.08) {
+                ElapsedTime time = new ElapsedTime();
+
+                time.reset();
+
+                while (time.seconds() < LIFT_MACRO_TIME) {
+                    liftL.setPower(-1);
+                    liftR.setPower(-1);
+
+                }
+                liftL.setPower(0);
+                liftR.setPower(0);
+
+            }
+            Thread.currentThread().interrupt();
+
+        }
+    };
+
+
+
     //====================================  DRIVETRAIN  ============================================
 
     // in arcade drive, the left stick controls all motors either moving forwards or backwards
@@ -126,7 +182,7 @@ public abstract class TeleLib extends OpMode {
     }
 
     public void tankDrive() {
-        if (Math.abs(gamepad1.left_stick_y) > 0.1) {
+        if (Math.abs(gamepad1.left_stick_y) > 0.08) {
             fl.setPower(gamepad1.left_stick_y);
             bl.setPower(gamepad1.left_stick_y);
 
@@ -137,7 +193,7 @@ public abstract class TeleLib extends OpMode {
 
         }
 
-        if (Math.abs(gamepad1.right_stick_y) > 0.1) {
+        if (Math.abs(gamepad1.right_stick_y) > 0.08) {
             fr.setPower(gamepad1.right_stick_y);
             br.setPower(gamepad1.right_stick_y);
 
@@ -251,61 +307,10 @@ public abstract class TeleLib extends OpMode {
 
     }
 
-    public void depositLiftMacro() {
-        double liftTimeout = 1.7;
-
-        if (Math.abs(gamepad2.right_trigger) > 0.08) {
-            ElapsedTime time = new ElapsedTime();
-
-            time.reset();
-
-            while (time.seconds() < liftTimeout) {
-                liftL.setPower(-1);
-                liftR.setPower(-1);
-
-            }
-
-        }
-
-    }
-
-    public void pivotMacro() {
-        double timeout = 1.1;
-
-        if (Math.abs(gamepad2.left_trigger) > 0.08) {
-            ElapsedTime time = new ElapsedTime();
-
-            time.reset();
-
-            while (time.seconds() < timeout) {
-                armPivotL.setPower(-0.7);
-                armPivotR.setPower(-0.7);
-
-            }
-
-        }
-
-    }
 
     //=====================================  INTAKE METHODS  =======================================
 
     public void collect() {
-//        if (gamepad2.left_bumper) {
-//            collectL.setPower(0.6);
-//            collectR.setPower(0.6);
-//
-//        }
-//        else if (gamepad2.right_bumper) {
-//            collectL.setPower(-0.6);
-//            collectR.setPower(-0.6);
-//
-//        }
-//        else {
-//            collectL.setPower(0);
-//            collectR.setPower(0);
-//
-//        }
-
         if (gamepad2.left_bumper) {
             collectL.setPower(0.6);
             collectR.setPower(0.6);
@@ -329,9 +334,28 @@ public abstract class TeleLib extends OpMode {
 
     }
 
+    public void testCollect() {
+        if (gamepad2.left_bumper) {
+            collectL.setPower(0.6);
+            collectR.setPower(0.6);
+
+        }
+        else if (gamepad2.right_bumper) {
+            collectL.setPower(-0.6);
+            collectR.setPower(-0.6);
+
+        }
+        else {
+            collectL.setPower(0);
+            collectR.setPower(0);
+
+        }
+
+    }
+
     public void openDoor() {
         if (gamepad1.right_bumper) {
-            door.setPosition(0);
+            door.setPosition(CLOSE_DOOR);
 
         }
 
@@ -339,7 +363,7 @@ public abstract class TeleLib extends OpMode {
 
     public void closeDoor() {
         if (gamepad1.left_bumper) {
-            door.setPosition(0.6);
+            door.setPosition(OPEN_DOOR);
 
         }
 
@@ -347,7 +371,7 @@ public abstract class TeleLib extends OpMode {
 
     public void unlock() {
         if (gamepad2.b) {
-            lock.setPosition(0.45);
+            lock.setPosition(OPEN_INTAKE);
 
         }
 
@@ -355,7 +379,7 @@ public abstract class TeleLib extends OpMode {
 
     public void lock() {
         if (gamepad2.y) {
-            lock.setPosition(0.8);
+            lock.setPosition(CLOSE_INTAKE);
 
         }
 

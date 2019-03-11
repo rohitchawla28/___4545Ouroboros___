@@ -28,8 +28,8 @@ public class TeleOP extends TeleLib {
         collect();
         unlock();
         lock();
-        pivotMacro();
-        depositLiftMacro();
+
+        
 
 
     }
