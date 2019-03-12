@@ -59,6 +59,10 @@ public abstract class TeleLib extends OpMode {
     private final double OPEN_INTAKE = 0.45;
     private final double CLOSE_INTAKE = 0.8;
 
+    // Threads
+    private Thread pivotThread;
+    private Thread liftThread;
+
     @Override
     // actions that occur when drive team presses init before match
     public void init() {
@@ -97,6 +101,10 @@ public abstract class TeleLib extends OpMode {
         // setting arm pivot motors to BRAKE mode instead of FLOAT makes it easier to control because it won't fall from gravity
         armPivotL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armPivotR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        // initializing threads
+        pivotThread = new Thread(pivotMacro);
+        liftThread = new Thread(liftMacro);
 
         // send message to phone to tell drive team when necessary actions have been completed
         telemetry.addLine("Initialized");
@@ -149,6 +157,20 @@ public abstract class TeleLib extends OpMode {
 
         }
     };
+
+    @Override
+    public void stop() {
+        pivotThread.interrupt();
+        liftThread.interrupt();
+
+    }
+
+    @Override
+    public void start() {
+        pivotThread.start();
+        liftThread.start();
+
+    }
 
 
 
