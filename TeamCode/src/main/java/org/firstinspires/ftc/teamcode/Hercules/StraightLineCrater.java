@@ -39,7 +39,7 @@ public class StraightLineCrater extends LinearOpMode{
 
         waitForStart();
 
-        lift.detachTime(drivetrain, intake);
+        lift.detachTime(drivetrain);
 
         switch (cubePosition) {
             case "left" :

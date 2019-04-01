@@ -41,7 +41,7 @@ public abstract class TeleLib extends OpMode {
     public CRServo collectR;
 
     // variables for toggles
-    public boolean arcade = false;
+    public boolean arcade = true;
     private double halfSpeedDrive = 1;
     private boolean driveSpeedToggle = false;
     private double halfSpeedPivot = 1;
@@ -102,9 +102,9 @@ public abstract class TeleLib extends OpMode {
         armPivotL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armPivotR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        // initializing threads
-        pivotThread = new Thread(pivotMacro);
-        liftThread = new Thread(liftMacro);
+//        // initializing threads
+//        pivotThread = new Thread(pivotMacro);
+//        liftThread = new Thread(liftMacro);
 
         // send message to phone to tell drive team when necessary actions have been completed
         telemetry.addLine("Initialized");
@@ -114,63 +114,63 @@ public abstract class TeleLib extends OpMode {
 
     //====================================  RUNNABLES  =============================================
 
-    public Runnable pivotMacro = new Runnable() {
-        @Override
-        public void run() {
-            if (Math.abs(gamepad2.left_trigger) > 0.08) {
-                ElapsedTime time = new ElapsedTime();
-
-                time.reset();
-
-                while (time.seconds() < PIVOT_MACRO_TIME) {
-                    armPivotL.setPower(-0.7);
-                    armPivotR.setPower(-0.7);
-
-                }
-                armPivotL.setPower(0);
-                armPivotR.setPower(0);
-
-            }
-            Thread.currentThread().interrupt();
-
-        }
-    };
-
-    public Runnable liftMacro = new Runnable() {
-        @Override
-        public void run() {
-            if (gamepad2.right_trigger > 0.08) {
-                ElapsedTime time = new ElapsedTime();
-
-                time.reset();
-
-                while (time.seconds() < LIFT_MACRO_TIME) {
-                    liftL.setPower(-1);
-                    liftR.setPower(-1);
-
-                }
-                liftL.setPower(0);
-                liftR.setPower(0);
-
-            }
-            Thread.currentThread().interrupt();
-
-        }
-    };
-
-    @Override
-    public void stop() {
-        pivotThread.interrupt();
-        liftThread.interrupt();
-
-    }
-
-    @Override
-    public void start() {
-        pivotThread.start();
-        liftThread.start();
-
-    }
+//    public Runnable pivotMacro = new Runnable() {
+//        @Override
+//        public void run() {
+//            if (Math.abs(gamepad2.left_trigger) > 0.08) {
+//                ElapsedTime time = new ElapsedTime();
+//
+//                time.reset();
+//
+//                while (time.seconds() < PIVOT_MACRO_TIME) {
+//                    armPivotL.setPower(-0.7);
+//                    armPivotR.setPower(-0.7);
+//
+//                }
+//                armPivotL.setPower(0);
+//                armPivotR.setPower(0);
+//
+//            }
+//            Thread.currentThread().interrupt();
+//
+//        }
+//    };
+//
+//    public Runnable liftMacro = new Runnable() {
+//        @Override
+//        public void run() {
+//            if (gamepad2.right_trigger > 0.08) {
+//                ElapsedTime time = new ElapsedTime();
+//
+//                time.reset();
+//
+//                while (time.seconds() < LIFT_MACRO_TIME) {
+//                    liftL.setPower(-1);
+//                    liftR.setPower(-1);
+//
+//                }
+//                liftL.setPower(0);
+//                liftR.setPower(0);
+//
+//            }
+//            Thread.currentThread().interrupt();
+//
+//        }
+//    };
+//
+//    @Override
+//    public void stop() {
+//        pivotThread.interrupt();
+//        liftThread.interrupt();
+//
+//    }
+//
+//    @Override
+//    public void start() {
+//        pivotThread.start();
+//        liftThread.start();
+//
+//    }
 
 
 
@@ -334,20 +334,20 @@ public abstract class TeleLib extends OpMode {
 
     public void collect() {
         if (gamepad2.left_bumper) {
-            collectL.setPower(0.6);
-            collectR.setPower(0.6);
+            collectL.setPower(0.8);
+            collectR.setPower(0.8);
 
         }
         else if (gamepad2.right_bumper) {
-            collectL.setPower(-0.6);
-            collectR.setPower(-0.6);
+            collectL.setPower(-0.8);
+            collectR.setPower(-0.8);
 
         }
-        else if (gamepad2.x) {
-            collectL.setPower(-0.3);
-            collectR.setPower(-0.3);
-
-        }
+//        else if (gamepad2.x) {
+//            collectL.setPower(-0.3);
+//            collectR.setPower(-0.3);
+//
+//        }
         else {
             collectL.setPower(0);
             collectR.setPower(0);
@@ -356,24 +356,24 @@ public abstract class TeleLib extends OpMode {
 
     }
 
-    public void testCollect() {
-        if (gamepad2.left_bumper) {
-            collectL.setPower(0.6);
-            collectR.setPower(0.6);
-
-        }
-        else if (gamepad2.right_bumper) {
-            collectL.setPower(-0.6);
-            collectR.setPower(-0.6);
-
-        }
-        else {
-            collectL.setPower(0);
-            collectR.setPower(0);
-
-        }
-
-    }
+//    public void testCollect() {
+//        if (gamepad2.left_bumper) {
+//            collectL.setPower(0.6);
+//            collectR.setPower(0.6);
+//
+//        }
+//        else if (gamepad2.right_bumper) {
+//            collectL.setPower(-0.6);
+//            collectR.setPower(-0.6);
+//
+//        }
+//        else {
+//            collectL.setPower(0);
+//            collectR.setPower(0);
+//
+//        }
+//
+//    }
 
     public void openDoor() {
         if (gamepad1.right_bumper) {

@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.Hercules.TeleLib;
 
 public class Collection extends TeleLib {
     public void loop() {
-        testCollect();
+        // testCollect();
 
     }
 

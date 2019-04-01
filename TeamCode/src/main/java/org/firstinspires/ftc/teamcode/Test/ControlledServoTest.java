@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.Test;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
@@ -15,7 +14,7 @@ public class ControlledServoTest extends OpMode {
 
     @Override
     public void init() {
-//        door = hardwareMap.servo.get("door");
+        door = hardwareMap.servo.get("door");
         lock = hardwareMap.servo.get("lock");
 
         telemetry.addLine("Initialized");
@@ -26,18 +25,18 @@ public class ControlledServoTest extends OpMode {
     public void loop() {
         if (gamepad1.dpad_up) {
             while (gamepad1.dpad_up) { }
-            lock.setPosition(lock.getPosition() + 0.05);
+            door.setPosition(door.getPosition() + 0.05);
 
-            telemetry.addData("Lock Position", lock.getPosition());
+            telemetry.addData("Door Position", door.getPosition());
             telemetry.update();
 
         }
 
         if (gamepad1.dpad_down) {
             while (gamepad1.dpad_down) { }
-            lock.setPosition(lock.getPosition() - 0.05);
+            door.setPosition(door.getPosition() - 0.05);
 
-            telemetry.addData("Lock Position", lock.getPosition());
+            telemetry.addData("Door Position", door.getPosition());
             telemetry.update();
 
         }

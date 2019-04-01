@@ -44,7 +44,7 @@ public class BMDepot extends LinearOpMode{
 
         intake.lock();
 
-        lift.detachTime(drivetrain, intake);
+        lift.detachTime(drivetrain);
 
         switch(cubePosition) {
             case "left" :
