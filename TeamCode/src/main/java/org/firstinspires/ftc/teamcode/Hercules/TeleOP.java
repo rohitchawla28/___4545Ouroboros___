@@ -20,6 +20,8 @@ public class TeleOP extends TeleLib {
 
         }
 
+        threadStates();
+
         // Manipulator methods
         lift();
         armPivot();

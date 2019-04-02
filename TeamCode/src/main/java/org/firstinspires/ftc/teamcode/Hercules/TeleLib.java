@@ -56,8 +56,14 @@ public abstract class TeleLib extends OpMode {
     private final double PIVOT_MACRO_TIME = 1.1;
     private final double OPEN_DOOR = 0;
     private final double CLOSE_DOOR = 0.6;
-    private final double OPEN_INTAKE = 0.45;
-    private final double CLOSE_INTAKE = 0.8;
+    private final double OPEN_INTAKE = 0.55;
+    private final double CLOSE_INTAKE = 0.18;
+
+    private final boolean garrettIsGoodAtSoftware = false;
+
+    // boolean states for threads
+    private boolean leftTrigPressed = false;
+    private boolean rightTrigPressed = true;
 
     // Threads
     private Thread pivotThread;
@@ -66,49 +72,52 @@ public abstract class TeleLib extends OpMode {
     @Override
     // actions that occur when drive team presses init before match
     public void init() {
-        // hardware mapping of all devices
-        fl = hardwareMap.dcMotor.get("fl");
-        fr = hardwareMap.dcMotor.get("fr");
-        bl = hardwareMap.dcMotor.get("bl");
-        br = hardwareMap.dcMotor.get("br");
+        if (!garrettIsGoodAtSoftware) {
+            // hardware mapping of all devices
 
-        armPivotL = hardwareMap.dcMotor.get("armPivotL");
-        armPivotR = hardwareMap.dcMotor.get("armPivotR");
-        liftL = hardwareMap.dcMotor.get("liftL");
-        liftR = hardwareMap.dcMotor.get("liftR");
+            fl = hardwareMap.dcMotor.get("fl");
+            fr = hardwareMap.dcMotor.get("fr");
+            bl = hardwareMap.dcMotor.get("bl");
+            br = hardwareMap.dcMotor.get("br");
 
-        collectL = hardwareMap.crservo.get("collectL");
-        collectR = hardwareMap.crservo.get("collectR");
+            armPivotL = hardwareMap.dcMotor.get("armPivotL");
+            armPivotR = hardwareMap.dcMotor.get("armPivotR");
+            liftL = hardwareMap.dcMotor.get("liftL");
+            liftR = hardwareMap.dcMotor.get("liftR");
 
-        door = hardwareMap.servo.get("door");
-        lock = hardwareMap.servo.get("lock");
+            collectL = hardwareMap.crservo.get("collectL");
+            collectR = hardwareMap.crservo.get("collectR");
 
-        // setting reverse directions of right motors because they are mounted opposite
-        fl.setDirection(DcMotor.Direction.FORWARD);
-        fr.setDirection(DcMotor.Direction.REVERSE);
-        bl.setDirection(DcMotor.Direction.FORWARD);
-        br.setDirection(DcMotor.Direction.REVERSE);
+            door = hardwareMap.servo.get("door");
+            lock = hardwareMap.servo.get("lock");
 
-        armPivotL.setDirection(DcMotor.Direction.FORWARD);
-        armPivotR.setDirection(DcMotor.Direction.REVERSE);
+            // setting reverse directions of right motors because they are mounted opposite
+            fl.setDirection(DcMotor.Direction.FORWARD);
+            fr.setDirection(DcMotor.Direction.REVERSE);
+            bl.setDirection(DcMotor.Direction.FORWARD);
+            br.setDirection(DcMotor.Direction.REVERSE);
 
-        liftL.setDirection(DcMotor.Direction.FORWARD);
-        liftR.setDirection(DcMotor.Direction.REVERSE);
+            armPivotL.setDirection(DcMotor.Direction.FORWARD);
+            armPivotR.setDirection(DcMotor.Direction.REVERSE);
 
-        collectL.setDirection(DcMotor.Direction.FORWARD);
-        collectR.setDirection(DcMotor.Direction.REVERSE);
+            liftL.setDirection(DcMotor.Direction.FORWARD);
+            liftR.setDirection(DcMotor.Direction.REVERSE);
 
-        // setting arm pivot motors to BRAKE mode instead of FLOAT makes it easier to control because it won't fall from gravity
-        armPivotL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        armPivotR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            collectL.setDirection(DcMotor.Direction.FORWARD);
+            collectR.setDirection(DcMotor.Direction.REVERSE);
 
-//        // initializing threads
-//        pivotThread = new Thread(pivotMacro);
-//        liftThread = new Thread(liftMacro);
+            // setting arm pivot motors to BRAKE mode instead of FLOAT makes it easier to control because it won't fall from gravity
+            armPivotL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            armPivotR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        // send message to phone to tell drive team when necessary actions have been completed
-        telemetry.addLine("Initialized");
-        telemetry.update();
+            // initializing threads
+//            pivotThread = new Thread(pivotMacro);
+//            liftThread = new Thread(liftMacro);
+
+            // send message to phone to tell drive team when necessary actions have been completed
+            telemetry.addLine("Initialized");
+            telemetry.update();
+        }
 
     }
 
@@ -117,7 +126,7 @@ public abstract class TeleLib extends OpMode {
 //    public Runnable pivotMacro = new Runnable() {
 //        @Override
 //        public void run() {
-//            if (Math.abs(gamepad2.left_trigger) > 0.08) {
+//            if (leftTrigPressed) {
 //                ElapsedTime time = new ElapsedTime();
 //
 //                time.reset();
@@ -131,15 +140,15 @@ public abstract class TeleLib extends OpMode {
 //                armPivotR.setPower(0);
 //
 //            }
+//            leftTrigPressed = false;
 //            Thread.currentThread().interrupt();
-//
 //        }
 //    };
 //
 //    public Runnable liftMacro = new Runnable() {
 //        @Override
 //        public void run() {
-//            if (gamepad2.right_trigger > 0.08) {
+//            if (rightTrigPressed) {
 //                ElapsedTime time = new ElapsedTime();
 //
 //                time.reset();
@@ -153,8 +162,9 @@ public abstract class TeleLib extends OpMode {
 //                liftR.setPower(0);
 //
 //            }
-//            Thread.currentThread().interrupt();
+//            rightTrigPressed = false;
 //
+//            Thread.currentThread().interrupt();
 //        }
 //    };
 //
@@ -172,7 +182,24 @@ public abstract class TeleLib extends OpMode {
 //
 //    }
 
+    //====================================  RUNNABLE MOTORS  =======================================
 
+    public void threadStates() {
+        if (gamepad2.left_trigger > 0.08) {
+            while (gamepad2.left_trigger > 0.08) { }
+
+            leftTrigPressed = true;
+
+        }
+
+        if (gamepad2.right_trigger > 0.08) {
+            while (gamepad2.left_trigger > 0.08) { }
+
+            rightTrigPressed = true;
+
+        }
+
+    }
 
     //====================================  DRIVETRAIN  ============================================
 
@@ -360,51 +387,39 @@ public abstract class TeleLib extends OpMode {
 //        if (gamepad2.left_bumper) {
 //            collectL.setPower(0.6);
 //            collectR.setPower(0.6);
-//
 //        }
 //        else if (gamepad2.right_bumper) {
 //            collectL.setPower(-0.6);
 //            collectR.setPower(-0.6);
-//
 //        }
 //        else {
 //            collectL.setPower(0);
 //            collectR.setPower(0);
-//
 //        }
-//
 //    }
 
     public void openDoor() {
         if (gamepad1.right_bumper) {
-            door.setPosition(CLOSE_DOOR);
-
+            door.setPosition(OPEN_DOOR);
         }
-
     }
 
     public void closeDoor() {
         if (gamepad1.left_bumper) {
-            door.setPosition(OPEN_DOOR);
-
+            door.setPosition(CLOSE_DOOR);
         }
-
     }
 
     public void unlock() {
         if (gamepad2.b) {
             lock.setPosition(OPEN_INTAKE);
-
         }
-
     }
 
     public void lock() {
         if (gamepad2.y) {
             lock.setPosition(CLOSE_INTAKE);
-
         }
-
     }
 
     //================================== UTILITY METHODS ===========================================
@@ -416,7 +431,5 @@ public abstract class TeleLib extends OpMode {
 
         liftL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         liftR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
     }
-
 }

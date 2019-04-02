@@ -41,23 +41,23 @@ public class ControlledServoTest extends OpMode {
 
         }
 
-//        if (gamepad1.dpad_left) {
-//            while (gamepad1.dpad_left) { }
-//            door.setPosition(door.getPosition() + 0.05);
-//
-//            telemetry.addData("Door position", door.getPosition());
-//            telemetry.update();
-//
-//        }
-//
-//        if (gamepad1.dpad_right) {
-//            while (gamepad1.dpad_right) { }
-//                door.setPosition(door.getPosition() - 0.05);
-//
-//                telemetry.addData("Door position", door.getPosition());
-//                telemetry.update();
-//
-//        }
+        if (gamepad1.dpad_left) {
+            while (gamepad1.dpad_left) { }
+            lock.setPosition(lock.getPosition() + 0.05);
+
+            telemetry.addData("Lock position", lock.getPosition());
+            telemetry.update();
+
+        }
+
+        if (gamepad1.dpad_right) {
+            while (gamepad1.dpad_right) { }
+                lock.setPosition(lock.getPosition() - 0.05);
+
+                telemetry.addData("Lock position", lock.getPosition());
+                telemetry.update();
+
+        }
 
     }
 
