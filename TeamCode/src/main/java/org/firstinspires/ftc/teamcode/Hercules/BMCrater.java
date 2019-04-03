@@ -41,7 +41,7 @@ public class BMCrater extends LinearOpMode{
         }
 
         waitForStart();
-        
+
         lift.detachTime(drivetrain);
 
 //        switch (cubePosition) {
