@@ -106,7 +106,6 @@ public class BitmapVisionWC {
     public String sample() throws InterruptedException {
         Bitmap bitmap = getBitmap();
         ArrayList<Integer> xValues = new ArrayList<Integer>();
-        ArrayList<Integer> yValues = new ArrayList<Integer>();
 
         int avgX = 0;
 
@@ -116,7 +115,7 @@ public class BitmapVisionWC {
         for (int colNum = 0; colNum < bitmap.getWidth(); colNum ++) {
 
             // scan rows 120-240 to block out cubes from crater
-            for (int rowNum = 120 ; rowNum < 240; rowNum ++) {
+            for (int rowNum = 180 ; rowNum < 240; rowNum ++) {
                 int pixel = bitmap.getPixel(colNum, rowNum);
 
                 // receive R, G, and B values for each pixel
@@ -128,27 +127,16 @@ public class BitmapVisionWC {
                 if (redPixel >= RED_THRESHOLD && greenPixel >= GREEN_THRESHOLD && bluePixel <= BLUE_THRESHOLD) {
 
                     xValues.add(colNum);
-                    yValues.add(rowNum);
 
                 }
 
             }
 
         }
-        double avgY = 0;
         // get sum of all yellow pixels' x coordinates
         for (int x : xValues) {
             avgX+= x;
         }
-        for(int y: yValues)
-        {
-            avgY+=y;
-        }
-        Collections.sort(yValues);
-        opMode.telemetry.addData("Average Y: ", (avgY / yValues.size()));
-        opMode.telemetry.addData("Lowest Recorded Val: ", yValues.get(0));
-        opMode.telemetry.addData("Highest", yValues.get(yValues.size()));
-        opMode.telemetry.update();
 
 
         // get average x-coordinate value of all yellow pixels

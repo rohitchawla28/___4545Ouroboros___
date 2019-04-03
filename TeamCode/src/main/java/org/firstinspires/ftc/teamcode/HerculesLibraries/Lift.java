@@ -42,7 +42,7 @@ public class Lift {
 
     public void detachTime(Drivetrain drivetrain) {
         // retract lift to get out of clip
-        moveLift(1, 0.5, false);
+        moveLift(1, 0.75, false);
 
         //allow lift and arm to drop to ground
         opMode.sleep(1500);

@@ -73,13 +73,13 @@ public class Intake {
 
     // lock position for intake in autonomous
     public void lock() {
-        lock.setPosition(0.8);
+        lock.setPosition(0.18);
 
     }
 
     // allow intake to be latched for tele-op
     public void unlock() {
-        lock.setPosition(0.45);
+        lock.setPosition(0.55);
 
     }
 

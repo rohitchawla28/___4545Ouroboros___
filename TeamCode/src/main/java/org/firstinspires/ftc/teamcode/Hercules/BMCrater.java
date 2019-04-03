@@ -30,6 +30,8 @@ public class BMCrater extends LinearOpMode{
         telemetry.addLine("Initialized");
         telemetry.update();
 
+        intake.lock();
+
         while (!isStarted()) {
             cubePosition = vision.sample();
 
@@ -39,9 +41,7 @@ public class BMCrater extends LinearOpMode{
         }
 
         waitForStart();
-
-        intake.lock();
-
+        
         lift.detachTime(drivetrain);
 
 //        switch (cubePosition) {
