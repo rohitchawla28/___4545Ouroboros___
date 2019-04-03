@@ -55,7 +55,7 @@ public abstract class TeleLib extends OpMode {
     private final double LIFT_MACRO_TIME = 1.7;
     private final double PIVOT_MACRO_TIME = 1.1;
     private final double OPEN_DOOR = 1.0;
-    private final double CLOSE_DOOR = 0;
+    private final double CLOSE_DOOR = 0.7;
     private final double OPEN_INTAKE = 0.55;
     private final double CLOSE_INTAKE = 0.18;
 

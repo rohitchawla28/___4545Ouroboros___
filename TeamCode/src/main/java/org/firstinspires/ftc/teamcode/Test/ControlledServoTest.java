@@ -43,8 +43,8 @@ public class ControlledServoTest extends OpMode {
 
         if (gamepad1.dpad_left) {
             while (gamepad1.dpad_left) { }
-            door.setPosition(door.getPosition() + 0.05);
 
+            door.setPosition(door.getPosition() + 0.05);
             telemetry.addData("Door position", door.getPosition());
             telemetry.update();
 
@@ -56,7 +56,6 @@ public class ControlledServoTest extends OpMode {
 
                 telemetry.addData("Door position", door.getPosition());
                 telemetry.update();
-
         }
 
     }

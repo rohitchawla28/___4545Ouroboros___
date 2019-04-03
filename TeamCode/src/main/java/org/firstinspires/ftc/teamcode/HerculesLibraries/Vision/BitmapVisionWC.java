@@ -12,8 +12,10 @@ import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.Parameters;
+import org.firstinspires.ftc.teamcode.Test.Collection;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.concurrent.BlockingQueue;
 
 import static android.graphics.Color.blue;
@@ -103,7 +105,8 @@ public class BitmapVisionWC {
 
     public String sample() throws InterruptedException {
         Bitmap bitmap = getBitmap();
-        ArrayList<Integer> xValues = new ArrayList<>();
+        ArrayList<Integer> xValues = new ArrayList<Integer>();
+        ArrayList<Integer> yValues = new ArrayList<Integer>();
 
         int avgX = 0;
 
@@ -123,21 +126,30 @@ public class BitmapVisionWC {
 
                 // only add x-coordinates of yellow pixels to list
                 if (redPixel >= RED_THRESHOLD && greenPixel >= GREEN_THRESHOLD && bluePixel <= BLUE_THRESHOLD) {
+
                     xValues.add(colNum);
+                    yValues.add(rowNum);
 
                 }
 
             }
 
         }
-
+        double avgY = 0;
         // get sum of all yellow pixels' x coordinates
         for (int x : xValues) {
             avgX+= x;
-
         }
+        for(int y: yValues)
+        {
+            avgY+=y;
+        }
+        Collections.sort(yValues);
+        opMode.telemetry.addData("Average Y: ", (avgY / yValues.size()));
+        opMode.telemetry.addData("Lowest Recorded Val: ", yValues.get(0));
+        opMode.telemetry.addData("Highest", yValues.get(yValues.size()));
+        opMode.telemetry.update();
 
-        opMode.telemetry.addData("Num Pixels found", xValues.size());
 
         // get average x-coordinate value of all yellow pixels
         try {
