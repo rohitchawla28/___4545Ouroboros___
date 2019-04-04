@@ -57,11 +57,13 @@ public class Intake {
     }
 
     public void deployMarker() {
+        lock();
+
         // raise arm to clear lift from hitting chassis
         lift.moveArm(0.8, 0.5, true);
 
         // extend lift into the depot
-        lift.moveLift(1, 1, true);
+        lift.moveLift(1, 1.75, true);
 
         // spin out to deploy marker
         collect(false, 1);

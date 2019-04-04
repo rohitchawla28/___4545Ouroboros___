@@ -233,6 +233,29 @@ public class Drivetrain {
 
     }
 
+    public void moveBackR(double power, double distance, double timeout){
+        resetEncoders();
+
+        ElapsedTime time = new ElapsedTime();
+
+        // get intial encoder so we can take difference -> doesn't allow last movement to affect next movement
+        double initEncoder = getEncoderAvg();
+
+        time.reset();
+
+        while (Math.abs(getEncoderAvg() - initEncoder) < distance && time.seconds() < timeout && opMode.opModeIsActive()) {
+            fr.setPower(-power * 0.75);
+            fl.setPower(-power);
+            br.setPower(-power * 0.75);
+            bl.setPower(-power);
+
+            opMode.telemetry.addData("Encoder distance left", (distance - getEncoderAvg()));
+            opMode.telemetry.update();
+
+        }
+        stopMotors();
+    }
+
     // method used to scale one side of chassis because uneven amounts of friction
     public void moveEncBadHardwareForward(double power, double distance, double timeout) {
         resetEncoders();
