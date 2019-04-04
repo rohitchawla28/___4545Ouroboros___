@@ -72,52 +72,50 @@ public abstract class TeleLib extends OpMode {
     @Override
     // actions that occur when drive team presses init before match
     public void init() {
-        if (!garrettIsGoodAtSoftware) {
             // hardware mapping of all devices
 
-            fl = hardwareMap.dcMotor.get("fl");
-            fr = hardwareMap.dcMotor.get("fr");
-            bl = hardwareMap.dcMotor.get("bl");
-            br = hardwareMap.dcMotor.get("br");
+        fl = hardwareMap.dcMotor.get("fl");
+        fr = hardwareMap.dcMotor.get("fr");
+        bl = hardwareMap.dcMotor.get("bl");
+        br = hardwareMap.dcMotor.get("br");
 
-            armPivotL = hardwareMap.dcMotor.get("armPivotL");
-            armPivotR = hardwareMap.dcMotor.get("armPivotR");
-            liftL = hardwareMap.dcMotor.get("liftL");
-            liftR = hardwareMap.dcMotor.get("liftR");
+        armPivotL = hardwareMap.dcMotor.get("armPivotL");
+        armPivotR = hardwareMap.dcMotor.get("armPivotR");
+        liftL = hardwareMap.dcMotor.get("liftL");
+        liftR = hardwareMap.dcMotor.get("liftR");
 
-            collectL = hardwareMap.crservo.get("collectL");
-            collectR = hardwareMap.crservo.get("collectR");
+        collectL = hardwareMap.crservo.get("collectL");
+        collectR = hardwareMap.crservo.get("collectR");
 
-            door = hardwareMap.servo.get("door");
-            lock = hardwareMap.servo.get("lock");
+        door = hardwareMap.servo.get("door");
+        lock = hardwareMap.servo.get("lock");
 
-            // setting reverse directions of right motors because they are mounted opposite
-            fl.setDirection(DcMotor.Direction.FORWARD);
-            fr.setDirection(DcMotor.Direction.REVERSE);
-            bl.setDirection(DcMotor.Direction.FORWARD);
-            br.setDirection(DcMotor.Direction.REVERSE);
+        // setting reverse directions of right motors because they are mounted opposite
+        fl.setDirection(DcMotor.Direction.FORWARD);
+        fr.setDirection(DcMotor.Direction.REVERSE);
+        bl.setDirection(DcMotor.Direction.FORWARD);
+        br.setDirection(DcMotor.Direction.REVERSE);
 
-            armPivotL.setDirection(DcMotor.Direction.FORWARD);
-            armPivotR.setDirection(DcMotor.Direction.REVERSE);
+        armPivotL.setDirection(DcMotor.Direction.FORWARD);
+        armPivotR.setDirection(DcMotor.Direction.REVERSE);
 
-            liftL.setDirection(DcMotor.Direction.FORWARD);
-            liftR.setDirection(DcMotor.Direction.REVERSE);
+        liftL.setDirection(DcMotor.Direction.FORWARD);
+        liftR.setDirection(DcMotor.Direction.REVERSE);
 
-            collectL.setDirection(DcMotor.Direction.FORWARD);
-            collectR.setDirection(DcMotor.Direction.REVERSE);
+        collectL.setDirection(DcMotor.Direction.FORWARD);
+        collectR.setDirection(DcMotor.Direction.REVERSE);
 
-            // setting arm pivot motors to BRAKE mode instead of FLOAT makes it easier to control because it won't fall from gravity
-            armPivotL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            armPivotR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        // setting arm pivot motors to BRAKE mode instead of FLOAT makes it easier to control because it won't fall from gravity
+        armPivotL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        armPivotR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-            // initializing threads
-//            pivotThread = new Thread(pivotMacro);
-//            liftThread = new Thread(liftMacro);
+        // initializing threads
+//      pivotThread = new Thread(pivotMacro);
+//      liftThread = new Thread(liftMacro);
 
-            // send message to phone to tell drive team when necessary actions have been completed
-            telemetry.addLine("Initialized");
-            telemetry.update();
-        }
+        // send message to phone to tell drive team when necessary actions have been completed
+        telemetry.addLine("Initialized");
+        telemetry.update();
 
     }
 
