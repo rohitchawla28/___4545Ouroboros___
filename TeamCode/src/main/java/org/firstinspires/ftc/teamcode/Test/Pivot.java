@@ -5,14 +5,13 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Hercules.TeleLib;
 
-@Disabled
 @TeleOp
         (name = "ArmPivotTest", group = "Controlled")
 
 public class Pivot extends TeleLib {
 
     public void loop() {
-        armPivot();
+        testArmPivot();
 
     }
 

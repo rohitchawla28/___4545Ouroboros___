@@ -352,6 +352,30 @@ public abstract class TeleLib extends OpMode {
 
     }
 
+    public void testArmPivot() {
+        double left = gamepad2.left_stick_y;
+        double right = gamepad2.right_stick_y;
+
+        if (Math.abs(left) > 0.08) {
+            armPivotL.setPower(left);
+
+        }
+        else {
+            armPivotL.setPower(0);
+
+        }
+
+        if (Math.abs(right) > 0.08) {
+            armPivotR.setPower(right);
+
+        }
+        else {
+            armPivotR.setPower(0);
+
+        }
+
+    }
+
 
     //=====================================  INTAKE METHODS  =======================================
 
