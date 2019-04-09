@@ -56,10 +56,8 @@ public abstract class TeleLib extends OpMode {
     private final double PIVOT_MACRO_TIME = 1.1;
     private final double OPEN_DOOR = 1.0;
     private final double CLOSE_DOOR = 0.7;
-    private final double OPEN_INTAKE = 0.55;
-    private final double CLOSE_INTAKE = 0.18;
-
-    private final boolean garrettIsGoodAtSoftware = false;
+    private final double OPEN_INTAKE = 1.0;
+    private final double CLOSE_INTAKE = 0.92;
 
     // boolean states for threads
     private boolean leftTrigPressed = false;
@@ -72,7 +70,7 @@ public abstract class TeleLib extends OpMode {
     @Override
     // actions that occur when drive team presses init before match
     public void init() {
-            // hardware mapping of all devices
+        // hardware mapping of all devices
 
         fl = hardwareMap.dcMotor.get("fl");
         fr = hardwareMap.dcMotor.get("fr");
@@ -397,13 +395,13 @@ public abstract class TeleLib extends OpMode {
 //    }
 
     public void openDoor() {
-        if (gamepad1.right_bumper) {
+        if (gamepad1.left_bumper) {
             door.setPosition(OPEN_DOOR);
         }
     }
 
     public void closeDoor() {
-        if (gamepad1.left_bumper) {
+        if (gamepad1.right_bumper) {
             door.setPosition(CLOSE_DOOR);
         }
     }

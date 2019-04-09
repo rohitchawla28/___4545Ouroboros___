@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.HerculesLibraries.Drivetrain;
 
-@Disabled
 @Autonomous
         (name = "MoveTelemetry", group = "Auto")
 
@@ -23,7 +22,7 @@ public class MotionTelemetry extends LinearOpMode {
         // objective is to move the robot to desired position manually
         // robot will return values for encoder ticks (distance) and gyro angle changes
         // this makes it much much faster to put in values into autonomous movements when testing pathing
-        drivetrain.composeTelemetryEncoders();
+        // drivetrain.composeTelemetryEncoders();
         drivetrain.composeTelemetryGyro();
 
     }

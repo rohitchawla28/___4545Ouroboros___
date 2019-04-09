@@ -233,7 +233,7 @@ public class Drivetrain {
 
     }
 
-    public void moveBackR(double power, double distance, double timeout){
+    public void moveWall(double power, double distance, boolean leftWall, double timeout) {
         resetEncoders();
 
         ElapsedTime time = new ElapsedTime();
@@ -244,16 +244,27 @@ public class Drivetrain {
         time.reset();
 
         while (Math.abs(getEncoderAvg() - initEncoder) < distance && time.seconds() < timeout && opMode.opModeIsActive()) {
-            fr.setPower(-power * 0.75);
-            fl.setPower(-power);
-            br.setPower(-power * 0.75);
-            bl.setPower(-power);
+            if (leftWall) {
+                fl.setPower(power);
+                fr.setPower(power * 1.25);
+                bl.setPower(power);
+                br.setPower(power * 1.25);
+
+            }
+            else {
+                fl.setPower(power * 1.25);
+                fr.setPower(power);
+                bl.setPower(power * 1.25);
+                br.setPower(power);
+
+            }
 
             opMode.telemetry.addData("Encoder distance left", (distance - getEncoderAvg()));
             opMode.telemetry.update();
 
         }
         stopMotors();
+
     }
 
     // method used to scale one side of chassis because uneven amounts of friction
@@ -423,9 +434,9 @@ public class Drivetrain {
     //returns values of gyro axis for testing purposes
     public void composeTelemetryGyro() {
         while (opMode.opModeIsActive()) {
-            opMode.telemetry.addData("Yaw", sensors.getGyroYaw());
-            opMode.telemetry.addData("Pitch", sensors.getGyroPitch());
-            opMode.telemetry.addData("Roll", sensors.getGyroRoll());
+            opMode.telemetry.addData("Yaw (First Angle)", sensors.getGyroYaw());
+            opMode.telemetry.addData("Pitch (Second Angle)", sensors.getGyroPitch());
+            opMode.telemetry.addData("Roll (Third Angle)", sensors.getGyroRoll());
             opMode.telemetry.update();
 
         }

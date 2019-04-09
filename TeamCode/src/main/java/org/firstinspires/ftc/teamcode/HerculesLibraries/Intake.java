@@ -63,10 +63,15 @@ public class Intake {
         lift.moveArm(0.8, 0.5, true);
 
         // extend lift into the depot
-        lift.moveLift(1, 1.75, true);
+        lift.moveLift(1, 2, true);
 
         // spin out to deploy marker
         collect(false, 1);
+
+        // unlock intake
+        unlock();
+
+        opMode.sleep(1000);
 
         // retract lift back in
         lift.moveLift(1, 0.5, false);
@@ -75,13 +80,13 @@ public class Intake {
 
     // lock position for intake in autonomous
     public void lock() {
-        lock.setPosition(0.18);
+        lock.setPosition(0.92);
 
     }
 
     // allow intake to be latched for tele-op
     public void unlock() {
-        lock.setPosition(0.55);
+        lock.setPosition(1.0);
 
     }
 

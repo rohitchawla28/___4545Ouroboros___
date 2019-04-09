@@ -59,22 +59,22 @@ public class BMCrater extends LinearOpMode{
                 drivetrain.turnPID(30, false, 0.7 / 30, 0.016, 0.02 / 30, 1.5);
                 sleep(500);
 
-                drivetrain.moveGyroStab(0.6, 800, 3);
+                drivetrain.moveGyroStab(0.6, 650, 3);
                 sleep(500);
 
                 drivetrain.turnPID(40, false, 0.7 / 40, 0.014, 0.02 / 40, 1.5);
                 sleep(500);
 
-                drivetrain.moveEncoder(0.6, 400, 5);
+                drivetrain.moveEncoder(0.6, 650, 5);
                 sleep(500);
 
                 intake.deployMarker();
                 sleep(500);
 
-                drivetrain.moveBackR(0.75, 1450, 5);
+                drivetrain.moveWall(-0.6, 1350, false, 4);
                 sleep(500);
 
-                drivetrain.moveBackR(0.3, 300, 5);
+                drivetrain.moveWall(-0.3, 300, false, 3);
                 sleep(500);
 
                 intake.unlock();
@@ -98,16 +98,16 @@ public class BMCrater extends LinearOpMode{
                 drivetrain.turnPID(40, false, .7 / 40, 0.017, 0.02 / 40, 2);
                 sleep(500);
 
-                drivetrain.moveEncoder(0.6, 200, 4);
+                drivetrain.moveEncoder(0.6, 500, 4);
                 sleep(500);
 
                 intake.deployMarker();
                 sleep(500);
 
-                drivetrain.moveBackR(0.75, 1550,4);
+                drivetrain.moveWall(-0.6, 1300,false, 4);
                 sleep(500);
 
-                drivetrain.moveBackR(0.3, 300, 3);
+                drivetrain.moveWall(-0.3, 300, false, 3);
                 sleep(500);
 
                 intake.unlock();
@@ -122,7 +122,7 @@ public class BMCrater extends LinearOpMode{
                 drivetrain.moveGyroStab(0.6, 275, 4);
                 sleep(500);
 
-                drivetrain.moveEncoder(-0.6, 250, 4);
+                drivetrain.moveEncoder(-0.6, 200, 4);
                 sleep(500);
 
                 drivetrain.turnPID(95, false, 0.6 / 95, 0.015, 0.03 / 95, 2);
@@ -134,16 +134,16 @@ public class BMCrater extends LinearOpMode{
                 drivetrain.turnPID(40, false, .7 / 40, 0.016, 0.02 / 40, 2);
                 sleep(500);
 
-                drivetrain.moveEncoder(0.6, 200, 4);
+                drivetrain.moveEncoder(0.6, 350, 4);
                 sleep(500);
 
                 intake.deployMarker();
                 sleep(500);
 
-                drivetrain.moveBackR(0.75, 1300, 4);
+                drivetrain.moveWall(-0.6, 1300, false, 4);
                 sleep(500);
 
-                drivetrain.moveBackR(0.3, 300, 3);
+                drivetrain.moveWall(-0.3, 300, false, 3);
                 sleep(500);
 
                 intake.unlock();
@@ -173,10 +173,10 @@ public class BMCrater extends LinearOpMode{
                 intake.deployMarker();
                 sleep(500);
 
-                drivetrain.moveBackR(0.75, 1550,4);
+                drivetrain.moveWall(-0.6, 1550,false, 4);
                 sleep(500);
 
-                drivetrain.moveBackR(0.3, 300, 3);
+                drivetrain.moveWall(-0.3, 300, false, 3);
                 sleep(500);
 
                 intake.unlock();
