@@ -51,7 +51,7 @@ public class Lift {
         moveArm(0.5, 0.15, true);
 
         // raise lift to get out of hook
-        moveLift(1, 0.5, true);
+        moveLift(1, 0.8, true);
 
         // slow move away from lander
         drivetrain.moveEncoder(0.3, 150, 3);
@@ -59,7 +59,7 @@ public class Lift {
         opMode.sleep(500);
 
         // bring lift down to retracted position
-        moveLift(0.8, 0.75, false);
+        moveLift(0.8, 1, false);
 
         // bring arm down to folded position
         moveArm(0.6, 1, false);

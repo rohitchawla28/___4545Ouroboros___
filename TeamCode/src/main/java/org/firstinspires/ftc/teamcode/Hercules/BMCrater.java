@@ -128,19 +128,19 @@ public class BMCrater extends LinearOpMode{
                 drivetrain.turnPID(95, false, 0.6 / 95, 0.015, 0.03 / 95, 2);
                 sleep(500);
 
-                drivetrain.moveGyroStab(0.6, 1325, 4);
+                drivetrain.moveGyroStab(0.6, 1200, 4);
                 sleep(500);
 
                 drivetrain.turnPID(40, false, .7 / 40, 0.016, 0.02 / 40, 2);
                 sleep(500);
 
-                drivetrain.moveEncoder(0.6, 350, 4);
+                drivetrain.moveEncoder(0.6, 525, 4);
                 sleep(500);
 
                 intake.deployMarker();
                 sleep(500);
 
-                drivetrain.moveWall(-0.6, 1300, false, 4);
+                drivetrain.moveWall(-0.6, 1275, false, 4);
                 sleep(500);
 
                 drivetrain.moveWall(-0.3, 300, false, 3);
@@ -152,28 +152,31 @@ public class BMCrater extends LinearOpMode{
                 break;
 
             default:
-                drivetrain.moveGyroStab(0.6, 200, 4);
+                drivetrain.turnPID(32, false, 0.65 / 32, 0.012, 0.02 / 32, 1.5);
                 sleep(500);
 
-                drivetrain.moveEncoder(-0.6, 100, 4);
+                drivetrain.moveGyroStab(0.6, 300, 3);
                 sleep(500);
 
-                drivetrain.turnPID(67, false, .7 / 67, 0.016, 0.02 / 67, 2);
+                drivetrain.moveEncoder(-0.6, 175, 4);
                 sleep(500);
 
-                drivetrain.moveGyroStab(0.6, 825, 4);
+                drivetrain.turnPID(30, false, 0.7 / 30, 0.016, 0.02 / 30, 1.5);
                 sleep(500);
 
-                drivetrain.turnPID(40, false, .7 / 40, 0.017, 0.02 / 40, 2);
+                drivetrain.moveGyroStab(0.6, 650, 3);
                 sleep(500);
 
-                drivetrain.moveEncoder(0.6, 975, 4);
+                drivetrain.turnPID(40, false, 0.7 / 40, 0.014, 0.02 / 40, 1.5);
+                sleep(500);
+
+                drivetrain.moveEncoder(0.6, 650, 5);
                 sleep(500);
 
                 intake.deployMarker();
                 sleep(500);
 
-                drivetrain.moveWall(-0.6, 1550,false, 4);
+                drivetrain.moveWall(-0.6, 1350, false, 4);
                 sleep(500);
 
                 drivetrain.moveWall(-0.3, 300, false, 3);
