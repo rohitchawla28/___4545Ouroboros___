@@ -98,7 +98,7 @@ public class BMCrater extends LinearOpMode{
                 drivetrain.turnPID(40, false, .7 / 40, 0.017, 0.02 / 40, 2);
                 sleep(500);
 
-                drivetrain.moveEncoder(0.6, 500, 4);
+                drivetrain.moveEncoder(0.6, 550, 4);
                 sleep(500);
 
                 intake.deployMarker();
@@ -134,7 +134,7 @@ public class BMCrater extends LinearOpMode{
                 drivetrain.turnPID(40, false, .7 / 40, 0.016, 0.02 / 40, 2);
                 sleep(500);
 
-                drivetrain.moveEncoder(0.6, 525, 4);
+                drivetrain.moveEncoder(0.6, 575 , 4);
                 sleep(500);
 
                 intake.deployMarker();
