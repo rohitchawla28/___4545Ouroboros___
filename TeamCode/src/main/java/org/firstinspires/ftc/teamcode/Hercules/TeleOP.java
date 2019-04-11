@@ -20,7 +20,7 @@ public class TeleOP extends TeleLib {
 
         }
 
-        threadStates();
+        //threadStates();
 
         // Manipulator methods
         lift();

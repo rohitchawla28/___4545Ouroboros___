@@ -54,8 +54,8 @@ public abstract class TeleLib extends OpMode {
     // final positions
     private final double LIFT_MACRO_TIME = 1.7;
     private final double PIVOT_MACRO_TIME = 1.1;
-    private final double OPEN_DOOR = 1.0;
-    private final double CLOSE_DOOR = 0.7;
+    private final double OPEN_DOOR = 0.78;
+    private final double CLOSE_DOOR = 0.5;
     private final double OPEN_INTAKE = 1.0;
     private final double CLOSE_INTAKE = 0.92;
 
@@ -108,8 +108,8 @@ public abstract class TeleLib extends OpMode {
         armPivotR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // initializing threads
-//      pivotThread = new Thread(pivotMacro);
-//      liftThread = new Thread(liftMacro);
+        //pivotThread = new Thread(pivotMacro);
+        //liftThread = new Thread(liftMacro);
 
         // send message to phone to tell drive team when necessary actions have been completed
         telemetry.addLine("Initialized");
@@ -164,6 +164,8 @@ public abstract class TeleLib extends OpMode {
 //        }
 //    };
 //
+//    liftThread
+//
 //    @Override
 //    public void stop() {
 //        pivotThread.interrupt();
@@ -173,29 +175,24 @@ public abstract class TeleLib extends OpMode {
 //
 //    @Override
 //    public void start() {
-//        pivotThread.start();
-//        liftThread.start();
+//
 //
 //    }
 
     //====================================  RUNNABLE MOTORS  =======================================
 
-    public void threadStates() {
-        if (gamepad2.left_trigger > 0.08) {
-            while (gamepad2.left_trigger > 0.08) { }
-
-            leftTrigPressed = true;
-
-        }
-
-        if (gamepad2.right_trigger > 0.08) {
-            while (gamepad2.left_trigger > 0.08) { }
-
-            rightTrigPressed = true;
-
-        }
-
-    }
+//    public void threadStates() {
+//        if (gamepad2.left_trigger > 0.08) {
+//            pivotThread.start();
+//
+//        }
+//
+//        if (gamepad2.right_trigger > 0.08) {
+//            liftThread.start();
+//
+//        }
+//
+//    }
 
     //====================================  DRIVETRAIN  ============================================
 
