@@ -94,6 +94,11 @@ public abstract class TeleLib extends OpMode {
         bl.setDirection(DcMotor.Direction.FORWARD);
         br.setDirection(DcMotor.Direction.REVERSE);
 
+        fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         armPivotL.setDirection(DcMotor.Direction.FORWARD);
         armPivotR.setDirection(DcMotor.Direction.REVERSE);
 
@@ -110,6 +115,8 @@ public abstract class TeleLib extends OpMode {
         // initializing threads
         //pivotThread = new Thread(pivotMacro);
         //liftThread = new Thread(liftMacro);
+
+        door.setPosition(CLOSE_DOOR);
 
         // send message to phone to tell drive team when necessary actions have been completed
         telemetry.addLine("Initialized");
@@ -270,7 +277,7 @@ public abstract class TeleLib extends OpMode {
         }
 
         if (gamepad2.a) {
-            while (gamepad2.a) { }
+            while (gamepad2.left_trigger > 0.08) { }
 
             if (!pivotSpeedToggle) {
                 halfSpeedPivot = 0.5;
@@ -350,11 +357,11 @@ public abstract class TeleLib extends OpMode {
     }
 
     public void testArmPivot() {
-        double left = gamepad2.left_stick_y;
-        double right = gamepad2.right_stick_y;
+        double leftPivot = gamepad2.left_stick_y;
+        double rightPivot = gamepad2.right_stick_y;
 
-        if (Math.abs(left) > 0.08) {
-            armPivotL.setPower(left);
+        if (Math.abs(leftPivot) > 0.08) {
+            armPivotL.setPower(leftPivot);
 
         }
         else {
@@ -362,8 +369,32 @@ public abstract class TeleLib extends OpMode {
 
         }
 
-        if (Math.abs(right) > 0.08) {
-            armPivotR.setPower(right);
+        if (Math.abs(rightPivot) > 0.08) {
+            armPivotR.setPower(rightPivot);
+
+        }
+        else {
+            armPivotR.setPower(0);
+
+        }
+
+    }
+
+    public void testLift() {
+        double leftLift = gamepad2.left_stick_y;
+        double rightLift = gamepad2.right_stick_y;
+
+        if (Math.abs(leftLift) > 0.08) {
+            armPivotL.setPower(leftLift);
+
+        }
+        else {
+            armPivotL.setPower(0);
+
+        }
+
+        if (Math.abs(rightLift) > 0.08) {
+            armPivotR.setPower(rightLift);
 
         }
         else {
@@ -387,11 +418,11 @@ public abstract class TeleLib extends OpMode {
             collectR.setPower(-0.8);
 
         }
-//        else if (gamepad2.x) {
-//            collectL.setPower(-0.3);
-//            collectR.setPower(-0.3);
-//
-//        }
+        else if (gamepad2.right_trigger > 0.08) {
+            collectL.setPower(-0.3);
+            collectR.setPower(-0.3);
+
+        }
         else {
             collectL.setPower(0);
             collectR.setPower(0);
