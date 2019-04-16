@@ -96,7 +96,7 @@ public class BMDepot extends LinearOpMode{
                 drivetrain.turnPID(100, true, .7 / 100, 0.01, 0.02 / 100, 2);
                 sleep(500);
 
-                drivetrain.moveEncoder(0.6, 1000, 4);
+                drivetrain.moveEncoder(0.6, 925, 4);
                 sleep(500);
 
                 intake.deployMarker();
@@ -129,7 +129,7 @@ public class BMDepot extends LinearOpMode{
                 drivetrain.turnPID(100, true, .7 / 100, 0.01, 0.02 / 100, 2);
                 sleep(500);
 
-                drivetrain.moveEncoder(0.6, 1150, 4);
+                drivetrain.moveEncoder(0.6, 1075, 4);
                 sleep(500);
 
                 intake.deployMarker();
