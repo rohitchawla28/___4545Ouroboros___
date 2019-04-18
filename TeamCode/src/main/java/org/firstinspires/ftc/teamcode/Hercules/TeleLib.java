@@ -55,9 +55,9 @@ public abstract class TeleLib extends OpMode {
     private final double LIFT_MACRO_TIME = 1.7;
     private final double PIVOT_MACRO_TIME = 1.1;
     private final double OPEN_DOOR = 0.78;
-    private final double CLOSE_DOOR = 0.5;
-    private final double OPEN_INTAKE = 0.0;
-    private final double CLOSE_INTAKE = 0.1;
+    private final double CLOSE_DOOR = 0;
+    private final double OPEN_INTAKE = 0.15;
+    private final double CLOSE_INTAKE = 0;
 
     // boolean states for threads
     private boolean leftTrigPressed = false;
@@ -431,20 +431,25 @@ public abstract class TeleLib extends OpMode {
 
     }
 
-//    public void testCollect() {
-//        if (gamepad2.left_bumper) {
-//            collectL.setPower(0.6);
-//            collectR.setPower(0.6);
-//        }
-//        else if (gamepad2.right_bumper) {
-//            collectL.setPower(-0.6);
-//            collectR.setPower(-0.6);
-//        }
-//        else {
-//            collectL.setPower(0);
-//            collectR.setPower(0);
-//        }
-//    }
+    public void testCollect() {
+        if (gamepad2.left_bumper) {
+            collectL.setPower(-0.6);
+
+        }
+        else if (gamepad2.right_bumper) {
+            collectR.setPower(-0.6);
+
+        }
+        else if (gamepad2.left_bumper && gamepad2.right_bumper) {
+            collectL.setPower(-0.6);
+            collectR.setPower(-0.6);
+
+        }
+        else {
+            collectL.setPower(0);
+            collectR.setPower(0);
+        }
+    }
 
     public void openDoor() {
         if (gamepad1.left_bumper) {

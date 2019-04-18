@@ -14,8 +14,8 @@ public class Intake {
 
     public Servo lock;
 
-    private CRServo collectL;
-    private CRServo collectR;
+    public CRServo collectL;
+    public CRServo collectR;
 
     // constructor to intialize servo and collection
     public Intake(LinearOpMode opMode) {
@@ -68,6 +68,9 @@ public class Intake {
         // spin out to deploy marker
         collect(false, 1);
 
+        collectL.setPower(-0.6);
+        collectR.setPower(-0.6);
+
         // unlock intake
         unlock();
 
@@ -76,17 +79,19 @@ public class Intake {
         // retract lift back in
         lift.moveLift(1, 0.5, false);
 
+
+
     }
 
     // lock position for intake in autonomous
     public void lock() {
-        lock.setPosition(0.92);
+        lock.setPosition(0);
 
     }
 
     // allow intake to be latched for tele-op
     public void unlock() {
-        lock.setPosition(1.0);
+        lock.setPosition(0.15);
 
     }
 

@@ -130,6 +130,8 @@ public class Drivetrain {
                 Math.abs(bl.getCurrentPosition()) +
                 Math.abs(br.getCurrentPosition())) / (4.0 - countZeros);
 
+        // return (Math.abs(fl.getCurrentPosition()) + Math.abs(fr.getCurrentPosition())) / 2.0;
+
     }
 
     public void moveEncoder(double power, double distance, double timeout) {
@@ -445,7 +447,11 @@ public class Drivetrain {
 
     public void composeTelemetryEncoders () {
         while (opMode.opModeIsActive()) {
-            opMode.telemetry.addData("Encoder Average", getEncoderAvg());
+            opMode.telemetry.addData("FL", fl.getCurrentPosition());
+            opMode.telemetry.addData("FR", fr.getCurrentPosition());
+            opMode.telemetry.addData("BL", bl.getCurrentPosition());
+            opMode.telemetry.addData("BR", br.getCurrentPosition());
+
             opMode.telemetry.update();
 
         }

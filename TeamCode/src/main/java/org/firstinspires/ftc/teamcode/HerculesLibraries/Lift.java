@@ -47,8 +47,8 @@ public class Lift {
         //allow lift and arm to drop to ground
         opMode.sleep(1500);
 
-        // small arm movement to align 90 deg with lander
-        moveArm(0.5, 0.15, true);
+//        // small arm movement to align 90 deg with lander
+//        moveArm(0.5, 0.15, true);
 
         // raise lift to get out of hook
         moveLift(1, 0.8, true);

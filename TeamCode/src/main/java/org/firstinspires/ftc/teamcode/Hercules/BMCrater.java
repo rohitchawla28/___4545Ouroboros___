@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Hercules;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.HerculesLibraries.Drivetrain;
 import org.firstinspires.ftc.teamcode.HerculesLibraries.Intake;
@@ -37,7 +38,6 @@ public class BMCrater extends LinearOpMode{
             telemetry.update();
 
         }
-
         waitForStart();
 
         intake.lock();
@@ -50,10 +50,10 @@ public class BMCrater extends LinearOpMode{
                 drivetrain.turnPID(32, false, 0.65 / 32, 0.012, 0.02 / 32, 1.5);
                 sleep(500);
 
-                drivetrain.moveGyroStab(0.6, 300, 3);
+                drivetrain.moveGyroStab(0.6, 325, 3);
                 sleep(500);
 
-                drivetrain.moveEncoder(-0.6, 175, 4);
+                drivetrain.moveEncoder(-0.6, 200, 4);
                 sleep(500);
 
                 drivetrain.turnPID(30, false, 0.7 / 30, 0.016, 0.02 / 30, 1.5);
@@ -83,10 +83,10 @@ public class BMCrater extends LinearOpMode{
                 break;
 
             case "center" :
-                drivetrain.moveGyroStab(0.6, 200, 4);
+                drivetrain.moveGyroStab(0.6, 225, 4);
                 sleep(500);
 
-                drivetrain.moveEncoder(-0.6, 100, 4);
+                drivetrain.moveEncoder(-0.6, 125, 4);
                 sleep(500);
 
                 drivetrain.turnPID(67, false, .7 / 67, 0.016, 0.02 / 67, 2);
@@ -119,7 +119,7 @@ public class BMCrater extends LinearOpMode{
                 drivetrain.turnPID(31, true, 0.6 / 31, 0.011, 0.025 / 31,1.25);
                 sleep(500);
 
-                drivetrain.moveGyroStab(0.6, 275, 4);
+                drivetrain.moveGyroStab(0.6, 325, 4);
                 sleep(500);
 
                 drivetrain.moveEncoder(-0.6, 200, 4);
