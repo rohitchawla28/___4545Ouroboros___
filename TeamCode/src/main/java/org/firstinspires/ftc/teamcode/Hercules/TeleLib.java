@@ -56,8 +56,8 @@ public abstract class TeleLib extends OpMode {
     private final double PIVOT_MACRO_TIME = 1.1;
     private final double OPEN_DOOR = 0.78;
     private final double CLOSE_DOOR = 0;
-    private final double OPEN_INTAKE = 0.15;
-    private final double CLOSE_INTAKE = 0;
+    private final double OPEN_INTAKE = 0.65;
+    private final double CLOSE_INTAKE = 0.48;
 
     // boolean states for threads
     private boolean leftTrigPressed = false;
